@@ -15,5 +15,9 @@ import com.igor.models.User;
 public interface UserRepository extends JpaRepository<User, Long> {
     Optional<User> findByUsername(String userName);
     
+    @Query(
+			  value = "INSERT INTO team_user (team_id, user_id) VALUES (:user_id,:team_id)", 
+			  nativeQuery = true)
+	List<User> addUserToTeam(@Param("user_id")long user_id, @Param("team_id")long team_id);
     
 }

@@ -12,6 +12,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.HttpServerErrorException;
 
+import com.igor.models.Task;
 import com.igor.models.Team;
 import com.igor.models.User;
 import com.igor.web.LoginDto;
@@ -85,5 +86,9 @@ public class UserController {
 		return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
-    
+    @GetMapping("/{user_id}/{team_id}")
+    public String addUserToTeam(@PathVariable Long user_id, @PathVariable Long team_id) {
+        List<User> user = userService.addUserToteam(user_id, team_id);
+        return "Ok";
+    }
 }
