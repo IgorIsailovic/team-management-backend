@@ -56,6 +56,22 @@ export default function UserPage(props) {
     setMobileOpen(!mobileOpen);
   };
 
+  function handleNewTeam() {
+    let id = data.id;
+    let token = localStorage.getItem("token");
+    axios
+      .get(`http://localhost:8088/users/${id}/1`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((response) => {
+        console.log(`OVO JE RESPONSE ${response}`);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  }
   const drawer = (
     <div>
       <Toolbar>
@@ -101,6 +117,9 @@ export default function UserPage(props) {
                 <ListItemText primary={team.name} />
               </ListItemButton>
             ))}
+            <ListItemButton sx={{ pl: 4 }} onClick={handleNewTeam}>
+              <ListItemText primary="Join another team" />
+            </ListItemButton>
           </List>
         </Collapse>
       </List>

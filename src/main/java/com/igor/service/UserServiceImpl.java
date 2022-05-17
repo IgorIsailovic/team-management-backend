@@ -153,8 +153,12 @@ public class UserServiceImpl implements UserService {
 			return "OK";
 		}
 
-		public List<User> addUserToteam(long user_id, long team_id) {
-	    	return userRepository.addUserToTeam(user_id, team_id);
+		public void addUserToteam(long user_id, long team_id) {
+	    	 userRepository.addUserToTeam(user_id, team_id);
 	    	
 	    }
+		
+	public boolean checkUserToTeam(long user_id, long team_id) {
+			return userRepository.checkUserToTeam(user_id, team_id);
+		}
 }

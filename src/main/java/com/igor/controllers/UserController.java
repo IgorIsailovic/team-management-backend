@@ -87,8 +87,24 @@ public class UserController {
     }
 
     @GetMapping("/{user_id}/{team_id}")
-    public String addUserToTeam(@PathVariable Long user_id, @PathVariable Long team_id) {
-        List<User> user = userService.addUserToteam(user_id, team_id);
-        return "Ok";
-    }
+    public ResponseEntity<String> addUserToTeam(@PathVariable long user_id, @PathVariable long team_id) {
+    	
+    	if(userService.checkUserToTeam(user_id, team_id)) {
+    		return new ResponseEntity<>("Ovaj user je već u tom timu!" ,HttpStatus.BAD_REQUEST);
+    	}
+    	else { 
+    		try {
+    		userService.addUserToteam(user_id, team_id);
+    		return new ResponseEntity<>("Uspešno ste dodali usera u team!" ,HttpStatus.OK);
+    		}
+    		catch (Exception e) {
+        		return new ResponseEntity<>("Neuspešno dodavanje usera u team!" ,HttpStatus.BAD_REQUEST);
+			}
+    	}
+    	}
+
+    	
+    	
+    	
+  //  }
 }
