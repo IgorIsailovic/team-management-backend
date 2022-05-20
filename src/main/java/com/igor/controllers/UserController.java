@@ -103,8 +103,12 @@ public class UserController {
     	}
     	}
 
+    @PutMapping("/{id}")
+    public ResponseEntity<String> updateUser(@RequestBody String password, @PathVariable Long id) {
+        userService.updateUser(id, password);
+        return ResponseEntity.ok().body("Succesffuly updated user!");
+    }
     	
     	
-    	
-  //  }
+  
 }

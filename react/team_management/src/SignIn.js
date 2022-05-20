@@ -15,6 +15,8 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import jwt_decode from "jwt-decode";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { Alert, AlertTitle } from "@mui/material";
+import Modal from "@mui/material/Modal";
 
 function Copyright(props) {
   return (
@@ -40,18 +42,63 @@ export default function SignIn() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [result, setResult] = useState("");
-
+  const [validCredentials, setValidCredentials] = useState(true);
+  const handleShowError = () => setValidCredentials(false);
+  const handleColseError = () => setValidCredentials(true);
   const navigate = useNavigate();
+  const [open, setOpen] = React.useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+  const [passwordOld, setPasswordOld] = useState("");
+  const [passwordNew, setPasswordNew] = useState("");
+  const [passwordNew2, setPasswordNew2] = useState("");
+
+  const style = {
+    position: "absolute",
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
+    width: 400,
+    bgcolor: "background.paper",
+    // border: "2px solid #000",
+    boxShadow: 24,
+    p: 4,
+  };
 
   //let token = localStorage.getItem("token");
 
   function validateForm() {
     return username.length > 0 && password.length > 0;
   }
+  function validateForm2() {
+    return (
+      passwordOld.length > 0 &&
+      passwordNew.length > 0 &&
+      passwordNew2.length > 0 &&
+      passwordNew === passwordNew2
+    );
+  }
+
+  function handlePasswordUpdate() {
+    axios
+      .get(`http://localhost:8088/users/getByName/${username}`)
+      .then(function (response) {
+        axios
+          .put(`http://localhost:8088/users/${response.id}`)
+          .then(function (response) {
+            alert("Uspe[no promenjena lozinka");
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  }
 
   function handleSubmit(event) {
     event.preventDefault();
-
     axios
       .post("http://localhost:8088/users/signin", {
         username: username,
@@ -92,12 +139,17 @@ export default function SignIn() {
           })
           .catch(function (error) {
             console.log(error);
-          })
-          .catch(function (error) {
-            console.log(error);
           });
+      })
+      .catch(function (error) {
+        error.response.status === 403
+          ? handleShowError()
+          : alert("Neka greska");
+        console.log(error.response);
+        console.log(error);
       });
   }
+
   return (
     <ThemeProvider theme={theme}>
       <Container component="main" maxWidth="xs">
@@ -122,6 +174,69 @@ export default function SignIn() {
             noValidate
             sx={{ mt: 1 }}
           >
+            <Modal
+              open={open}
+              onClose={handleClose}
+              aria-labelledby="modal-modal-title"
+              aria-describedby="modal-modal-description"
+            >
+              <Box sx={style}>
+                <TextField
+                  margin="normal"
+                  required
+                  fullWidth
+                  id="passwordOld"
+                  label="Current password"
+                  name="passwordOld"
+                  autoComplete="passwordOld"
+                  autoFocus
+                  value={passwordOld}
+                  onChange={(e) => {
+                    setPasswordOld(e.target.value);
+                    handleColseError();
+                  }}
+                />
+                <TextField
+                  margin="normal"
+                  required
+                  fullWidth
+                  name="passwordNew"
+                  label="New Password"
+                  type="passwordNew"
+                  id="passwordNew"
+                  autoComplete="passwordNew"
+                  value={passwordNew}
+                  onChange={(e) => {
+                    setPasswordNew(e.target.value);
+                    handleColseError();
+                  }}
+                />
+                <TextField
+                  margin="normal"
+                  required
+                  fullWidth
+                  name="passwordNew2"
+                  label="New Password"
+                  type="passwordNew2"
+                  id="passwordNew2"
+                  autoComplete="passwordNew2"
+                  value={passwordNew2}
+                  onChange={(e) => {
+                    setPasswordNew2(e.target.value);
+                    handleColseError();
+                  }}
+                />
+                <Button
+                  type="primary"
+                  fullWidth
+                  variant="contained"
+                  sx={{ mt: 3, mb: 2 }}
+                  disabled={!validateForm2()}
+                >
+                  Sign In
+                </Button>
+              </Box>
+            </Modal>
             <TextField
               margin="normal"
               required
@@ -132,7 +247,10 @@ export default function SignIn() {
               autoComplete="username"
               autoFocus
               value={username}
-              onChange={(e) => setUsername(e.target.value)}
+              onChange={(e) => {
+                setUsername(e.target.value);
+                handleColseError();
+              }}
             />
             <TextField
               margin="normal"
@@ -144,12 +262,12 @@ export default function SignIn() {
               id="password"
               autoComplete="current-password"
               value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              onChange={(e) => {
+                setPassword(e.target.value);
+                handleColseError();
+              }}
             />
-            <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
-              label="Remember me"
-            />
+
             <Button
               type="submit"
               fullWidth
@@ -159,9 +277,15 @@ export default function SignIn() {
             >
               Sign In
             </Button>
+            {validCredentials === false ? (
+              <Alert severity="error">
+                <AlertTitle>Greška</AlertTitle>
+                <strong>Neispravni username ili password!</strong>
+              </Alert>
+            ) : null}
             <Grid container>
               <Grid item xs>
-                <Link href="#" variant="body2">
+                <Link href="#" variant="body2" onClick={handleOpen}>
                   Forgot password?
                 </Link>
               </Grid>
@@ -172,10 +296,6 @@ export default function SignIn() {
               </Grid>
             </Grid>
           </Box>
-          <h1>{result.username}</h1>
-          <h1>{result.email}</h1>
-          <h1>{result.firstName}</h1>
-          <h1>{result.lastName}</h1>
         </Box>
         <Copyright sx={{ mt: 8, mb: 4 }} />
       </Container>

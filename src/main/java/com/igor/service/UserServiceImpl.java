@@ -17,6 +17,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.igor.models.Role;
+import com.igor.models.Task;
 import com.igor.models.Team;
 import com.igor.models.User;
 import com.igor.repository.RoleRepository;
@@ -161,4 +162,12 @@ public class UserServiceImpl implements UserService {
 	public boolean checkUserToTeam(long user_id, long team_id) {
 			return userRepository.checkUserToTeam(user_id, team_id);
 		}
+	
+	
+	public User updateUser(Long id, String password) {
+		User user = userRepository.findById(id).get();
+	    user.setPassword(passwordEncoder.encode(password));
+    	return userRepository.save(user);
+    }
+    
 }
