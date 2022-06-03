@@ -46,4 +46,9 @@ public class TeamServiceImpl implements TeamService {
 	       List<Team> teams = repository.findAllUserTeams(username);
 	        return teams;
 	    }
+
+	@Override
+	public Team getTeamByName(String name) {
+		return repository.findByName(name);
+	}
 }

@@ -50,6 +50,12 @@ public class TaskController {
 	        return ResponseEntity.ok().body(task);
 	    }
 	
+	 @GetMapping("/getTasksForTeam/{team}")
+	 public List<Task> getTasksForTeam(@PathVariable String team) {
+	        return taskService.findTasksForTeam(team);
+	        
+	    }
+	 
 	 @PostMapping("/addTask")
 	    public ResponseEntity<String> addTask(@RequestBody Task task) {
 	        taskService.addTask(task);

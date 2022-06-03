@@ -103,12 +103,16 @@ public class UserController {
     	}
     	}
 
-    @PutMapping("/{id}")
+    @PutMapping("/updatePassword/{id}")
     public ResponseEntity<String> updateUser(@RequestBody String password, @PathVariable Long id) {
         userService.updateUser(id, password);
         return ResponseEntity.ok().body("Succesffuly updated user!");
     }
     	
-    	
+    @GetMapping("/getUsersForTeam/{team}")
+	 public List<User> getUsersForTeam(@PathVariable String team) {
+	        return userService.findUsersForTeam(team);
+	        
+	    }
   
 }

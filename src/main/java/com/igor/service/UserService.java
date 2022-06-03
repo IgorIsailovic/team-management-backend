@@ -7,5 +7,7 @@ import com.igor.models.User;
 
 public interface UserService {
 	
+	List<User> findUsersForTeam(String team);
+	
 
 }

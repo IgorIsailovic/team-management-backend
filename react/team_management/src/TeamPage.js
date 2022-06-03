@@ -29,9 +29,7 @@ import Container from "@mui/material/Container";
 import Button from "@mui/material/Button";
 import Card from "@mui/material/Card";
 import AssignmentIcon from "@mui/icons-material/Assignment";
-import "./UserPage.css";
-import jwt_decode from "jwt-decode";
-import { useNavigate } from "react-router-dom";
+import "./TeamPage.css";
 
 const drawerWidth = 240;
 
@@ -64,7 +62,7 @@ const AppBar = styled(MuiAppBar, {
     duration: theme.transitions.duration.leavingScreen,
   }),
   ...(open && {
-    width: `calc(100% - ${drawerWidth}px)`,
+    width: "100%",
     marginLeft: `${drawerWidth}px`,
     transition: theme.transitions.create(["margin", "width"], {
       easing: theme.transitions.easing.easeOut,
@@ -73,79 +71,18 @@ const AppBar = styled(MuiAppBar, {
   }),
 }));
 
-const DrawerHeader = styled("div")(({ theme }) => ({
-  display: "flex",
-  alignItems: "center",
-  padding: theme.spacing(0, 1),
-  // necessary for content to be below app bar
-  ...theme.mixins.toolbar,
-  justifyContent: "flex-end",
-}));
-
-export default function UserPage() {
+export default function TeamPage() {
   const theme = useTheme();
   const [open, setOpen] = React.useState(true);
   const [openSub, setOpenSub] = useState(true);
   const container =
     window !== undefined ? () => window().document.body : undefined;
 
-  const navigate = useNavigate();
-
   const location = useLocation();
   const data = location.state.data;
-
-  const handleClick = () => {
-    setOpenSub(!openSub);
-  };
-
-  const handleDrawerOpen = () => {
-    setOpen(true);
-  };
-
-  const handleDrawerClose = () => {
-    setOpen(false);
-  };
-
-  const handleTeamClick = (team) => {
-    let token = localStorage.getItem("token");
-    let decoded = jwt_decode(token);
-    let user = decoded.sub;
-    let roles = decoded.roles[0].authority;
-    let authority = decoded.authority;
-    let iat = decoded.iat;
-    let exp = decoded.exp;
-    axios
-      .get(`http://localhost:8088/users/getUsersForTeam/${team}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
-      .then((response) => {
-        let users = response.data;
-        axios
-          .get(`http://localhost:8088/tasks/getTasksForTeam/${team}`, {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          })
-          .then((response) => {
-            let tasks = response.data;
-            navigate("/teamPage", {
-              state: {
-                tasks: tasks,
-                users: users,
-                team: team,
-              },
-            });
-          })
-          .catch(function (error) {
-            console.log(error);
-          });
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
-  };
+  const users = location.state.users;
+  const tasks = location.state.tasks;
+  const team = location.state.team;
 
   function Copyright(props) {
     return (
@@ -170,111 +107,18 @@ export default function UserPage() {
       <CssBaseline />
       <AppBar position="fixed" open={open}>
         <Toolbar>
-          <IconButton
-            color="inherit"
-            aria-label="open drawer"
-            onClick={handleDrawerOpen}
-            edge="start"
-            sx={{ mr: 2, ...(open && { display: "none" }) }}
-          >
-            <MenuIcon />
-          </IconButton>
-
           <Typography
             variant="h6"
             component="div"
             sx={{ flexGrow: 1 }}
             align="center"
           >
-            User Page
+            {team}
           </Typography>
         </Toolbar>
       </AppBar>
-      <Drawer
-        sx={{
-          width: drawerWidth,
 
-          flexShrink: 0,
-          "& .MuiDrawer-paper": {
-            width: drawerWidth,
-            boxSizing: "border-box",
-          },
-        }}
-        variant="persistent"
-        anchor="left"
-        open={open}
-      >
-        <DrawerHeader sx={{ height: "15%" }}>
-          <Container
-            sx={{
-              display: "grid",
-              justifyItems: "center",
-              gridGap: "0.5rem",
-              marginTop: "1rem",
-            }}
-          >
-            <Avatar
-              alt={data.firstName.charAt(0) + data.lastName.charAt(0)}
-              src="/public/ceks.jpg"
-            >
-              {data.firstName.charAt(0) + data.lastName.charAt(0)}
-            </Avatar>
-            <Typography
-              variant="h6"
-              component="div"
-              sx={{ flexGrow: 1 }}
-              align="center"
-            >
-              {`${data.firstName} ${data.lastName}`}
-            </Typography>
-            <IconButton onClick={handleDrawerClose}>
-              {theme.direction === "ltr" ? (
-                <ChevronLeftIcon />
-              ) : (
-                <ChevronRightIcon />
-              )}
-            </IconButton>
-          </Container>
-        </DrawerHeader>
-        <Divider />
-        <List
-          sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}
-          component="nav"
-          aria-labelledby="nested-list-subheader"
-          subheader={
-            <ListSubheader
-              component="div"
-              id="nested-list-subheader"
-            ></ListSubheader>
-          }
-        >
-          <ListItemButton onClick={handleClick}>
-            <ListItemIcon>
-              <GroupsIcon />
-            </ListItemIcon>
-
-            <ListItemText primary="Teams" />
-            {openSub ? <ExpandLess /> : <ExpandMore />}
-          </ListItemButton>
-          <Collapse in={openSub} timeout={1} unmountOnExit>
-            <List component="div" disablePadding>
-              {data.teamUser.map((team, key) => (
-                <ListItemButton
-                  sx={{ pl: 4 }}
-                  onClick={() => handleTeamClick(team.name)}
-                >
-                  <ListItemText primary={team.name} />
-                </ListItemButton>
-              ))}
-              {/*  <ListItemButton sx={{ pl: 4 }} onClick={handleNewTeam}>
-                <ListItemText primary="Join another team" />
-              </ListItemButton>*/}
-            </List>
-          </Collapse>
-        </List>
-      </Drawer>
       <Main open={open}>
-        <DrawerHeader />
         <ThemeProvider theme={theme}>
           <Container
             className="main-container"
@@ -285,7 +129,105 @@ export default function UserPage() {
               justifyItems: "center",
               alignItems: "center",
               gridGap: "1rem",
-              height: "100%",
+              height: "50%",
+              marginTop: "2rem",
+            }}
+          >
+            <CssBaseline />
+            <Typography
+              className="naslov"
+              variant="h5"
+              fontFamily="inherit"
+              color="inherit"
+              fontWeight={900}
+              align="center"
+            >
+              Users
+            </Typography>
+
+            {users.length > 0 ? (
+              users.map((user, key) => (
+                <Card
+                  //variant="outlined"
+                  style={{
+                    display: "grid",
+                    gridTemplateColumns: "1fr 9fr",
+                    justifyContent: "center",
+                    alignContent: "center",
+                    backgroundColor: "inherit",
+                    padding: "10px",
+                    margin: "5px",
+                    width: "100%",
+                    textAlign: "center",
+                    borderRadius: "1.5rem",
+                    minWidth: "280px",
+                    maxWidth: "550px",
+                    height: "130px",
+                  }}
+                >
+                  <Avatar sx={{ bgcolor: "green" }}>
+                    <AssignmentIcon />
+                  </Avatar>
+                  <Typography
+                    variant="body1"
+                    fontFamily="Helvetica"
+                    color="inherit"
+                    align="center"
+                    fontWeight={900}
+                  >
+                    {user.firstName}
+                  </Typography>
+
+                  <Typography
+                    sx={{
+                      gridColumn: "span 2",
+                    }}
+                    variant="body2"
+                    fontFamily="Helvetica"
+                    color="inherit"
+                    align="center"
+                    marginBottom={2}
+                  >
+                    {user.lastName}
+                  </Typography>
+                  <Button
+                    style={{
+                      color: "inherit",
+                      border: "solid 0.2px black",
+                      height: "2rem",
+                      width: "5rem",
+                      gridColumn: "span 2",
+                    }}
+                  >
+                    Detailed
+                  </Button>
+                </Card>
+              ))
+            ) : (
+              <h1 style={{ textAlign: "center" }}>
+                Trenutno nema podataka o userima
+              </h1>
+            )}
+
+            <Box
+              className="copyright"
+              sx={{
+                marginTop: 4,
+                width: "100%",
+                alignSelf: "center",
+              }}
+            ></Box>
+          </Container>
+          <Container
+            className="main-container"
+            component="main"
+            sx={{
+              display: "grid",
+              gridTemplateColumns: "1fr",
+              justifyItems: "center",
+              alignItems: "center",
+              gridGap: "1rem",
+              height: "50%",
             }}
           >
             <CssBaseline />
@@ -300,8 +242,8 @@ export default function UserPage() {
               Tasks
             </Typography>
 
-            {data.taskUser.length > 0 ? (
-              data.taskUser.map((task, key) => (
+            {tasks.length > 0 ? (
+              tasks.map((task, key) => (
                 <Card
                   //variant="outlined"
                   style={{
@@ -361,18 +303,9 @@ export default function UserPage() {
                 </Card>
               ))
             ) : (
-              <Typography
-                sx={{
-                  gridColumn: "span 2",
-                }}
-                variant="h4"
-                fontFamily="Helvetica"
-                color="inherit"
-                align="center"
-                marginBottom={2}
-              >
+              <h1 style={{ textAlign: "center" }}>
                 Trenutno nema podataka o taskovima
-              </Typography>
+              </h1>
             )}
 
             <Box

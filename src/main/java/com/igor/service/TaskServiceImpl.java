@@ -49,4 +49,9 @@ public class TaskServiceImpl implements TaskService {
 	    public void deleteTask(Long id) {
 	    	repository.deleteById(id);
 	    }
+
+		@Override
+		public List<Task> findTasksForTeam(String team) {
+			return repository.findTasksForTeam(team);
+		}
 }

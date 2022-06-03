@@ -37,5 +37,12 @@ public interface UserRepository extends JpaRepository<User, Long> {
 			  nativeQuery = true)
 	boolean checkUserToTeam(@Param("user_id")long user_id, @Param("team_id")long team_id);
   
+    @Query(
+    		value = "SELECT * FROM security_user u\r\n"
+    				+ "JOIN team_user tu ON tu.user_id=u.id\r\n"
+			  		+ "JOIN team t ON t.id = tu.team_id\r\n"
+			  		+ "WHERE t.name=:team", 
+			  nativeQuery = true)
+	List<User> findUsersForTeam(@Param("team")String team);
 
 }

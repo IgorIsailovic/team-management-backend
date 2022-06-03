@@ -40,6 +40,11 @@ public class TeamController {
 	        return ResponseEntity.ok().body(team);
 	    }
 	
+	 @GetMapping("teams/getTeamByName/{name}")
+	    public ResponseEntity<Team> getTeamByName(@PathVariable String name) {
+	        Team team = teamService.getTeamByName(name);
+	        return ResponseEntity.ok().body(team);
+	    }
 	 @PostMapping("teams")
 	    public ResponseEntity<String> addTeam(@RequestBody Team team) {
 	        teamService.addTeam(team);

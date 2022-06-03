@@ -28,4 +28,11 @@ public interface TaskRepository extends JpaRepository<Task, Long>{
 			  		+ "WHERE s.username=:username", 
 			  nativeQuery = true)
 	List<Task> findAllTasksForUser1(@Param("username")String username);
+
+	@Query(
+			  value = "SELECT * FROM task t\r\n"
+			  		+ "JOIN team te ON t.team_id = te.id\r\n"
+			  		+ "WHERE te.name=:team", 
+			  nativeQuery = true)
+	List<Task> findTasksForTeam(@Param("team")String team);
 }
