@@ -102,6 +102,32 @@ export default function TeamPage() {
     );
   }
 
+  /*const handleUserDetails = (user) => {
+    axios
+      .get(`http://localhost:8088/users/getByName/${user}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((response) => {
+        console.log(`Response${response.data}`);
+        navigate("/userPage", {
+          state: {
+            data: response.data,
+            user: user,
+            roles: roles,
+            authority: authority,
+            iat: iat,
+            exp: exp,
+          },
+        });
+        console.log(result);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  };*/
+
   return (
     <Box sx={{ display: "flex", height: "100vh" }}>
       <CssBaseline />
@@ -136,7 +162,7 @@ export default function TeamPage() {
             <CssBaseline />
             <Typography
               className="naslov"
-              variant="h5"
+              variant="h6"
               fontFamily="inherit"
               color="inherit"
               fontWeight={900}
@@ -175,7 +201,7 @@ export default function TeamPage() {
                     align="center"
                     fontWeight={900}
                   >
-                    {user.firstName}
+                    {user.firstName} {user.lastName}
                   </Typography>
 
                   <Typography
@@ -188,7 +214,7 @@ export default function TeamPage() {
                     align="center"
                     marginBottom={2}
                   >
-                    {user.lastName}
+                    {user.roles.map((role, key) => role.roleName)}
                   </Typography>
                   <Button
                     style={{
@@ -204,9 +230,18 @@ export default function TeamPage() {
                 </Card>
               ))
             ) : (
-              <h1 style={{ textAlign: "center" }}>
+              <Typography
+                sx={{
+                  gridColumn: "span 2",
+                }}
+                variant="body2"
+                fontFamily="Helvetica"
+                color="inherit"
+                align="center"
+                marginBottom={2}
+              >
                 Trenutno nema podataka o userima
-              </h1>
+              </Typography>
             )}
 
             <Box
@@ -233,7 +268,7 @@ export default function TeamPage() {
             <CssBaseline />
             <Typography
               className="naslov"
-              variant="h5"
+              variant="h6"
               fontFamily="inherit"
               color="inherit"
               fontWeight={900}
@@ -303,9 +338,18 @@ export default function TeamPage() {
                 </Card>
               ))
             ) : (
-              <h1 style={{ textAlign: "center" }}>
+              <Typography
+                sx={{
+                  gridColumn: "span 2",
+                }}
+                variant="body1"
+                fontFamily="Helvetica"
+                color="inherit"
+                align="center"
+                marginBottom={2}
+              >
                 Trenutno nema podataka o taskovima
-              </h1>
+              </Typography>
             )}
 
             <Box

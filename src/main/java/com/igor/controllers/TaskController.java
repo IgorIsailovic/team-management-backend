@@ -73,5 +73,5 @@ public class TaskController {
 	        taskService.deleteTask(id);
 	        return ResponseEntity.ok().body("Succesffuly deleted task!");
 	    }
-
+	
 }

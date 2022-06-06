@@ -67,4 +67,9 @@ public class TeamController {
 		public List<Team> getAllTeams(@PathVariable String username){
 			return teamService.findTeamsForUser(username);
 		}
+	 
+	 @GetMapping("teams/teamsForTask/{id}")
+		public List<Team> teamsForTask(@PathVariable int id){
+			return teamService.findTeamsForTask(id);
+		}
 }

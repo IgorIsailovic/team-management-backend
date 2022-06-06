@@ -32,8 +32,27 @@ import AssignmentIcon from "@mui/icons-material/Assignment";
 import "./UserPage.css";
 import jwt_decode from "jwt-decode";
 import { useNavigate } from "react-router-dom";
+import BottomNavigation from "@mui/material/BottomNavigation";
+import HourglassBottomIcon from "@mui/icons-material/HourglassBottom";
+import CheckIcon from "@mui/icons-material/Check";
+import { CheckCircle } from "@mui/icons-material";
+import Modal from "@mui/material/Modal";
 
-const drawerWidth = 240;
+const drawerWidth = 200;
+
+const style = {
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  width: 700,
+  bgcolor: "background.paper",
+  border: "2px solid #000",
+  boxShadow: 24,
+  pt: 2,
+  px: 4,
+  pb: 3,
+};
 
 const Main = styled("main", { shouldForwardProp: (prop) => prop !== "open" })(
   ({ theme, open }) => ({
@@ -73,6 +92,107 @@ const AppBar = styled(MuiAppBar, {
   }),
 }));
 
+const ModalTask = ({ task, openModal, handleCloseModal, handleOpenModal }) => {
+  return (
+    <Modal
+      open={openModal}
+      onClose={handleCloseModal}
+      aria-labelledby="modal-modal-title"
+      aria-describedby="modal-modal-description"
+      BackdropProps={{
+        style: {
+          opacity: 0.3,
+        },
+      }}
+    >
+      <Box sx={{ ...style }}>
+        <Container
+          className="main-container"
+          component="main"
+          sx={{
+            display: "grid",
+            gridTemplateColumns: "1fr",
+            gridAutoRows: "auto",
+            justifyItems: "center",
+            alignItems: "center",
+            gridGap: "1rem",
+            height: "100%",
+          }}
+        >
+          <Avatar sx={{ bgcolor: "green", justifySelf: "start" }}>
+            <AssignmentIcon />
+          </Avatar>
+          <Typography
+            variant="body1"
+            fontFamily="Helvetica"
+            color="inherit"
+            align="center"
+            fontWeight={900}
+            sx={{
+              gridColumn: "span 2",
+              justifySelf: "start",
+            }}
+          >
+            {task.name}
+          </Typography>
+
+          <Typography
+            sx={{
+              gridColumn: "span 3",
+            }}
+            variant="body2"
+            fontFamily="Helvetica"
+            color="inherit"
+            align="center"
+            marginBottom={2}
+          >
+            {task.description}
+          </Typography>
+          <Typography
+            sx={
+              {
+                // gridColumn: "",
+              }
+            }
+            variant="body2"
+            fontFamily="Helvetica"
+            color="inherit"
+            align="center"
+            marginBottom={2}
+          >
+            <b> Estimated duration(h):</b> {task.est_dur}
+          </Typography>
+          <Avatar
+            sx={{
+              bgcolor: "green",
+              alignSelf: "center",
+              justifySelf: "end",
+            }}
+          >
+            {task.status === "FINISHED" ? (
+              <CheckIcon />
+            ) : (
+              <HourglassBottomIcon />
+            )}
+          </Avatar>
+          <Typography
+            variant="body2"
+            fontFamily="Helvetica"
+            color="inherit"
+            align="center"
+            fontWeight={900}
+            sx={{
+              alignSelf: "center",
+              justifySelf: "center",
+            }}
+          >
+            {task.status === "FINISHED" ? "Finished" : "In Progress"}
+          </Typography>
+        </Container>
+      </Box>
+    </Modal>
+  );
+};
 const DrawerHeader = styled("div")(({ theme }) => ({
   display: "flex",
   alignItems: "center",
@@ -83,9 +203,16 @@ const DrawerHeader = styled("div")(({ theme }) => ({
 }));
 
 export default function UserPage() {
+  let token = localStorage.getItem("token");
   const theme = useTheme();
   const [open, setOpen] = React.useState(true);
   const [openSub, setOpenSub] = useState(true);
+  const [openModal, setOpenModal] = React.useState(false);
+  const [taskTeams, setTaskTeams] = useState("");
+  const [taskUsers, setTaskUsers] = useState("");
+
+  const handleOpenModal = () => setOpenModal(true);
+  const handleCloseModal = () => setOpenModal(false);
   const container =
     window !== undefined ? () => window().document.body : undefined;
 
@@ -106,8 +233,34 @@ export default function UserPage() {
     setOpen(false);
   };
 
+  const handleTaskDetails = (id) => {
+    axios
+      .get(`http://localhost:8088/teams/teamsForTask/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((response) => {
+        setTaskTeams(response.data);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+    axios
+      .get(`http://localhost:8088/users/getUsersForTask/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((response) => {
+        setTaskUsers(response.data);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  };
+
   const handleTeamClick = (team) => {
-    let token = localStorage.getItem("token");
     let decoded = jwt_decode(token);
     let user = decoded.sub;
     let roles = decoded.roles[0].authority;
@@ -150,10 +303,10 @@ export default function UserPage() {
   function Copyright(props) {
     return (
       <Typography
-        variant="body2"
+        variant="body1"
         color="text.secondary"
-        align="center"
         {...props}
+        padding="1rem"
       >
         {"Copyright © "}
         <Link color="inherit" href="https://github.com/IgorIsailovic">
@@ -168,75 +321,103 @@ export default function UserPage() {
   return (
     <Box sx={{ display: "flex", height: "100vh" }}>
       <CssBaseline />
-      <AppBar position="fixed" open={open}>
-        <Toolbar>
+      <AppBar
+        position="fixed"
+        sx={{
+          zIndex: (theme) => theme.zIndex.drawer + 1,
+        }}
+      >
+        <Toolbar
+          sx={{ display: "grid", gridTemplateColumns: "14fr 1fr 1fr 1fr" }}
+        >
           <IconButton
             color="inherit"
             aria-label="open drawer"
             onClick={handleDrawerOpen}
-            edge="start"
-            sx={{ mr: 2, ...(open && { display: "none" }) }}
+            sx={{
+              color: "black",
+              bgcolor: "white",
+              mr: 2,
+              ...(open && { display: "none" }),
+              justifySelf: "start",
+            }}
           >
             <MenuIcon />
           </IconButton>
-
-          <Typography
-            variant="h6"
-            component="div"
-            sx={{ flexGrow: 1 }}
-            align="center"
+          <IconButton
+            onClick={handleDrawerClose}
+            sx={{
+              color: "black",
+              bgcolor: "white",
+              mr: 2,
+              ...(!open && { display: "none" }),
+              justifySelf: "start",
+            }}
           >
-            User Page
-          </Typography>
+            <ChevronLeftIcon />
+          </IconButton>
+          <IconButton onClick={() => navigate("/teamPage")}>
+            <Avatar
+              sx={{
+                color: "black",
+                bgcolor: "white",
+                mr: 2,
+                justifySelf: "center",
+                margin: "0",
+              }}
+            >
+              <GroupsIcon />
+            </Avatar>
+          </IconButton>
+          <IconButton onClick={() => navigate("/")}>
+            <Avatar
+              sx={{
+                color: "black",
+                bgcolor: "white",
+                mr: 2,
+                justifySelf: "center",
+                margin: "0",
+              }}
+            >
+              <AssignmentIcon />
+            </Avatar>
+          </IconButton>
+          <IconButton onClick={!open ? handleDrawerOpen : handleDrawerClose}>
+            <Avatar
+              alt={data.firstName.charAt(0) + data.lastName.charAt(0)}
+              src="/public/ceks.jpg"
+              sx={{
+                color: "black",
+                bgcolor: "white",
+                justifySelf: "center",
+              }}
+            >
+              {data.firstName.charAt(0) + data.lastName.charAt(0)}
+            </Avatar>
+          </IconButton>
         </Toolbar>
       </AppBar>
       <Drawer
         sx={{
           width: drawerWidth,
-
           flexShrink: 0,
-          "& .MuiDrawer-paper": {
+          [`& .MuiDrawer-paper`]: {
             width: drawerWidth,
             boxSizing: "border-box",
+            marginTop: "5rem",
           },
         }}
         variant="persistent"
         anchor="left"
         open={open}
       >
-        <DrawerHeader sx={{ height: "15%" }}>
-          <Container
-            sx={{
-              display: "grid",
-              justifyItems: "center",
-              gridGap: "0.5rem",
-              marginTop: "1rem",
-            }}
-          >
-            <Avatar
-              alt={data.firstName.charAt(0) + data.lastName.charAt(0)}
-              src="/public/ceks.jpg"
-            >
-              {data.firstName.charAt(0) + data.lastName.charAt(0)}
-            </Avatar>
-            <Typography
-              variant="h6"
-              component="div"
-              sx={{ flexGrow: 1 }}
-              align="center"
-            >
-              {`${data.firstName} ${data.lastName}`}
-            </Typography>
-            <IconButton onClick={handleDrawerClose}>
-              {theme.direction === "ltr" ? (
-                <ChevronLeftIcon />
-              ) : (
-                <ChevronRightIcon />
-              )}
-            </IconButton>
-          </Container>
-        </DrawerHeader>
-        <Divider />
+        <Typography
+          variant="h6"
+          component="div"
+          sx={{ justifySelf: "start", alignSelf: "center" }}
+        >
+          {`${data.firstName} ${data.lastName}`}
+        </Typography>
         <List
           sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}
           component="nav"
@@ -282,6 +463,7 @@ export default function UserPage() {
             sx={{
               display: "grid",
               gridTemplateColumns: "1fr",
+              gridAutoRows: "auto",
               justifyItems: "center",
               alignItems: "center",
               gridGap: "1rem",
@@ -289,76 +471,110 @@ export default function UserPage() {
             }}
           >
             <CssBaseline />
-            <Typography
-              className="naslov"
-              variant="h5"
-              fontFamily="inherit"
-              color="inherit"
-              fontWeight={900}
-              align="center"
-            >
-              Tasks
-            </Typography>
 
             {data.taskUser.length > 0 ? (
               data.taskUser.map((task, key) => (
-                <Card
-                  //variant="outlined"
-                  style={{
-                    display: "grid",
-                    gridTemplateColumns: "1fr 9fr",
-                    justifyContent: "center",
-                    alignContent: "center",
-                    backgroundColor: "inherit",
-                    padding: "10px",
-                    margin: "5px",
-                    width: "100%",
-                    textAlign: "center",
-                    borderRadius: "1.5rem",
-                    minWidth: "280px",
-                    maxWidth: "550px",
-                    height: "130px",
-                  }}
-                >
-                  <Avatar sx={{ bgcolor: "green" }}>
-                    <AssignmentIcon />
-                  </Avatar>
-                  <Typography
-                    variant="body1"
-                    fontFamily="Helvetica"
-                    color="inherit"
-                    align="center"
-                    fontWeight={900}
-                  >
-                    {task.name}
-                  </Typography>
-
-                  <Typography
-                    sx={{
-                      gridColumn: "span 2",
-                    }}
-                    variant="body2"
-                    fontFamily="Helvetica"
-                    color="inherit"
-                    align="center"
-                    marginBottom={2}
-                  >
-                    {task.description === task.description.substring(0, 40)
-                      ? `${task.description.substring(0, 40)}`
-                      : `${task.description.substring(0, 40)}...`}
-                  </Typography>
-                  <Button
+                <>
+                  <Card
+                    //variant="outlined"
                     style={{
-                      color: "inherit",
-                      border: "solid 0.2px black",
-                      height: "2rem",
-                      width: "5rem",
-                      gridColumn: "span 2",
+                      display: "grid",
+                      gridTemplateColumns: "1fr 5fr 5fr",
+                      justifyContent: "center",
+                      alignContent: "center",
+                      backgroundColor: "inherit",
+                      padding: "10px",
+                      margin: "5px",
+                      width: "100%",
+                      textAlign: "center",
+                      borderRadius: "1.5rem",
+                      minWidth: "280px",
+                      maxWidth: "400px",
+                      height: "150px",
+                      boxShadow: "2px 2px 2px 2px rgba(0,0,0,0.75)",
+                      gridGap: "0.3rem",
                     }}
                   >
-                    Detailed
-                  </Button>
-                </Card>
+                    <Avatar sx={{ bgcolor: "green" }}>
+                      <AssignmentIcon />
+                    </Avatar>
+                    <Typography
+                      variant="body1"
+                      fontFamily="Helvetica"
+                      color="inherit"
+                      align="center"
+                      fontWeight={900}
+                      sx={{
+                        gridColumn: "span 2",
+                      }}
+                    >
+                      {task.name}
+                    </Typography>
+
+                    <Typography
+                      sx={{
+                        gridColumn: "span 3",
+                      }}
+                      variant="body2"
+                      fontFamily="Helvetica"
+                      color="inherit"
+                      align="center"
+                      marginBottom={2}
+                    >
+                      {task.description === task.description.substring(0, 40)
+                        ? `${task.description.substring(0, 40)}`
+                        : `${task.description.substring(0, 40)}...`}
+                    </Typography>
+                    <Button
+                      sx={{
+                        alignSelf: "center",
+                        justifySelf: "center",
+                      }}
+                      style={{
+                        color: "inherit",
+                        border: "solid 0.2px black",
+                        height: "2rem",
+                        width: "5rem",
+                        // gridRow: "span 2",
+                      }}
+                      onClick={handleOpenModal}
+                    >
+                      Detailed
+                    </Button>
+                    <Avatar
+                      sx={{
+                        bgcolor: "green",
+                        alignSelf: "center",
+                        justifySelf: "end",
+                      }}
+                    >
+                      {task.status === "FINISHED" ? (
+                        <CheckIcon />
+                      ) : (
+                        <HourglassBottomIcon />
+                      )}
+                    </Avatar>
+                    <Typography
+                      variant="body2"
+                      fontFamily="Helvetica"
+                      color="inherit"
+                      align="center"
+                      fontWeight={900}
+                      sx={{
+                        alignSelf: "center",
+                        justifySelf: "center",
+                      }}
+                    >
+                      {task.status === "FINISHED" ? "Finished" : "In Progress"}
+                    </Typography>
+                  </Card>
+                  <ModalTask
+                    task={task}
+                    openModal={openModal}
+                    handleCloseModal={handleCloseModal}
+                    handleOpenModal={handleCloseModal}
+                  ></ModalTask>
+                </>
               ))
             ) : (
               <Typography
@@ -382,12 +598,19 @@ export default function UserPage() {
                 width: "100%",
                 alignSelf: "center",
               }}
-            >
-              <Copyright />
-            </Box>
+            ></Box>
           </Container>
         </ThemeProvider>
       </Main>
+      <BottomNavigation
+        sx={{
+          position: "fixed",
+          width: "100%",
+          bottom: 0,
+        }}
+      >
+        <Copyright />
+      </BottomNavigation>
     </Box>
   );
 }

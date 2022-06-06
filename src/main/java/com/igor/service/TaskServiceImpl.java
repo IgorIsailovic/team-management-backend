@@ -54,4 +54,6 @@ public class TaskServiceImpl implements TaskService {
 		public List<Task> findTasksForTeam(String team) {
 			return repository.findTasksForTeam(team);
 		}
+
+		
 }

@@ -174,5 +174,10 @@ public class UserServiceImpl implements UserService {
 	public List<User> findUsersForTeam(String team) {
 		return userRepository.findUsersForTeam(team);
 	}
+
+	public List<User> findUsersForTask(int id) {
+		return userRepository.findUsersForTask(id);
+		
+	}
     
 }

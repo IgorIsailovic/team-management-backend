@@ -51,4 +51,9 @@ public class TeamServiceImpl implements TeamService {
 	public Team getTeamByName(String name) {
 		return repository.findByName(name);
 	}
+
+	@Override
+	public List<Team> findTeamsForTask(int id) {
+		return repository.findTeamsForTask(id);
+	}
 }

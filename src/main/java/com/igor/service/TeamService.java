@@ -18,6 +18,6 @@ public interface TeamService {
 	
 	Team getTeamByName(String name);
 	
-	
+	List<Team> findTeamsForTask(int id);
 
 }

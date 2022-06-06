@@ -86,7 +86,7 @@ export default function SignIn() {
         axios
           .put(`http://localhost:8088/users/${response.id}`)
           .then(function (response) {
-            alert("Uspe[no promenjena lozinka");
+            alert("Uspešno promenjena lozinka");
           })
           .catch(function (error) {
             console.log(error);

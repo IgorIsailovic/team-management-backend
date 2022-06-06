@@ -115,4 +115,9 @@ public class UserController {
 	        
 	    }
   
+    @GetMapping("/getUsersForTask/{id}")
+  	 public List<User> getUsersForTask(@PathVariable int id) {
+  	        return userService.findUsersForTask(id);
+  	        
+  	    }
 }

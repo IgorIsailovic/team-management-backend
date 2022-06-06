@@ -35,4 +35,6 @@ public interface TaskRepository extends JpaRepository<Task, Long>{
 			  		+ "WHERE te.name=:team", 
 			  nativeQuery = true)
 	List<Task> findTasksForTeam(@Param("team")String team);
+
+	
 }
