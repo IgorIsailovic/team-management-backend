@@ -37,6 +37,7 @@ import HourglassBottomIcon from "@mui/icons-material/HourglassBottom";
 import CheckIcon from "@mui/icons-material/Check";
 import { CheckCircle } from "@mui/icons-material";
 import Modal from "@mui/material/Modal";
+import PersonIcon from "@mui/icons-material/Person";
 
 const drawerWidth = 200;
 
@@ -92,7 +93,7 @@ const AppBar = styled(MuiAppBar, {
   }),
 }));
 
-const ModalTask = ({ task, openModal, handleCloseModal, handleOpenModal }) => {
+const ModalTask = ({ task, openModal, handleCloseModal }) => {
   return (
     <Modal
       open={openModal}
@@ -207,6 +208,7 @@ export default function UserPage() {
   const theme = useTheme();
   const [open, setOpen] = React.useState(true);
   const [openSub, setOpenSub] = useState(true);
+  const [openSubTasks, setOpenSubTasks] = useState(true);
   const [openModal, setOpenModal] = React.useState(false);
   const [taskTeams, setTaskTeams] = useState("");
   const [taskUsers, setTaskUsers] = useState("");
@@ -328,7 +330,7 @@ export default function UserPage() {
         }}
       >
         <Toolbar
-          sx={{ display: "grid", gridTemplateColumns: "14fr 1fr 1fr 1fr" }}
+          sx={{ display: "grid", gridTemplateColumns: "1fr 13fr 1fr 1fr 1fr" }}
         >
           <IconButton
             color="inherit"
@@ -356,10 +358,31 @@ export default function UserPage() {
           >
             <ChevronLeftIcon />
           </IconButton>
+
+          <Typography
+            variant="h6"
+            component="div"
+            sx={{ justifySelf: "start", alignSelf: "center" }}
+          >
+            {`${data.firstName} ${data.lastName}`}
+          </Typography>
+          <IconButton onClick={!open ? handleDrawerOpen : handleDrawerClose}>
+            <Avatar
+              alt={data.firstName.charAt(0) + data.lastName.charAt(0)}
+              src="/public/ceks.jpg"
+              sx={{
+                color: "#1976d3",
+                bgcolor: "white",
+                justifySelf: "center",
+              }}
+            >
+              {data.firstName.charAt(0) + data.lastName.charAt(0)}
+            </Avatar>
+          </IconButton>
           <IconButton onClick={() => navigate("/teamPage")}>
             <Avatar
               sx={{
-                color: "black",
+                color: "#1976d3",
                 bgcolor: "white",
                 mr: 2,
                 justifySelf: "center",
@@ -372,7 +395,7 @@ export default function UserPage() {
           <IconButton onClick={() => navigate("/")}>
             <Avatar
               sx={{
-                color: "black",
+                color: "#1976d3",
                 bgcolor: "white",
                 mr: 2,
                 justifySelf: "center",
@@ -380,19 +403,6 @@ export default function UserPage() {
               }}
             >
               <AssignmentIcon />
-            </Avatar>
-          </IconButton>
-          <IconButton onClick={!open ? handleDrawerOpen : handleDrawerClose}>
-            <Avatar
-              alt={data.firstName.charAt(0) + data.lastName.charAt(0)}
-              src="/public/ceks.jpg"
-              sx={{
-                color: "black",
-                bgcolor: "white",
-                justifySelf: "center",
-              }}
-            >
-              {data.firstName.charAt(0) + data.lastName.charAt(0)}
             </Avatar>
           </IconButton>
         </Toolbar>
@@ -404,20 +414,13 @@ export default function UserPage() {
           [`& .MuiDrawer-paper`]: {
             width: drawerWidth,
             boxSizing: "border-box",
-            marginTop: "5rem",
+            marginTop: "4rem",
           },
         }}
         variant="persistent"
         anchor="left"
         open={open}
       >
-        <Typography
-          variant="h6"
-          component="div"
-          sx={{ justifySelf: "start", alignSelf: "center" }}
-        >
-          {`${data.firstName} ${data.lastName}`}
-        </Typography>
         <List
           sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}
           component="nav"
@@ -435,23 +438,21 @@ export default function UserPage() {
             </ListItemIcon>
 
             <ListItemText primary="Teams" />
-            {openSub ? <ExpandLess /> : <ExpandMore />}
           </ListItemButton>
-          <Collapse in={openSub} timeout={1} unmountOnExit>
-            <List component="div" disablePadding>
-              {data.teamUser.map((team, key) => (
-                <ListItemButton
-                  sx={{ pl: 4 }}
-                  onClick={() => handleTeamClick(team.name)}
-                >
-                  <ListItemText primary={team.name} />
-                </ListItemButton>
-              ))}
-              {/*  <ListItemButton sx={{ pl: 4 }} onClick={handleNewTeam}>
-                <ListItemText primary="Join another team" />
-              </ListItemButton>*/}
-            </List>
-          </Collapse>
+          <ListItemButton onClick={handleClick}>
+            <ListItemIcon>
+              <AssignmentIcon />
+            </ListItemIcon>
+
+            <ListItemText primary="Tasks" />
+          </ListItemButton>
+          <ListItemButton onClick={handleClick}>
+            <ListItemIcon>
+              <PersonIcon />
+            </ListItemIcon>
+
+            <ListItemText primary="User Info" />
+          </ListItemButton>
         </List>
       </Drawer>
       <Main open={open}>
@@ -463,11 +464,13 @@ export default function UserPage() {
             sx={{
               display: "grid",
               gridTemplateColumns: "1fr",
+              gridTemplateRows: "auto 1fr" /* NEW */,
+
               gridAutoRows: "auto",
               justifyItems: "center",
               alignItems: "center",
               gridGap: "1rem",
-              height: "100%",
+              height: "",
             }}
           >
             <CssBaseline />
@@ -483,19 +486,18 @@ export default function UserPage() {
                       justifyContent: "center",
                       alignContent: "center",
                       backgroundColor: "inherit",
-                      padding: "10px",
+                      padding: "15px",
                       margin: "5px",
                       width: "100%",
                       textAlign: "center",
-                      borderRadius: "1.5rem",
+                      borderRadius: "1rem",
                       minWidth: "280px",
                       maxWidth: "400px",
                       height: "150px",
-                      boxShadow: "2px 2px 2px 2px rgba(0,0,0,0.75)",
                       gridGap: "0.3rem",
                     }}
                   >
-                    <Avatar sx={{ bgcolor: "green" }}>
+                    <Avatar sx={{ bgcolor: "#1976d3" }}>
                       <AssignmentIcon />
                     </Avatar>
                     <Typography
@@ -543,7 +545,8 @@ export default function UserPage() {
                     </Button>
                     <Avatar
                       sx={{
-                        bgcolor: "green",
+                        bgcolor:
+                          task.status === "FINISHED" ? "green" : "orange",
                         alignSelf: "center",
                         justifySelf: "end",
                       }}
