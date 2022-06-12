@@ -27,14 +27,17 @@ public class InitUsers implements ApplicationRunner {
 	UserServiceImpl userService;
 	@Override
 	public void run(ApplicationArguments args) throws Exception {
-		Optional<Role> role = userService.addRole("ROLE_ADMIN", "Admin role");
+		Optional<Role> role = userService.addRole("Admin", "Admin role");
 		LOGGER.debug("Role ROLE_ADMIN created? " + (role.isPresent() ? role.get().getRoleName() : "Nije"));
 		
 		
-		Optional<Role> role2 = userService.addRole("ROLE_USER", "User role");
+		Optional<Role> role2 = userService.addRole("User", "User role");
 		LOGGER.debug("Role ROLE_USER created? " + (role2.isPresent() ?
 		role2.get().getRoleName(): "Nije"));
 		 
+		Optional<Role> role3 = userService.addRole("Leader", "User role");
+		LOGGER.debug("Role ROLE_USER created? " + (role2.isPresent() ?
+		role2.get().getRoleName(): "Nije"));
 		
 		
 		Optional<User> user1 = userService.addAdmin("milan","Sps.7009", "Milan", "Nikolic", "milan.nikolic@nbs.rs");
