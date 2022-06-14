@@ -76,7 +76,7 @@ export default function Task({ task }) {
       </Button>
       <Avatar
         sx={{
-          bgcolor: task.status === "FINISHED" ? "#1976d3" : "orange",
+          bgcolor: task.status === "FINISHED" ? "green" : "orange",
           alignSelf: "center",
           justifySelf: "end",
         }}

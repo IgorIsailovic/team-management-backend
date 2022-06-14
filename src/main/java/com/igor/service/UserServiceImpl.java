@@ -96,7 +96,22 @@ public class UserServiceImpl implements UserService {
 	        LOGGER.info("New user attempting to add to DB");
 	        Optional<User> user = Optional.empty();
 	        if (!userRepository.findByUsername(username).isPresent()) {
-	            Optional<Role> role = roleRepository.findByRoleName("ROLE_USER");
+	            Optional<Role> role = roleRepository.findByRoleName("User");
+	            user = Optional.of(userRepository.save(new User(username,
+	                            passwordEncoder.encode(password),
+	                            role.get(),
+	                            firstName,
+	                            lastName,
+	                            email)));
+	        }
+	        return user;
+	    }
+	    
+	    public Optional<User> addLeader(String username, String password, String firstName, String lastName, String email) {
+	        LOGGER.info("New leader attempting to add to DB");
+	        Optional<User> user = Optional.empty();
+	        if (!userRepository.findByUsername(username).isPresent()) {
+	            Optional<Role> role = roleRepository.findByRoleName("Leader");
 	            user = Optional.of(userRepository.save(new User(username,
 	                            passwordEncoder.encode(password),
 	                            role.get(),
@@ -111,7 +126,7 @@ public class UserServiceImpl implements UserService {
 	       LOGGER.info("New admin added");
 	        Optional<User> user = Optional.empty();
 	        if (!userRepository.findByUsername(username).isPresent()) {
-	            Optional<Role> role = roleRepository.findByRoleName("ROLE_ADMIN");
+	            Optional<Role> role = roleRepository.findByRoleName("Admin");
 	            user = Optional.of(userRepository.save(new User(username,
 	                            passwordEncoder.encode(password),
 	                            role.get(),

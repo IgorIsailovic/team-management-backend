@@ -146,7 +146,24 @@ export default function UserPage() {
       case "teams":
         return <Teams data={data}></Teams>;
       case "tasks":
-        return <Tasks data={data}></Tasks>;
+        return (
+          <Container
+            className="tasks"
+            sx={{
+              gridColumn: "span 2",
+              display: "grid",
+              gridTemplateColumns: "1fr",
+              gridTemplateRows: "auto" /* NEW */,
+
+              // gridAutoRows: "auto",
+              justifyItems: "center",
+              alignItems: "center",
+              gridGap: "1rem",
+            }}
+          >
+            <Tasks data={data}></Tasks>
+          </Container>
+        );
       case "userInfo":
         return <UserInfo data={data}></UserInfo>;
       default:
@@ -373,7 +390,7 @@ export default function UserPage() {
           </ListItemButton>
         </List>
       </Drawer>
-      <Main open={open}>
+      <Main open={open} sx={{ backgroundColor: "#f8fafd" }}>
         <DrawerHeader />
         <ThemeProvider theme={theme}>
           <Container
@@ -381,9 +398,8 @@ export default function UserPage() {
             component="main"
             sx={{
               display: "grid",
-              gridTemplateColumns: "1fr",
-              gridTemplateRows: "auto 1fr" /* NEW */,
-
+              gridTemplateColumns: "1fr 1fr",
+              gridTemplateRows: "1fr 1fr" /* NEW */,
               gridAutoRows: "auto",
               justifyItems: "center",
               alignItems: "center",
@@ -393,6 +409,7 @@ export default function UserPage() {
             <CssBaseline />
 
             {getView(view)}
+
             <Box
               className="copyright"
               sx={{
@@ -409,7 +426,6 @@ export default function UserPage() {
           position: "fixed",
           width: "100%",
           bottom: 0,
-          bgcolor: "transparent",
         }}
       >
         <Copyright marginLeft={open ? "240px" : "0"} />
