@@ -26,6 +26,7 @@ export default function Task({ task }) {
         maxWidth: "400px",
         height: "150px",
         gridGap: "0.3rem",
+        boxShadow: "1px 3px 10px  #9E9E9E",
       }}
     >
       <Avatar sx={{ bgcolor: "#1976d3" }}>

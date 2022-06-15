@@ -1,7 +1,15 @@
+html{
+  height: 100%;
+}
+body{
+  height: 100%;
+}
 @media (min-width: 58rem) {
   .tasks {
     grid-template-columns: 1fr 1fr !important;
+  
   }
+  
   
 }
 
@@ -9,6 +17,9 @@
 @media (min-width: 78rem) {
   .tasks {
     grid-template-columns: 1fr 1fr 1fr !important;
+   
   }
+
+
   
 }

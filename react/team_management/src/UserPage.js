@@ -24,7 +24,7 @@ import Container from "@mui/material/Container";
 import Button from "@mui/material/Button";
 import Card from "@mui/material/Card";
 import AssignmentIcon from "@mui/icons-material/Assignment";
-import "./UserPage.css";
+import "./Shared.css";
 import jwt_decode from "jwt-decode";
 import { useNavigate } from "react-router-dom";
 import BottomNavigation from "@mui/material/BottomNavigation";
@@ -165,7 +165,22 @@ export default function UserPage() {
           </Container>
         );
       case "userInfo":
-        return <UserInfo data={data}></UserInfo>;
+        return (
+          <Container
+            sx={{
+              gridColumn: "span 2",
+              display: "grid",
+              gridTemplateColumns: "1fr",
+              gridTemplateRows: "auto" /* NEW */,
+              // gridAutoRows: "auto",
+              justifyItems: "center",
+              alignItems: "center",
+              gridGap: "1rem",
+            }}
+          >
+            <UserInfo data={data}></UserInfo>
+          </Container>
+        );
       default:
         return null;
     }
@@ -390,7 +405,7 @@ export default function UserPage() {
           </ListItemButton>
         </List>
       </Drawer>
-      <Main open={open} sx={{ backgroundColor: "#f8fafd" }}>
+      <Main open={open} sx={{ backgroundColor: "#f8fafd", height: "120%" }}>
         <DrawerHeader />
         <ThemeProvider theme={theme}>
           <Container
@@ -404,6 +419,7 @@ export default function UserPage() {
               justifyItems: "center",
               alignItems: "center",
               gridGap: "1rem",
+              marginTop: "2rem",
             }}
           >
             <CssBaseline />

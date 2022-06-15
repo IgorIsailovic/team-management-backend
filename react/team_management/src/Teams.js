@@ -10,9 +10,10 @@ export default function Teams({ data }) {
         sx={{
           borderRadius: "2rem",
           border: "1px solid #1976d3",
+          boxShadow: "1px 3px 10px  #9E9E9E",
           backgroundColor: "white",
           width: "100%",
-          margin: "5px",
+          margin: "1rem",
           padding: "1.5rem",
           //gridColumn: "span 2",
           gridRow: "auto",
@@ -22,6 +23,19 @@ export default function Teams({ data }) {
       </Box>
     ))
   ) : (
-    <p>Niste ni u jednom timu</p>
+    <Box
+      sx={{
+        borderRadius: "3rem",
+        boxShadow: "1px 3px 10px  #9E9E9E",
+        backgroundColor: "white",
+        width: "100%",
+        margin: "1rem",
+        padding: "1.5rem",
+        //gridColumn: "span 2",
+        gridRow: "auto",
+      }}
+    >
+      Niste ni u jednom timu
+    </Box>
   );
 }

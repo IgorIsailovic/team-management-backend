@@ -13,24 +13,24 @@ import { IconButton, Avatar } from "@mui/material";
 export default function UserOverview({ data }) {
   return (
     <>
+      <UserInfo data={data}></UserInfo>
       <Box
         sx={{
-          backgroundColor: "white",
-          borderRadius: "2rem",
-          width: "100%",
-          height: "100%",
+          alignSelf: "start",
+          justifySelf: "start",
+          borderRadius: "3rem",
           padding: "1.5rem",
-        }}
-      >
-        <UserInfo data={data}></UserInfo>
-      </Box>
-      <Box
-        sx={{
-          borderRadius: "2rem",
+          display: "grid",
+          gridTemplateColumns: "1fr",
+          gridTemplateRows: "auto" /* NEW */,
           backgroundColor: "white",
           width: "100%",
           height: "100%",
-          padding: "1.5rem",
+          boxShadow: "1px 3px 10px  #9E9E9E",
+
+          // gridAutoRows: "auto",
+          justifyItems: "center",
+          alignItems: "start",
         }}
       >
         <Teams data={data}></Teams>
@@ -38,7 +38,7 @@ export default function UserOverview({ data }) {
       <Box
         className="tasks"
         sx={{
-          borderRadius: "2rem",
+          borderRadius: "3rem",
           gridColumn: "span 2",
           padding: "1.5rem",
           display: "grid",
@@ -47,9 +47,11 @@ export default function UserOverview({ data }) {
           backgroundColor: "white",
           width: "100%",
           height: "100%",
+          boxShadow: "1px 3px 10px  #9E9E9E",
+
           // gridAutoRows: "auto",
           justifyItems: "center",
-          alignItems: "center",
+          alignItems: "start",
           gridGap: "1rem",
         }}
       >
