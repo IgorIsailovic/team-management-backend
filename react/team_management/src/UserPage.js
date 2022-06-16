@@ -154,7 +154,7 @@ export default function UserPage() {
               display: "grid",
               gridTemplateColumns: "1fr",
               gridTemplateRows: "auto" /* NEW */,
-
+              width: "100%",
               // gridAutoRows: "auto",
               justifyItems: "center",
               alignItems: "center",
@@ -256,199 +256,201 @@ export default function UserPage() {
   }
 
   return (
-    <Box sx={{ display: "flex", height: "100vh" }}>
-      <CssBaseline />
-      <AppBar
-        position="fixed"
-        sx={{
-          zIndex: (theme) => theme.zIndex.drawer + 1,
-        }}
-      >
-        <Toolbar
+    <div id="app">
+      <Box sx={{ display: "flex", height: "100vh" }}>
+        <CssBaseline />
+        <AppBar
+          position="fixed"
           sx={{
-            display: "grid",
-            gridTemplateColumns: !open ? "11fr 1fr 1fr 1fr" : "12fr 1fr 1fr",
+            zIndex: (theme) => theme.zIndex.drawer + 1,
           }}
         >
-          <IconButton
-            color="inherit"
-            aria-label="open drawer"
-            onClick={handleDrawerOpen}
-            sx={{
-              color: "black",
-              bgcolor: "white",
-              mr: 2,
-              ...(open && { display: "none" }),
-              justifySelf: "start",
-            }}
-          >
-            <MenuIcon />
-          </IconButton>
-          <IconButton
-            onClick={handleDrawerClose}
-            sx={{
-              color: "black",
-              bgcolor: "white",
-              mr: 2,
-              ...(!open && { display: "none" }),
-              justifySelf: "start",
-            }}
-          >
-            <ChevronLeftIcon />
-          </IconButton>
-
-          <IconButton onClick={() => handleClickView("teams")}>
-            <Avatar
-              sx={{
-                color: "#1976d3",
-                bgcolor: "white",
-                mr: 2,
-                justifySelf: "center",
-                margin: "0",
-              }}
-            >
-              <GroupsIcon />
-            </Avatar>
-          </IconButton>
-          <IconButton onClick={() => handleClickView("tasks")}>
-            <Avatar
-              sx={{
-                color: "#1976d3",
-                bgcolor: "white",
-                mr: 2,
-                justifySelf: "center",
-                margin: "0",
-              }}
-            >
-              <AssignmentIcon />
-            </Avatar>
-          </IconButton>
-          {open ? null : (
-            <IconButton onClick={() => handleClickView("user")}>
-              <Avatar
-                alt={data.firstName.charAt(0) + data.lastName.charAt(0)}
-                src={getAvatar(data.username)}
-                sx={{
-                  color: "#1976d3",
-                  bgcolor: "white",
-                  justifySelf: "center",
-                }}
-              ></Avatar>
-            </IconButton>
-          )}
-        </Toolbar>
-      </AppBar>
-      <Drawer
-        sx={{
-          width: drawerWidth,
-          flexShrink: 0,
-          [`& .MuiDrawer-paper`]: {
-            width: drawerWidth,
-            boxSizing: "border-box",
-            marginTop: "4rem",
-          },
-        }}
-        variant="persistent"
-        anchor="left"
-        open={open}
-      >
-        <List
-          sx={{
-            /* width: "100%",*/ maxWidth: 360,
-            bgcolor: "background.paper",
-          }}
-          component="nav"
-          aria-labelledby="nested-list-subheader"
-          subheader={
-            <ListSubheader
-              component="div"
-              id="nested-list-subheader"
-            ></ListSubheader>
-          }
-        >
-          <ListItemButton onClick={() => handleClickView("user")}>
-            <IconButton>
-              <Avatar
-                alt={data.firstName.charAt(0) + data.lastName.charAt(0)}
-                src={getAvatar(data.username)}
-                sx={{
-                  color: "#1976d3",
-                  bgcolor: "white",
-                  justifySelf: "center",
-                }}
-              >
-                {data.firstName.charAt(0) + data.lastName.charAt(0)}
-              </Avatar>
-            </IconButton>
-            <Typography
-              variant="inherit"
-              component="div"
-              sx={{ justifySelf: "start", alignSelf: "center" }}
-            >
-              {`${data.firstName} ${data.lastName}`}
-            </Typography>
-          </ListItemButton>
-          <ListItemButton onClick={() => handleClickView("teams")}>
-            <ListItemIcon>
-              <GroupsIcon />
-            </ListItemIcon>
-            <ListItemText primary="Teams" />
-          </ListItemButton>
-          <ListItemButton onClick={() => handleClickView("tasks")}>
-            <ListItemIcon>
-              <AssignmentIcon />
-            </ListItemIcon>
-            <ListItemText primary="Tasks" />
-          </ListItemButton>
-          <ListItemButton onClick={() => handleClickView("userInfo")}>
-            <ListItemIcon>
-              <PersonIcon />
-            </ListItemIcon>
-            <ListItemText primary="User Info" />
-          </ListItemButton>
-        </List>
-      </Drawer>
-      <Main open={open} sx={{}}>
-        <DrawerHeader />
-        <ThemeProvider theme={theme}>
-          <Container
-            className="main-container"
-            component="main"
+          <Toolbar
             sx={{
               display: "grid",
-              gridTemplateColumns: "1fr 1fr",
-              gridTemplateRows: "1fr 1fr" /* NEW */,
-              gridAutoRows: "auto",
-              justifyItems: "center",
-              alignItems: "center",
-              gridGap: "1rem",
-              marginTop: "2rem",
+              gridTemplateColumns: !open ? "11fr 1fr 1fr 1fr" : "12fr 1fr 1fr",
             }}
           >
-            <CssBaseline />
-
-            {getView(view)}
-
-            <Box
-              className="copyright"
+            <IconButton
+              color="inherit"
+              aria-label="open drawer"
+              onClick={handleDrawerOpen}
               sx={{
-                marginTop: 4,
-                //width: "100%",
-                alignSelf: "center",
+                color: "black",
+                bgcolor: "white",
+                mr: 2,
+                ...(open && { display: "none" }),
+                justifySelf: "start",
               }}
-            ></Box>
-          </Container>
-        </ThemeProvider>
-      </Main>
-      <BottomNavigation
-        sx={{
-          position: "fixed",
-          //width: "100%",
-          bottom: 0,
-        }}
-      >
-        <Copyright marginLeft={open ? "240px" : "0"} />
-      </BottomNavigation>
-    </Box>
+            >
+              <MenuIcon />
+            </IconButton>
+            <IconButton
+              onClick={handleDrawerClose}
+              sx={{
+                color: "black",
+                bgcolor: "white",
+                mr: 2,
+                ...(!open && { display: "none" }),
+                justifySelf: "start",
+              }}
+            >
+              <ChevronLeftIcon />
+            </IconButton>
+
+            <IconButton onClick={() => handleClickView("teams")}>
+              <Avatar
+                sx={{
+                  color: "#1976d3",
+                  bgcolor: "white",
+                  mr: 2,
+                  justifySelf: "center",
+                  margin: "0",
+                }}
+              >
+                <GroupsIcon />
+              </Avatar>
+            </IconButton>
+            <IconButton onClick={() => handleClickView("tasks")}>
+              <Avatar
+                sx={{
+                  color: "#1976d3",
+                  bgcolor: "white",
+                  mr: 2,
+                  justifySelf: "center",
+                  margin: "0",
+                }}
+              >
+                <AssignmentIcon />
+              </Avatar>
+            </IconButton>
+            {open ? null : (
+              <IconButton onClick={() => handleClickView("user")}>
+                <Avatar
+                  alt={data.firstName.charAt(0) + data.lastName.charAt(0)}
+                  src={getAvatar(data.username)}
+                  sx={{
+                    color: "#1976d3",
+                    bgcolor: "white",
+                    justifySelf: "center",
+                  }}
+                ></Avatar>
+              </IconButton>
+            )}
+          </Toolbar>
+        </AppBar>
+        <Drawer
+          sx={{
+            width: drawerWidth,
+            flexShrink: 0,
+            [`& .MuiDrawer-paper`]: {
+              width: drawerWidth,
+              boxSizing: "border-box",
+              marginTop: "4rem",
+            },
+          }}
+          variant="persistent"
+          anchor="left"
+          open={open}
+        >
+          <List
+            sx={{
+              /* width: "100%",*/ maxWidth: 360,
+              bgcolor: "background.paper",
+            }}
+            component="nav"
+            aria-labelledby="nested-list-subheader"
+            subheader={
+              <ListSubheader
+                component="div"
+                id="nested-list-subheader"
+              ></ListSubheader>
+            }
+          >
+            <ListItemButton onClick={() => handleClickView("user")}>
+              <IconButton>
+                <Avatar
+                  alt={data.firstName.charAt(0) + data.lastName.charAt(0)}
+                  src={getAvatar(data.username)}
+                  sx={{
+                    color: "#1976d3",
+                    bgcolor: "white",
+                    justifySelf: "center",
+                  }}
+                >
+                  {data.firstName.charAt(0) + data.lastName.charAt(0)}
+                </Avatar>
+              </IconButton>
+              <Typography
+                variant="inherit"
+                component="div"
+                sx={{ justifySelf: "start", alignSelf: "center" }}
+              >
+                {`${data.firstName} ${data.lastName}`}
+              </Typography>
+            </ListItemButton>
+            <ListItemButton onClick={() => handleClickView("teams")}>
+              <ListItemIcon>
+                <GroupsIcon />
+              </ListItemIcon>
+              <ListItemText primary="Teams" />
+            </ListItemButton>
+            <ListItemButton onClick={() => handleClickView("tasks")}>
+              <ListItemIcon>
+                <AssignmentIcon />
+              </ListItemIcon>
+              <ListItemText primary="Tasks" />
+            </ListItemButton>
+            <ListItemButton onClick={() => handleClickView("userInfo")}>
+              <ListItemIcon>
+                <PersonIcon />
+              </ListItemIcon>
+              <ListItemText primary="User Info" />
+            </ListItemButton>
+          </List>
+        </Drawer>
+        <Main open={open} sx={{}}>
+          <DrawerHeader />
+          <ThemeProvider theme={theme}>
+            <Container
+              className="main-container"
+              component="main"
+              sx={{
+                display: "grid",
+                gridTemplateColumns: "1fr 1fr",
+                gridTemplateRows: "1fr 1fr" /* NEW */,
+                gridAutoRows: "auto",
+                justifyItems: "center",
+                alignItems: "center",
+                gridGap: "1rem",
+                marginTop: "2rem",
+              }}
+            >
+              <CssBaseline />
+
+              {getView(view)}
+
+              <Box
+                className="copyright"
+                sx={{
+                  marginTop: 4,
+                  width: "100%",
+                  alignSelf: "center",
+                }}
+              ></Box>
+            </Container>
+          </ThemeProvider>
+        </Main>
+        <BottomNavigation
+          sx={{
+            position: "fixed",
+            width: "100%",
+            bottom: 0,
+          }}
+        >
+          <Copyright marginLeft={open ? "200px" : "0"} />
+        </BottomNavigation>
+      </Box>
+    </div>
   );
 }
