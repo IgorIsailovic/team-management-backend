@@ -44,7 +44,7 @@ const drawerWidth = 200;
 
 const Main = styled("main", { shouldForwardProp: (prop) => prop !== "open" })(
   ({ theme, open }) => ({
-    width: "100%",
+    // width: "100%",
     padding: theme.spacing(3),
     transition: theme.transitions.create("margin", {
       easing: theme.transitions.easing.sharp,
@@ -353,7 +353,10 @@ export default function UserPage() {
         open={open}
       >
         <List
-          sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}
+          sx={{
+            /* width: "100%",*/ maxWidth: 360,
+            bgcolor: "background.paper",
+          }}
           component="nav"
           aria-labelledby="nested-list-subheader"
           subheader={
@@ -405,7 +408,7 @@ export default function UserPage() {
           </ListItemButton>
         </List>
       </Drawer>
-      <Main open={open} sx={{ backgroundColor: "#f8fafd", height: "120%" }}>
+      <Main open={open} sx={{}}>
         <DrawerHeader />
         <ThemeProvider theme={theme}>
           <Container
@@ -430,7 +433,7 @@ export default function UserPage() {
               className="copyright"
               sx={{
                 marginTop: 4,
-                width: "100%",
+                //width: "100%",
                 alignSelf: "center",
               }}
             ></Box>
@@ -440,7 +443,7 @@ export default function UserPage() {
       <BottomNavigation
         sx={{
           position: "fixed",
-          width: "100%",
+          //width: "100%",
           bottom: 0,
         }}
       >

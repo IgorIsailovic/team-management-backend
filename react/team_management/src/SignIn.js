@@ -100,7 +100,7 @@ export default function SignIn() {
   function handleSubmit(event) {
     event.preventDefault();
     axios
-      .post("http://localhost:8088/users/signin", {
+      .post(`http://${window.location.hostname}:8088/users/signin`, {
         username: username,
         password: password,
       })
@@ -116,11 +116,14 @@ export default function SignIn() {
         let exp = decoded.exp;
         console.log(user);
         axios
-          .get(`http://localhost:8088/users/getByName/${user}`, {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          })
+          .get(
+            `http://${window.location.hostname}:8088/users/getByName/${user}`,
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            }
+          )
           .then((response) => {
             console.log(response.data);
             setResult(response.data);

@@ -1,12 +1,17 @@
 import React from "react";
 import GroupsIcon from "@mui/icons-material/Groups";
 import { Container } from "react-bootstrap";
+import { IconButton, Typography } from "@mui/material";
 import Box from "@mui/material/Box";
 
 export default function Teams({ data }) {
+  const clicked = () => {
+    console.log("clicked");
+  };
   return data.teamUser.length > 0 ? (
     data.teamUser.map((team, key) => (
-      <Box
+      <IconButton
+        onClick={clicked}
         sx={{
           borderRadius: "2rem",
           border: "1px solid #1976d3",
@@ -17,10 +22,20 @@ export default function Teams({ data }) {
           padding: "1.5rem",
           //gridColumn: "span 2",
           gridRow: "auto",
+          color: "black",
         }}
       >
-        <h4>{team.name}</h4>
-      </Box>
+        <Typography
+          variant="body1"
+          fontFamily="Helvetica"
+          color="inherit"
+          align="center"
+          fontWeight={700}
+          sx={{ alignSelf: "start", justifySelf: "start" }}
+        >
+          {team.name}
+        </Typography>
+      </IconButton>
     ))
   ) : (
     <Box
@@ -35,7 +50,16 @@ export default function Teams({ data }) {
         gridRow: "auto",
       }}
     >
-      Niste ni u jednom timu
+      <Typography
+        variant="body1"
+        fontFamily="Helvetica"
+        color="inherit"
+        align="center"
+        fontWeight={700}
+        sx={{ alignSelf: "start", justifySelf: "start" }}
+      >
+        Niste ni u jednom timu
+      </Typography>
     </Box>
   );
 }

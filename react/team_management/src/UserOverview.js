@@ -24,7 +24,7 @@ export default function UserOverview({ data }) {
           gridTemplateColumns: "1fr",
           gridTemplateRows: "auto" /* NEW */,
           backgroundColor: "white",
-          width: "100%",
+          //width: "100%",
           height: "100%",
           boxShadow: "1px 3px 10px  #9E9E9E",
 
@@ -45,7 +45,7 @@ export default function UserOverview({ data }) {
           gridTemplateColumns: "1fr",
           gridTemplateRows: "auto" /* NEW */,
           backgroundColor: "white",
-          width: "100%",
+          //width: "100%",
           height: "100%",
           boxShadow: "1px 3px 10px  #9E9E9E",
 
