@@ -63,7 +63,7 @@ export default function MainPage() {
   };
 
   const handleMenu = (event) => {
-    window.location.reload();
+    handleClickView("user");
   };
 
   const handleClose = () => {

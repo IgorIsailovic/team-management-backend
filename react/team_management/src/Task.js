@@ -6,6 +6,7 @@ import AssignmentIcon from "@mui/icons-material/Assignment";
 import HourglassBottomIcon from "@mui/icons-material/HourglassBottom";
 import CheckIcon from "@mui/icons-material/Check";
 import Typography from "@mui/material/Typography";
+import { Box } from "@mui/material";
 
 export default function Task({ task }) {
   return (
@@ -63,7 +64,7 @@ export default function Task({ task }) {
           ? `${task.description.substring(0, 50)}`
           : `${task.description.substring(0, 50)}...`}
       </Typography>
-      <Button
+      {/* <Button
         sx={{
           alignSelf: "center",
           justifySelf: "center",
@@ -79,15 +80,7 @@ export default function Task({ task }) {
       >
         Detailed
       </Button>
-      <Avatar
-        sx={{
-          bgcolor: task.status === "FINISHED" ? "green" : "orange",
-          alignSelf: "center",
-          justifySelf: "end",
-        }}
-      >
-        {task.status === "FINISHED" ? <CheckIcon /> : <HourglassBottomIcon />}
-      </Avatar>
+     
       <Typography
         variant="body2"
         fontFamily="Helvetica"
@@ -96,11 +89,22 @@ export default function Task({ task }) {
         fontWeight={900}
         sx={{
           alignSelf: "center",
-          justifySelf: "center",
+          justifySelf: "end",
         }}
       >
         {task.status === "FINISHED" ? "Finished" : "In Progress"}
       </Typography>
+       */}
+      <Avatar
+        sx={{
+          bgcolor: task.status === "FINISHED" ? "green" : "orange",
+          alignSelf: "center",
+          justifySelf: "center",
+          gridColumn: "1 / -1",
+        }}
+      >
+        {task.status === "FINISHED" ? <CheckIcon /> : <HourglassBottomIcon />}
+      </Avatar>
     </Card>
   );
 }
