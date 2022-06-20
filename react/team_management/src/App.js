@@ -4,6 +4,7 @@ import SignUp from "./SignUp";
 import UserPage from "./UserPage";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import TeamPage from "./TeamPage";
+import MainPage from "./MainPage";
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
         <Route path="/signin" element={<SignIn />}></Route>
         <Route path="/signup" element={<SignUp />}></Route>
         <Route path="/userPage" element={<UserPage />}></Route>
+        <Route path="/mainPage" element={<MainPage />}></Route>
       </Routes>
     </BrowserRouter>
   );

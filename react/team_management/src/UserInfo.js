@@ -2,7 +2,7 @@ import React from "react";
 import Avatar from "@mui/material/Avatar";
 import Link from "@mui/material/Link";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import Container from "@mui/material/Container";
+import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Card from "@mui/material/Card";
 import AssignmentIcon from "@mui/icons-material/Assignment";
@@ -22,6 +22,7 @@ import Teams from "./Teams";
 import AlternateEmailIcon from "@mui/icons-material/AlternateEmail";
 import Typography from "@mui/material/Typography";
 import ContactMailIcon from "@mui/icons-material/ContactMail";
+import Divider from "@mui/material/Divider";
 
 export default function userInfo({ data }) {
   const getAvatar = (user) => {
@@ -37,101 +38,109 @@ export default function userInfo({ data }) {
     }
   };
   return (
-    <Container
-      sx={{
-        boxShadow: "1px 3px 10px  #9E9E9E",
-        height: "100%",
-        padding: "3rem",
-        borderRadius: "3rem",
-        backgroundColor: "white",
-      }}
-    >
-      <Container
+    <Box sx={{ display: "grid" }}>
+      <Box
         sx={{
+          alignSelf: "center",
+          justifySelf: "center",
           display: "grid",
-          gridTemplateColumns: "1fr",
-          marginBottom: "2rem",
+          boxShadow: "1px 3px 10px  #9E9E9E",
+          height: "100%",
+          width: "100%",
+          maxWidth: "60rem",
+          padding: "3rem",
+          //borderRadius: "3rem",
+          backgroundColor: "white",
         }}
       >
-        <Avatar
-          alt={data.firstName.charAt(0) + data.lastName.charAt(0)}
-          src={getAvatar(data.username)}
+        <Box
           sx={{
-            color: "#1976d3",
-            bgcolor: "white",
-            justifySelf: "center",
-            alignSelf: "center",
-            height: "9rem",
-            width: "9rem",
+            display: "grid",
+            gridTemplateColumns: "1fr",
+            marginBottom: "2rem",
           }}
-        ></Avatar>
-      </Container>
-      <Container
-        sx={{
-          display: "grid",
-          gridTemplateColumns: "1fr 9fr",
-          margin: "1rem",
-          gridGap: "1rem",
-        }}
-      >
-        <PersonIcon
-          sx={{ alignSelf: "start", justifySelf: "start", color: "#1976d3" }}
-        ></PersonIcon>
-        <Typography
-          variant="body1"
-          fontFamily="Helvetica"
-          color="inherit"
-          align="center"
-          fontWeight={700}
-          sx={{ alignSelf: "start", justifySelf: "start" }}
         >
-          {data.firstName} {data.lastName}
-        </Typography>
-      </Container>
-      <Container
-        sx={{
-          display: "grid",
-          gridTemplateColumns: "1fr 9fr",
-          margin: "1rem",
-          gridGap: "1rem",
-        }}
-      >
-        <AlternateEmailIcon
-          sx={{ alignSelf: "start", justifySelf: "start", color: "#1976d3" }}
-        ></AlternateEmailIcon>
-        <Typography
-          variant="body1"
-          fontFamily="Helvetica"
-          color="inherit"
-          align="center"
-          fontWeight={700}
-          sx={{ alignSelf: "start", justifySelf: "start" }}
+          <Avatar
+            alt={data.firstName.charAt(0) + data.lastName.charAt(0)}
+            src={getAvatar(data.username)}
+            sx={{
+              color: "black",
+              bgcolor: "white",
+              justifySelf: "center",
+              alignSelf: "center",
+              height: "9rem",
+              width: "9rem",
+            }}
+          ></Avatar>
+        </Box>
+        <Divider />
+        <Box
+          sx={{
+            display: "grid",
+            gridTemplateColumns: "1fr 9fr",
+            margin: "1rem",
+            gridGap: "1rem",
+          }}
         >
-          {data.email}
-        </Typography>
-      </Container>
-      <Container
-        sx={{
-          display: "grid",
-          gridTemplateColumns: "1fr 9fr",
-          margin: "1rem",
-          gridGap: "1rem",
-        }}
-      >
-        <ContactMailIcon
-          sx={{ alignSelf: "center", justifySelf: "start", color: "#1976d3" }}
-        ></ContactMailIcon>
-        <Typography
-          variant="body1"
-          fontFamily="Helvetica"
-          color="inherit"
-          align="center"
-          fontWeight={700}
-          sx={{ alignSelf: "start", justifySelf: "start" }}
+          <PersonIcon
+            sx={{ alignSelf: "start", justifySelf: "start", color: "black" }}
+          ></PersonIcon>
+          <Typography
+            variant="body1"
+            fontFamily="Helvetica"
+            color="inherit"
+            align="center"
+            fontWeight={700}
+            sx={{ alignSelf: "start", justifySelf: "start" }}
+          >
+            {data.firstName} {data.lastName}
+          </Typography>
+        </Box>
+        <Box
+          sx={{
+            display: "grid",
+            gridTemplateColumns: "1fr 9fr",
+            margin: "1rem",
+            gridGap: "1rem",
+          }}
         >
-          {data.roles.map((role, key) => role.roleName)}
-        </Typography>
-      </Container>
-    </Container>
+          <AlternateEmailIcon
+            sx={{ alignSelf: "start", justifySelf: "start", color: "black" }}
+          ></AlternateEmailIcon>
+          <Typography
+            variant="body1"
+            fontFamily="Helvetica"
+            color="inherit"
+            align="center"
+            fontWeight={700}
+            sx={{ alignSelf: "start", justifySelf: "start" }}
+          >
+            {data.email}
+          </Typography>
+        </Box>
+        <Box
+          sx={{
+            display: "grid",
+            gridTemplateColumns: "1fr 9fr",
+            margin: "1rem",
+            gridGap: "1rem",
+          }}
+        >
+          <ContactMailIcon
+            sx={{ alignSelf: "center", justifySelf: "start", color: "black" }}
+          ></ContactMailIcon>
+          <Typography
+            variant="body1"
+            fontFamily="Helvetica"
+            color="inherit"
+            align="center"
+            fontWeight={700}
+            sx={{ alignSelf: "start", justifySelf: "start" }}
+          >
+            {data.roles.map((role, key) => role.roleName)}
+          </Typography>
+        </Box>
+      </Box>
+    </Box>
   );
 }

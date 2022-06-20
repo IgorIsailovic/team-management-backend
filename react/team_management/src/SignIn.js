@@ -128,7 +128,7 @@ export default function SignIn() {
             console.log(response.data);
             setResult(response.data);
             console.log(`Response${response.data}`);
-            navigate("/userPage", {
+            navigate("/mainPage", {
               state: {
                 data: response.data,
                 user: user,
