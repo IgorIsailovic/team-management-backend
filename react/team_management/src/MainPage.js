@@ -35,6 +35,8 @@ import AssignmentIcon from "@mui/icons-material/Assignment";
 import { useEffect } from "react";
 
 const drawerWidth = 240;
+const mainColor = "black";
+const secondaryColor = "white";
 
 export default function MainPage() {
   let token = localStorage.getItem("token");
@@ -136,7 +138,7 @@ export default function MainPage() {
         position="fixed"
         sx={{
           zIndex: (theme) => theme.zIndex.drawer + 1,
-          backgroundColor: "#919fae",
+          backgroundColor: mainColor,
         }}
       >
         <Toolbar>
@@ -152,9 +154,11 @@ export default function MainPage() {
               <MenuIcon />
             </IconButton>
           ) : null}
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            Photos
-          </Typography>
+          <Typography
+            variant="h6"
+            component="div"
+            sx={{ flexGrow: 1 }}
+          ></Typography>
           {auth && (
             <div>
               <IconButton
@@ -169,7 +173,7 @@ export default function MainPage() {
                   alt={data.firstName.charAt(0) + data.lastName.charAt(0)}
                   src={getAvatar(data.username)}
                   sx={{
-                    color: "#919fae",
+                    color: mainColor,
                     bgcolor: "white",
                     justifySelf: "center",
                   }}
@@ -202,6 +206,11 @@ export default function MainPage() {
       <Drawer
         variant={drawer ? "permanent" : "persistent"}
         open={open}
+        PaperProps={{
+          sx: {
+            backgroundColor: secondaryColor,
+          },
+        }}
         sx={{
           width: drawerWidth,
           flexShrink: 0,
@@ -216,7 +225,7 @@ export default function MainPage() {
           <List
             sx={{
               /* width: "100%",*/ maxWidth: 360,
-              bgcolor: "background.paper",
+              bgcolor: "transparent",
               marginTop: "1rem",
             }}
             component="nav"
@@ -228,23 +237,32 @@ export default function MainPage() {
               ></ListSubheader>
             }
           >
-            <ListItemButton onClick={() => handleClickView("teams")}>
-              <ListItemIcon>
+            <ListItemButton
+              onClick={() => handleClickView("teams")}
+              sx={{ backgroundColor: secondaryColor }}
+            >
+              <ListItemIcon sx={{ color: mainColor }}>
                 <GroupsIcon />
               </ListItemIcon>
-              <ListItemText primary="Teams" />
+              <ListItemText primary="Teams" sx={{ color: mainColor }} />
             </ListItemButton>
-            <ListItemButton onClick={() => handleClickView("tasks")}>
-              <ListItemIcon>
+            <ListItemButton
+              onClick={() => handleClickView("tasks")}
+              sx={{ backgroundColor: secondaryColor }}
+            >
+              <ListItemIcon sx={{ color: mainColor }}>
                 <AssignmentIcon />
               </ListItemIcon>
-              <ListItemText primary="Tasks" />
+              <ListItemText primary="Tasks" sx={{ color: mainColor }} />
             </ListItemButton>
-            <ListItemButton onClick={() => handleClickView("userInfo")}>
-              <ListItemIcon>
+            <ListItemButton
+              onClick={() => handleClickView("userInfo")}
+              sx={{ backgroundColor: secondaryColor }}
+            >
+              <ListItemIcon sx={{ color: mainColor }}>
                 <PersonIcon />
               </ListItemIcon>
-              <ListItemText primary="User Info" />
+              <ListItemText primary="User Info" sx={{ color: mainColor }} />
             </ListItemButton>
           </List>
         </Box>
