@@ -25,12 +25,14 @@ export default function Task({ task }) {
         minWidth: "280px",
         //maxWidth: "50rem",
         height: "100%",
-        minHeight: "13rem",
+        minHeight: "8rem",
         gridGap: "1rem",
         boxShadow: "1px 3px 10px  #9E9E9E",
       }}
     >
-      <Avatar sx={{ bgcolor: "#919fae" }}>
+      <Avatar
+        sx={{ bgcolor: "#919fae", alignSelf: "center", justifySelf: "center" }}
+      >
         <AssignmentIcon />
       </Avatar>
       <Typography
@@ -41,30 +43,31 @@ export default function Task({ task }) {
         alignSelf="center"
         justifyContent="start"
         fontWeight={900}
+        sx={{
+          alignSelf: "center",
+          justifySelf: "center",
+        }}
       >
         {task.name}
       </Typography>
-
+      {/*
       <Typography
         sx={{
           gridColumn: "span 3",
           width: "80%",
           alignSelf: "center",
-
           justifySelf: "center",
         }}
         variant="body2"
         fontFamily="Helvetica"
         color="inherit"
-        align="center"
-        marginBottom={2}
         flexWrap="wrap"
       >
         {task.description === task.description.substring(0, 50)
           ? `${task.description.substring(0, 50)}`
           : `${task.description.substring(0, 50)}...`}
       </Typography>
-      {/* <Button
+    <Button
         sx={{
           alignSelf: "center",
           justifySelf: "center",
@@ -80,8 +83,41 @@ export default function Task({ task }) {
       >
         Detailed
       </Button>
-     
-      <Typography
+       */}
+      <Box
+        sx={{
+          display: "grid",
+          gridColumn: "3 / -1",
+          alignSelf: "center",
+          justifySelf: "center",
+        }}
+      >
+        <Typography
+          variant="body2"
+          fontFamily="Helvetica"
+          color="inherit"
+          align="center"
+          fontWeight={900}
+          sx={{
+            alignSelf: "center",
+            justifySelf: "center",
+            marginBottom: "1rem",
+          }}
+        >
+          {task.status === "FINISHED" ? "Finished" : "In Progress"}
+        </Typography>
+
+        <Avatar
+          sx={{
+            bgcolor: task.status === "FINISHED" ? "green" : "orange",
+            alignSelf: "center",
+            justifySelf: "center",
+          }}
+        >
+          {task.status === "FINISHED" ? <CheckIcon /> : <HourglassBottomIcon />}
+        </Avatar>
+      </Box>
+      {/* <Typography
         variant="body2"
         fontFamily="Helvetica"
         color="inherit"
@@ -89,22 +125,13 @@ export default function Task({ task }) {
         fontWeight={900}
         sx={{
           alignSelf: "center",
-          justifySelf: "end",
-        }}
-      >
-        {task.status === "FINISHED" ? "Finished" : "In Progress"}
-      </Typography>
-       */}
-      <Avatar
-        sx={{
-          bgcolor: task.status === "FINISHED" ? "green" : "orange",
-          alignSelf: "center",
           justifySelf: "center",
-          gridColumn: "1 / -1",
+          gridColumn: "1 / 2",
         }}
       >
-        {task.status === "FINISHED" ? <CheckIcon /> : <HourglassBottomIcon />}
-      </Avatar>
+        {`Estimated duration: ${task.est_dur}h`}
+      </Typography>
+      */}
     </Card>
   );
 }
