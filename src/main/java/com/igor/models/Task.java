@@ -16,6 +16,7 @@ import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.igor.enums.Priority;
 import com.igor.enums.Status;
 
 @Entity
@@ -33,6 +34,9 @@ public class Task {
 	
 	private Status status;
 	
+	private Priority priority;
+	
+	private int assigner;
 	
 	@ManyToMany
 	@JoinTable(
@@ -40,20 +44,16 @@ public class Task {
 	  joinColumns = @JoinColumn(name = "task_id"), 
 	  inverseJoinColumns = @JoinColumn(name = "user_id"))
     	Set<User> userTask;
-	
-	  @ManyToOne(fetch = FetchType.LAZY, optional = false)
-	  @JoinColumn(name = "team_id", nullable = false)
-	  @OnDelete(action = OnDeleteAction.CASCADE)
-	  @JsonIgnore
-	  private Team team;
+
+	private int team;
 	
 	  
 	  
-	public Team getTeam() {
+	public int getTeam() {
 		return team;
 	}
 
-	public void setTeam(Team team) {
+	public void setTeam(int team) {
 		this.team = team;
 	}
 
@@ -99,7 +99,23 @@ public class Task {
 	}
 
 
-	public Task(Long id, String name, String description, int est_dur, Status status, Team team) {
+	public int getAssigner() {
+		return assigner;
+	}
+
+	public void setAssigner(int assigner) {
+		this.assigner = assigner;
+	}
+	
+	public Priority getPriority() {
+		return priority;
+	}
+
+	public void setPriority(Priority priority) {
+		this.priority = priority;
+	}
+	
+	public Task(Long id, String name, String description, int est_dur, Status status, int team, int assigner, Priority priority) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -107,11 +123,16 @@ public class Task {
 		this.est_dur = est_dur;
 		this.status = status;
 		this.team = team;
+		this.assigner=assigner;
+		this.priority=priority;
 
 	}
 
 	public Task() {
 	}
+
+
+
 	
 	
 	

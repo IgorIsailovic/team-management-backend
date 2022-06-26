@@ -23,7 +23,7 @@ export default function UserOverview({ data }) {
 
       <Teams data={data}></Teams>
 
-      <Tasks data={data} status="INPROGRESS"></Tasks>
+      <Tasks data={data}></Tasks>
     </Box>
   );
 }

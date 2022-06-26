@@ -153,7 +153,7 @@ public class UserServiceImpl implements UserService {
 	    }
 	    
 	    public User getUserById(long id) {
-	    	return userRepository.getById(id);
+	    	return userRepository.findById(id).get();
 	    	
 	    }
 	    

@@ -12,7 +12,7 @@ import com.igor.models.Team;
 
 public interface TaskRepository extends JpaRepository<Task, Long>{
 
-//	List<Team> findAll();
+
 	@Query(
 			  value = "SELECT * FROM task t\r\n"
 			  		+ "JOIN task_user tu ON t.id = tu.task_id\r\n"
