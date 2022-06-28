@@ -10,6 +10,11 @@ import { Box } from "@mui/material";
 import axios from "axios";
 import Modal from "@mui/material/Modal";
 import AvatarGroup from "@mui/material/AvatarGroup";
+import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
+import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
+import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
+import GroupsIcon from "@mui/icons-material/Groups";
+import Divider from "@mui/material/Divider";
 import nikola from "./ceks.png";
 import Igor from "./igor.png";
 import Milan from "./milan.png";
@@ -19,11 +24,15 @@ const style = {
   top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",
-  width: 400,
+  width: "60%",
   bgcolor: "background.paper",
-  border: "2px solid #000",
-  boxShadow: 24,
+  boxShadow: "1px 3px 10px  #9E9E9E",
+
   p: 4,
+  display: "grid",
+  gridTemplateColumns: "1fr",
+  gridTemplateRows: "1fr 1fr",
+  minWidth: "20rem",
 };
 
 export default function Task({ task }) {
@@ -79,50 +88,108 @@ export default function Task({ task }) {
   return (
     <>
       <div>
-        <Modal
-          open={open}
-          onClose={handleClose}
-          aria-labelledby="modal-modal-title"
-          aria-describedby="modal-modal-description"
-        >
-          <Box sx={style}>
-            <Typography id="modal-modal-title" variant="h6" component="h2">
-              {task.name}
-            </Typography>
-            <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-              {task.description}
-            </Typography>
-            <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-              {`Assigner: `}
-            </Typography>
-            <AvatarGroup>
-              <Avatar
-                src={Milan}
-                sx={{
-                  bgcolor: "white",
-                  justifySelf: "center",
-                }}
-              ></Avatar>
-            </AvatarGroup>
-            <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-              {`Priority: ${task.priority}`}
-            </Typography>
-            <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-              {`Team: ${taskResult1}`}
-            </Typography>
-            <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-              {`Assignies:`}
-            </Typography>
-            <AvatarGroup max={4}>
-              <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
-              <Avatar alt="Travis Howard" src="/static/images/avatar/2.jpg" />
-              <Avatar alt="Cindy Baker" src="/static/images/avatar/3.jpg" />
-              <Avatar alt="Agnes Walker" src="/static/images/avatar/4.jpg" />
-              <Avatar
-                alt="Trevor Henderson"
-                src="/static/images/avatar/5.jpg"
-              />
-            </AvatarGroup>
+        <Modal open={open} onClose={handleClose}>
+          <Box sx={style} className="card-modal">
+            <Box>
+              <Typography
+                id="modal-modal-title"
+                variant="h5"
+                component="h2"
+                align="center"
+              >
+                {task.name}
+              </Typography>
+              <Typography
+                id="modal-modal-description"
+                align="center"
+                sx={{ mt: 2 }}
+              >
+                {task.description}
+              </Typography>
+            </Box>
+
+            <Box sx={{ display: "grid" }}>
+              <Box sx={{ display: "grid" }}>
+                <Typography
+                  id="modal-modal-description"
+                  variant="h6"
+                  align="center"
+                  sx={{ mt: 2 }}
+                >
+                  Assigner
+                </Typography>
+                <Avatar
+                  src={Milan}
+                  sx={{
+                    bgcolor: "white",
+                    justifySelf: "center",
+                  }}
+                ></Avatar>
+              </Box>
+              <Box sx={{ display: "grid" }}>
+                <Typography
+                  variant="h6"
+                  id="modal-modal-description"
+                  align="center"
+                  sx={{ mt: 2 }}
+                >
+                  Priority
+                </Typography>
+                <Typography
+                  id="modal-modal-description"
+                  align="center"
+                  sx={{ mt: 2 }}
+                >
+                  {task.priority === "HIGH" ? (
+                    <ArrowUpwardIcon style={{ color: "red" }} />
+                  ) : task.priority === "LOW" ? (
+                    <ArrowDownwardIcon style={{ color: "green" }} />
+                  ) : (
+                    <ArrowForwardIcon style={{ color: "orange" }} />
+                  )}
+                </Typography>
+              </Box>
+              <Box sx={{ display: "grid" }}>
+                <Typography
+                  id="modal-modal-description"
+                  variant="h6"
+                  align="center"
+                  sx={{ alignSelf: "center", justifySelf: "center" }}
+                >
+                  Team
+                </Typography>
+
+                <Typography id="modal-modal-description" align="center">
+                  {taskResult1}
+                </Typography>
+              </Box>
+              <Box sx={{ display: "grid" }}>
+                <Typography
+                  id="modal-modal-description"
+                  variant="h6"
+                  align="center"
+                  sx={{ mt: 2 }}
+                >
+                  Assignies
+                </Typography>
+                <AvatarGroup max={4} sx={{ justifySelf: "center" }}>
+                  <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
+                  <Avatar
+                    alt="Travis Howard"
+                    src="/static/images/avatar/2.jpg"
+                  />
+                  <Avatar alt="Cindy Baker" src="/static/images/avatar/3.jpg" />
+                  <Avatar
+                    alt="Agnes Walker"
+                    src="/static/images/avatar/4.jpg"
+                  />
+                  <Avatar
+                    alt="Trevor Henderson"
+                    src="/static/images/avatar/5.jpg"
+                  />
+                </AvatarGroup>
+              </Box>
+            </Box>
           </Box>
         </Modal>
       </div>

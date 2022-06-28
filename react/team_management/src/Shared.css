@@ -6,6 +6,11 @@
   .overview-box{
     grid-template-columns: 1fr 1fr !important;
   }
+  .card-modal{
+    grid-template-columns: 7fr 3fr !important;
+    grid-template-rows: 1fr !important;
+
+  }
  
   
   #menu-button{

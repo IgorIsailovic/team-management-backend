@@ -31,6 +31,7 @@ import GroupsIcon from "@mui/icons-material/Groups";
 import ListSubheader from "@mui/material/ListSubheader";
 import Avatar from "@mui/material/Avatar";
 import AssignmentIcon from "@mui/icons-material/Assignment";
+import LogoutIcon from "@mui/icons-material/Logout";
 
 import { useEffect } from "react";
 
@@ -131,6 +132,10 @@ export default function MainPage() {
     }
   };
 
+  const logOut = () => {
+    localStorage.setItem("token", "");
+    window.location.replace("/");
+  };
   return (
     <Box sx={{ display: "flex" }}>
       <CssBaseline />
@@ -263,6 +268,15 @@ export default function MainPage() {
                 <PersonIcon />
               </ListItemIcon>
               <ListItemText primary="User Info" sx={{ color: mainColor }} />
+            </ListItemButton>
+            <ListItemButton
+              onClick={() => handleClickView(logOut)}
+              sx={{ backgroundColor: secondaryColor }}
+            >
+              <ListItemIcon sx={{ color: mainColor }}>
+                <LogoutIcon />
+              </ListItemIcon>
+              <ListItemText primary="Log Out" sx={{ color: mainColor }} />
             </ListItemButton>
           </List>
         </Box>
