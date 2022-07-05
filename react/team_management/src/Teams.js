@@ -22,15 +22,15 @@ export default function Teams({ data }) {
       }}
     >
       {data.teamUser.length > 0 ? (
-        data.teamUser.map((team, key) => (
+        data.teamUser.map((team) => (
           <IconButton
+            key={team.id}
             onClick={clicked}
             sx={{
               borderRadius: "0rem",
               boxShadow: "1px 3px 10px  #9E9E9E",
               backgroundColor: "white",
               width: "100%",
-
               marginBottom: "1rem",
               padding: "1.5rem",
               //gridColumn: "span 2",
@@ -42,6 +42,7 @@ export default function Teams({ data }) {
           >
             <GroupsIcon sx={{ margin: "0.5rem" }}></GroupsIcon>
             <Typography
+              key={team.id}
               variant="body1"
               fontFamily="Helvetica"
               color="inherit"

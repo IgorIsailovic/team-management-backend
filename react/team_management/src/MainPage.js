@@ -9,15 +9,10 @@ import MenuItem from "@mui/material/MenuItem";
 import Menu from "@mui/material/Menu";
 import CssBaseline from "@mui/material/CssBaseline";
 import List from "@mui/material/List";
-import Divider from "@mui/material/Divider";
-import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
-import InboxIcon from "@mui/icons-material/MoveToInbox";
-import MailIcon from "@mui/icons-material/Mail";
 import Drawer from "@mui/material/Drawer";
-import { useNavigate } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import PersonIcon from "@mui/icons-material/Person";
 import nikola from "./ceks.png";
@@ -32,15 +27,14 @@ import ListSubheader from "@mui/material/ListSubheader";
 import Avatar from "@mui/material/Avatar";
 import AssignmentIcon from "@mui/icons-material/Assignment";
 import LogoutIcon from "@mui/icons-material/Logout";
+import DashboardIcon from "@mui/icons-material/Dashboard";
 
 import { useEffect } from "react";
 
 const drawerWidth = 240;
-const mainColor = "black";
-const secondaryColor = "white";
 
 export default function MainPage() {
-  let token = localStorage.getItem("token");
+  //let token = localStorage.getItem("token");
   const [auth, setAuth] = useState(true);
   const [anchorEl, setAnchorEl] = useState(null);
   const [open, setOpen] = useState(false);
@@ -48,7 +42,7 @@ export default function MainPage() {
   const [drawer, setDrawer] = useState(null);
   const [margin, setMargin] = useState(null);
 
-  const navigate = useNavigate();
+  //const navigate = useNavigate();
 
   const location = useLocation();
   const data = location.state.data;
@@ -61,12 +55,12 @@ export default function MainPage() {
     setOpen(false);
   };
 
-  const handleChange = (event) => {
+  /*const handleChange = (event) => {
     setAuth(event.target.checked);
-  };
+  };*/
 
   const handleMenu = (event) => {
-    handleClickView("user");
+    handleClickView("userInfo");
   };
 
   const handleClose = () => {
@@ -100,7 +94,7 @@ export default function MainPage() {
         handleDrawerOpen();
         setDrawer(true);
         setMargin(0);
-      }
+      } else setMargin(`-${drawerWidth}px`);
     }
     closeDrawer();
   }, []);
@@ -143,7 +137,7 @@ export default function MainPage() {
         position="fixed"
         sx={{
           zIndex: (theme) => theme.zIndex.drawer + 1,
-          backgroundColor: mainColor,
+          backgroundColor: "primary.main",
         }}
       >
         <Toolbar>
@@ -178,7 +172,7 @@ export default function MainPage() {
                   alt={data.firstName.charAt(0) + data.lastName.charAt(0)}
                   src={getAvatar(data.username)}
                   sx={{
-                    color: mainColor,
+                    color: "primary.main",
                     bgcolor: "white",
                     justifySelf: "center",
                   }}
@@ -213,7 +207,7 @@ export default function MainPage() {
         open={open}
         PaperProps={{
           sx: {
-            backgroundColor: secondaryColor,
+            backgroundColor: "secondary.main",
           },
         }}
         sx={{
@@ -243,40 +237,52 @@ export default function MainPage() {
             }
           >
             <ListItemButton
-              onClick={() => handleClickView("teams")}
-              sx={{ backgroundColor: secondaryColor }}
+              onClick={() => handleClickView("user")}
+              sx={{ backgroundColor: "secondary.main" }}
             >
-              <ListItemIcon sx={{ color: mainColor }}>
+              <ListItemIcon sx={{ color: "primary.main" }}>
+                <DashboardIcon />
+              </ListItemIcon>
+              <ListItemText primary="Overview" sx={{ color: "primary.main" }} />
+            </ListItemButton>
+            <ListItemButton
+              onClick={() => handleClickView("teams")}
+              sx={{ backgroundColor: "secondary.main" }}
+            >
+              <ListItemIcon sx={{ color: "primary.main" }}>
                 <GroupsIcon />
               </ListItemIcon>
-              <ListItemText primary="Teams" sx={{ color: mainColor }} />
+              <ListItemText primary="Teams" sx={{ color: "primary.main" }} />
             </ListItemButton>
             <ListItemButton
               onClick={() => handleClickView("tasks")}
-              sx={{ backgroundColor: secondaryColor }}
+              sx={{ backgroundColor: "secondary.main" }}
             >
-              <ListItemIcon sx={{ color: mainColor }}>
+              <ListItemIcon sx={{ color: "primary.main" }}>
                 <AssignmentIcon />
               </ListItemIcon>
-              <ListItemText primary="Tasks" sx={{ color: mainColor }} />
+              <ListItemText primary="Tasks" sx={{ color: "primary.main" }} />
             </ListItemButton>
             <ListItemButton
               onClick={() => handleClickView("userInfo")}
-              sx={{ backgroundColor: secondaryColor }}
+              sx={{ backgroundColor: "secondary.main" }}
             >
-              <ListItemIcon sx={{ color: mainColor }}>
+              <ListItemIcon sx={{ color: "primary.main" }}>
                 <PersonIcon />
               </ListItemIcon>
-              <ListItemText primary="User Info" sx={{ color: mainColor }} />
+              <ListItemText
+                primary="User Info"
+                sx={{ color: "primary.main" }}
+              />
             </ListItemButton>
             <ListItemButton
               onClick={() => handleClickView(logOut)}
-              sx={{ backgroundColor: secondaryColor }}
+              sx={{ backgroundColor: "secondary.main" }}
             >
-              <ListItemIcon sx={{ color: mainColor }}>
+              <ListItemIcon sx={{ color: "primary.main" }}>
                 <LogoutIcon />
               </ListItemIcon>
-              <ListItemText primary="Log Out" sx={{ color: mainColor }} />
+              <ListItemText primary="Log Out" sx={{ color: "primary.main" }} />
             </ListItemButton>
           </List>
         </Box>

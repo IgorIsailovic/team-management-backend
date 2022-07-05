@@ -21,8 +21,9 @@ export default function Tasks({ data, status }) {
     >
       {data.taskUser.length > 0 ? (
         status === undefined ? (
-          data.taskUser.map((task, key) => (
+          data.taskUser.map((task) => (
             <Box
+              key={task.id}
               sx={{
                 alignSelf: "center",
                 justifySelf: "center",
@@ -30,13 +31,14 @@ export default function Tasks({ data, status }) {
                 height: "100%",
               }}
             >
-              <Task task={task}></Task>
+              <Task task={task} key={task.id}></Task>
             </Box>
           ))
         ) : (
-          data.taskUser.map((task, key) =>
+          data.taskUser.map((task) =>
             task.status === "INPROGRESS" ? (
               <Box
+                key={task.id}
                 sx={{
                   alignSelf: "center",
                   justifySelf: "center",
@@ -44,7 +46,7 @@ export default function Tasks({ data, status }) {
                   height: "100%",
                 }}
               >
-                <Task task={task}></Task>
+                <Task task={task} key={task.id}></Task>
               </Box>
             ) : null
           )

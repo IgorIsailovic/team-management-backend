@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import Avatar from "@mui/material/Avatar";
-import Button from "@mui/material/Button";
 import Card from "@mui/material/Card";
 import AssignmentIcon from "@mui/icons-material/Assignment";
 import HourglassBottomIcon from "@mui/icons-material/HourglassBottom";
@@ -13,12 +12,10 @@ import AvatarGroup from "@mui/material/AvatarGroup";
 import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
-import GroupsIcon from "@mui/icons-material/Groups";
-import Divider from "@mui/material/Divider";
 import nikola from "./ceks.png";
-import Igor from "./igor.png";
-import Milan from "./milan.png";
-
+import igor from "./igor.png";
+import milan from "./milan.png";
+import Tooltip from "@mui/material/Tooltip";
 const style = {
   position: "absolute",
   top: "50%",
@@ -27,36 +24,35 @@ const style = {
   width: "60%",
   bgcolor: "background.paper",
   boxShadow: "1px 3px 10px  #9E9E9E",
-
   p: 4,
   display: "grid",
   gridTemplateColumns: "1fr",
-  gridTemplateRows: "1fr 1fr",
+  gridTemplateRows: "1fr 2fr",
+  maxWidth: "50rem",
   minWidth: "20rem",
 };
 
 export default function Task({ task }) {
   const [taskResult, setTaskResult] = useState("");
   const [taskResult1, setTaskResult1] = useState("");
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
+  const [assigner, setAssigner] = useState("");
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
   function cardClick() {
     let token = localStorage.getItem("token");
     axios
-      .get(`http://localhost:8088/tasks/1`, {
+      .get(`http://localhost:8088/tasks/${task.id}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       })
       .then(function (response) {
-        console.log(`Task: ${response.data.team}`);
-        console.log(`Task: ${response.data.id}`);
         axios
           .all([
             axios.get(
-              `http://localhost:8088/users/getOne/${response.data.id}`,
+              `http://localhost:8088/users/getOne/${response.data.assigner}`,
               {
                 headers: {
                   Authorization: `Bearer ${token}`,
@@ -71,8 +67,9 @@ export default function Task({ task }) {
           ])
           .then(
             axios.spread((...responses) => {
-              setTaskResult(`${responses[0].data}}`);
+              setTaskResult(`${responses[0].data.username}`);
               setTaskResult1(` ${responses[1].data.name}`);
+              setAssigner(getAvatar(responses[0].data.username));
             })
           )
           .catch(function (error) {
@@ -85,6 +82,18 @@ export default function Task({ task }) {
     handleOpen();
   }
 
+  const getAvatar = (user) => {
+    switch (user) {
+      case "igor":
+        return igor;
+      case "nikola":
+        return nikola;
+      case "milan":
+        return milan;
+      default:
+        return null;
+    }
+  };
   return (
     <>
       <div>
@@ -109,47 +118,41 @@ export default function Task({ task }) {
             </Box>
 
             <Box sx={{ display: "grid" }}>
-              <Box sx={{ display: "grid" }}>
-                <Typography
-                  id="modal-modal-description"
-                  variant="h6"
-                  align="center"
-                  sx={{ mt: 2 }}
-                >
-                  Assigner
-                </Typography>
-                <Avatar
-                  src={Milan}
-                  sx={{
-                    bgcolor: "white",
-                    justifySelf: "center",
-                  }}
-                ></Avatar>
-              </Box>
-              <Box sx={{ display: "grid" }}>
+              <Box sx={{ display: "grid", mt: 2 }}>
                 <Typography
                   variant="h6"
                   id="modal-modal-description"
                   align="center"
-                  sx={{ mt: 2 }}
                 >
                   Priority
                 </Typography>
-                <Typography
-                  id="modal-modal-description"
-                  align="center"
-                  sx={{ mt: 2 }}
-                >
-                  {task.priority === "HIGH" ? (
-                    <ArrowUpwardIcon style={{ color: "red" }} />
-                  ) : task.priority === "LOW" ? (
-                    <ArrowDownwardIcon style={{ color: "green" }} />
-                  ) : (
-                    <ArrowForwardIcon style={{ color: "orange" }} />
-                  )}
-                </Typography>
+                {task.priority === "HIGH" ? (
+                  <ArrowUpwardIcon
+                    style={{
+                      color: "red",
+                      alignSelf: "center",
+                      justifySelf: "center",
+                    }}
+                  />
+                ) : task.priority === "LOW" ? (
+                  <ArrowDownwardIcon
+                    style={{
+                      color: "green",
+                      alignSelf: "center",
+                      justifySelf: "center",
+                    }}
+                  />
+                ) : (
+                  <ArrowForwardIcon
+                    style={{
+                      color: "orange",
+                      alignSelf: "center",
+                      justifySelf: "center",
+                    }}
+                  />
+                )}
               </Box>
-              <Box sx={{ display: "grid" }}>
+              <Box sx={{ display: "grid", mt: 2 }}>
                 <Typography
                   id="modal-modal-description"
                   variant="h6"
@@ -163,12 +166,30 @@ export default function Task({ task }) {
                   {taskResult1}
                 </Typography>
               </Box>
-              <Box sx={{ display: "grid" }}>
+              <Box sx={{ display: "grid", mt: 2 }}>
                 <Typography
                   id="modal-modal-description"
                   variant="h6"
                   align="center"
-                  sx={{ mt: 2 }}
+                >
+                  Assigner
+                </Typography>
+                <Tooltip title={taskResult}>
+                  <Avatar
+                    src={assigner}
+                    sx={{
+                      bgcolor: "white",
+                      justifySelf: "center",
+                    }}
+                  ></Avatar>
+                </Tooltip>
+              </Box>
+              <Box sx={{ display: "grid", mt: 2 }}>
+                <Typography
+                  id="modal-modal-description"
+                  variant="h6"
+                  align="center"
+                  //sx={{ mt: 2 }}
                 >
                   Assignies
                 </Typography>
@@ -309,6 +330,7 @@ export default function Task({ task }) {
             )}
           </Avatar>
         </Box>
+        {/*
         <Typography
           variant="body2"
           fontFamily="Helvetica"
@@ -351,6 +373,7 @@ export default function Task({ task }) {
         >
           {`Assigner id: ${task.assigner_id}`}
         </Typography>
+        */}
       </Card>
     </>
   );
