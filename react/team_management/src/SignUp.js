@@ -9,21 +9,9 @@ import Box from "@mui/material/Box";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
 
 import Copyright from "./Copyright";
 
-/*const theme = createTheme({
-  palette: {
-    primary: {
-      main: "#000000",
-    },
-    secondary: {
-      main: "#ffffff",
-    },
-  },
-});
-*/
 
 export default function SignUp() {
   const [username, setUsername] = useState("");
@@ -76,7 +64,6 @@ export default function SignUp() {
   };
 
   return (
-    // <ThemeProvider theme={theme}>
     <Container component="main" maxWidth="xs">
       <CssBaseline />
       <Box
@@ -195,6 +182,5 @@ export default function SignUp() {
       </Box>
       <Copyright sx={{ mt: 5 }} />
     </Container>
-    // </ThemeProvider>
   );
 }
