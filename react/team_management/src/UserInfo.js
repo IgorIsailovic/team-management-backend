@@ -1,28 +1,15 @@
 import React from "react";
 import Avatar from "@mui/material/Avatar";
-import Link from "@mui/material/Link";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
 import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
-import Card from "@mui/material/Card";
-import AssignmentIcon from "@mui/icons-material/Assignment";
 import "./UserPage.css";
-import jwt_decode from "jwt-decode";
-import { useNavigate } from "react-router-dom";
-import BottomNavigation from "@mui/material/BottomNavigation";
-import HourglassBottomIcon from "@mui/icons-material/HourglassBottom";
-import CheckIcon from "@mui/icons-material/Check";
-import Modal from "@mui/material/Modal";
-import PersonIcon from "@mui/icons-material/Person";
 import nikola from "./ceks.png";
 import igor from "./igor.png";
 import milan from "./milan.png";
-import Tasks from "./Tasks";
-import Teams from "./Teams";
 import AlternateEmailIcon from "@mui/icons-material/AlternateEmail";
 import Typography from "@mui/material/Typography";
-import ContactMailIcon from "@mui/icons-material/ContactMail";
 import Divider from "@mui/material/Divider";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import AttributionIcon from "@mui/icons-material/Attribution";
 
 export default function userInfo({ data }) {
   const getAvatar = (user) => {
@@ -82,9 +69,9 @@ export default function userInfo({ data }) {
             gridGap: "1rem",
           }}
         >
-          <PersonIcon
-            sx={{ alignSelf: "start", justifySelf: "start", color: "black" }}
-          ></PersonIcon>
+          <AccountCircleIcon
+            sx={{ alignSelf: "start", justifySelf: "center", color: "black" }}
+          ></AccountCircleIcon>
           <Typography
             variant="body1"
             fontFamily="Helvetica"
@@ -105,7 +92,7 @@ export default function userInfo({ data }) {
           }}
         >
           <AlternateEmailIcon
-            sx={{ alignSelf: "start", justifySelf: "start", color: "black" }}
+            sx={{ alignSelf: "start", justifySelf: "center", color: "black" }}
           ></AlternateEmailIcon>
           <Typography
             variant="body1"
@@ -126,9 +113,9 @@ export default function userInfo({ data }) {
             gridGap: "1rem",
           }}
         >
-          <ContactMailIcon
-            sx={{ alignSelf: "center", justifySelf: "start", color: "black" }}
-          ></ContactMailIcon>
+          <AttributionIcon
+            sx={{ alignSelf: "center", justifySelf: "center", color: "black" }}
+          ></AttributionIcon>
           <Typography
             variant="body1"
             fontFamily="Helvetica"

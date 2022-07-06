@@ -28,6 +28,7 @@ import Avatar from "@mui/material/Avatar";
 import AssignmentIcon from "@mui/icons-material/Assignment";
 import LogoutIcon from "@mui/icons-material/Logout";
 import DashboardIcon from "@mui/icons-material/Dashboard";
+import jwt_decode from "jwt-decode";
 
 import { useEffect } from "react";
 
@@ -130,6 +131,21 @@ export default function MainPage() {
     localStorage.setItem("token", "");
     window.location.replace("/");
   };
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      let token = localStorage.getItem("token");
+      let decoded = jwt_decode(token);
+      let exp = decoded.exp;
+      let date = Date.now();
+      let dateCut = Math.round(date / 1000);
+      exp < dateCut ? logOut() : console.log("ok");
+      console.log(exp);
+      console.log(dateCut);
+    }, 10000);
+    return () => clearInterval(interval);
+  }, []);
+
   return (
     <Box sx={{ display: "flex" }}>
       <CssBaseline />

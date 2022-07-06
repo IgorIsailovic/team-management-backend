@@ -57,7 +57,7 @@ export default function SignIn() {
     );
   }
 
-  function handlePasswordUpdate() {
+  /*function handlePasswordUpdate() {
     axios
       .get(`http://localhost:8088/users/getByName/${username}`)
       .then(function (response) {
@@ -74,7 +74,7 @@ export default function SignIn() {
         console.log(error);
       });
   }
-
+*/
   function handleSubmit(event) {
     event.preventDefault();
     axios
