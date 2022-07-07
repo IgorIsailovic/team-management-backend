@@ -29,7 +29,6 @@ import AssignmentIcon from "@mui/icons-material/Assignment";
 import LogoutIcon from "@mui/icons-material/Logout";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import jwt_decode from "jwt-decode";
-
 import { useEffect } from "react";
 
 const drawerWidth = 240;
@@ -139,9 +138,7 @@ export default function MainPage() {
       let exp = decoded.exp;
       let date = Date.now();
       let dateCut = Math.round(date / 1000);
-      exp < dateCut ? logOut() : console.log("ok");
-      console.log(exp);
-      console.log(dateCut);
+      if (exp < dateCut) logOut();
     }, 10000);
     return () => clearInterval(interval);
   }, []);

@@ -8,8 +8,10 @@
   }
   .card-modal{
     grid-template-columns: 7fr 3fr !important;
-    grid-template-rows: 1fr !important;
-
+    grid-template-rows: 2fr !important;
+  }
+  .modal-header{
+    grid-column: 1 / -1 !important;
   }
  
   
