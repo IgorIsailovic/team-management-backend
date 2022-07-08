@@ -17,7 +17,7 @@ export default function Teams({ data }) {
         //marginTop: "1rem",
         // maxWidth: "100rem",
         //marginBottom: "2rem",
-        minWidth: "20rem",
+        //minWidth: "17rem",
         //gridColumn: "1 / -1",
       }}
     >

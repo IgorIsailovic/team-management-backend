@@ -33,6 +33,9 @@ const style = {
   display: "grid",
   gridTemplateColumns: "1fr",
   gridTemplateRows: "auto auto 3fr",
+  overflow: "scroll",
+
+  maxHeight: "80%",
   maxWidth: "50rem",
   minWidth: "20rem",
 };
@@ -45,8 +48,25 @@ export default function Task({ task }) {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
+  function deleteTask() {
+    let token = localStorage.getItem("token");
+    axios
+      .delete(`http://localhost:8088/tasks/${task.id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then(function (response) {
+        console.log("task deleted");
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  }
+
   function cardClick() {
     let token = localStorage.getItem("token");
+    console.log(task.id);
     axios
       .get(`http://localhost:8088/tasks/${task.id}`, {
         headers: {
@@ -141,7 +161,7 @@ export default function Task({ task }) {
                       justifySelf: "center",
                       color: "primary.main",
                     }}
-                    onClick={null}
+                    onClick={deleteTask}
                   >
                     <DeleteForeverIcon></DeleteForeverIcon>
                   </IconButton>
@@ -221,7 +241,6 @@ export default function Task({ task }) {
               </Box>
               <Box sx={{ display: "grid", m: 1 }}>
                 <Typography
-                  id="modal-modal-description"
                   variant="h6"
                   align="center"
                   fontWeight={600}
@@ -230,22 +249,33 @@ export default function Task({ task }) {
                   Team
                 </Typography>
 
-                <Typography
-                  id="modal-modal-description"
-                  align="center"
-                  sx={{ m: 1 }}
-                >
+                <Typography align="center" sx={{ m: 1 }}>
                   {taskResult1}
                 </Typography>
               </Box>
               <Box sx={{ display: "grid", m: 1 }}>
                 <Typography
-                  id="modal-modal-description"
                   variant="h6"
-                  fontWeight={600}
                   align="center"
-                  m="1"
+                  fontWeight={600}
+                  sx={{ alignSelf: "center", justifySelf: "center", m: 1 }}
                 >
+                  Status
+                </Typography>
+                <Typography
+                  color="inherit"
+                  align="center"
+                  sx={{
+                    alignSelf: "center",
+                    justifySelf: "center",
+                    marginBottom: "1rem",
+                  }}
+                >
+                  {task.status}
+                </Typography>
+              </Box>
+              <Box sx={{ display: "grid", m: 1 }}>
+                <Typography variant="h6" fontWeight={600} align="center" m="1">
                   Assigner
                 </Typography>
                 <Tooltip title={taskResult}>
@@ -261,7 +291,6 @@ export default function Task({ task }) {
               </Box>
               <Box sx={{ display: "grid", m: 1 }}>
                 <Typography
-                  id="modal-modal-description"
                   variant="h6"
                   fontWeight={600}
                   align="center"
