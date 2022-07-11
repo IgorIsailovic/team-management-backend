@@ -1,9 +1,6 @@
 import React from "react";
 import Avatar from "@mui/material/Avatar";
 import Card from "@mui/material/Card";
-import AssignmentIcon from "@mui/icons-material/Assignment";
-import HourglassBottomIcon from "@mui/icons-material/HourglassBottom";
-import CheckIcon from "@mui/icons-material/Check";
 import Typography from "@mui/material/Typography";
 import { Box } from "@mui/material";
 import AvatarGroup from "@mui/material/AvatarGroup";

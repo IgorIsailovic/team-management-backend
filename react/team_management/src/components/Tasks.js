@@ -3,7 +3,7 @@ import Typography from "@mui/material/Typography";
 
 import Task from "./Task";
 import Box from "@mui/material/Box";
-import "./Shared.css";
+import "../styles/Shared.css";
 
 export default function Tasks({ data, status }) {
   const backlog = data.taskUser.filter((task) => task.status === "BACKLOG");
@@ -25,6 +25,7 @@ export default function Tasks({ data, status }) {
           height: "100%",
           background: "#F1F1F1",
           padding: "1rem",
+          minHeight: "14rem",
         }}
       >
         <Typography

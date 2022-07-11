@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import axios from "axios";
-import nikola from "./ceks.png";
-import igor from "./igor.png";
-import milan from "./milan.png";
+import nikola from "../images/ceks.png";
+import igor from "../images/igor.png";
+import milan from "../images/milan.png";
 import TaskModal from "./TaskModal";
 import TaskCard from "./TaskCard";
 

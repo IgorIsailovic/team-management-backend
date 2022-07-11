@@ -1,10 +1,10 @@
 import React from "react";
 import Avatar from "@mui/material/Avatar";
 import Box from "@mui/material/Box";
-import "./UserPage.css";
-import nikola from "./ceks.png";
-import igor from "./igor.png";
-import milan from "./milan.png";
+import "../styles/UserPage.css";
+import nikola from "../images/ceks.png";
+import igor from "../images/igor.png";
+import milan from "../images/milan.png";
 import AlternateEmailIcon from "@mui/icons-material/AlternateEmail";
 import Typography from "@mui/material/Typography";
 import Divider from "@mui/material/Divider";

@@ -1,9 +1,9 @@
-import "./App.css";
-import SignIn from "./SignIn";
-import SignUp from "./SignUp";
-import UserPage from "./UserPage";
+import "./styles/App.css";
+import SignIn from "./components/SignIn";
+import SignUp from "./components/SignUp";
+import UserPage from "./components/UserPage";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import MainPage from "./MainPage";
+import MainPage from "./components/MainPage";
 
 function App() {
   return (

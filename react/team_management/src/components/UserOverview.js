@@ -3,7 +3,7 @@ import Box from "@mui/material/Box";
 import UserInfo from "./UserInfo";
 import Teams from "./Teams";
 import Tasks from "./Tasks";
-import "./Shared.css";
+import "../styles/Shared.css";
 
 export default function UserOverview({ data }) {
   return (

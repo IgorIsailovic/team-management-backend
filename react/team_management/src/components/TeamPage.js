@@ -1,27 +1,11 @@
 import React, { useState } from "react";
 import { styled, useTheme } from "@mui/material/styles";
 import Box from "@mui/material/Box";
-import Drawer from "@mui/material/Drawer";
 import CssBaseline from "@mui/material/CssBaseline";
 import MuiAppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
-import List from "@mui/material/List";
 import Typography from "@mui/material/Typography";
-import Divider from "@mui/material/Divider";
-import IconButton from "@mui/material/IconButton";
-import MenuIcon from "@mui/icons-material/Menu";
-import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
-import ChevronRightIcon from "@mui/icons-material/ChevronRight";
-import ListItemButton from "@mui/material/ListItemButton";
-import ListItemIcon from "@mui/material/ListItemIcon";
-import ListItemText from "@mui/material/ListItemText";
 import { useLocation } from "react-router-dom";
-import axios from "axios";
-import GroupsIcon from "@mui/icons-material/Groups";
-import ListSubheader from "@mui/material/ListSubheader";
-import ExpandLess from "@mui/icons-material/ExpandLess";
-import ExpandMore from "@mui/icons-material/ExpandMore";
-import Collapse from "@mui/material/Collapse";
 import Avatar from "@mui/material/Avatar";
 import Link from "@mui/material/Link";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
@@ -29,7 +13,7 @@ import Container from "@mui/material/Container";
 import Button from "@mui/material/Button";
 import Card from "@mui/material/Card";
 import AssignmentIcon from "@mui/icons-material/Assignment";
-import "./TeamPage.css";
+import "../styles/TeamPage.css";
 
 const drawerWidth = 240;
 
