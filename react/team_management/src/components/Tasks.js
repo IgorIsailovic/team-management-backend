@@ -1,9 +1,12 @@
-import React from "react";
+import React, { useState } from "react";
 import Typography from "@mui/material/Typography";
-
 import Task from "./Task";
 import Box from "@mui/material/Box";
 import "../styles/Shared.css";
+import Fab from "@mui/material/Fab";
+import AddIcon from "@mui/icons-material/Add";
+import NewTask from "./NewTask";
+import jwt_decode from "jwt-decode";
 
 export default function Tasks({ data, status }) {
   const backlog = data.taskUser.filter((task) => task.status === "BACKLOG");
@@ -12,6 +15,32 @@ export default function Tasks({ data, status }) {
     (task) => task.status === "INPROGRESS"
   );
   const finished = data.taskUser.filter((task) => task.status === "FINISHED");
+
+  const handleOpenNew = () => setOpenNew(true);
+  const handleCloseNew = (
+    setTaskName,
+    setTaskDescription,
+    setPriority,
+    setStatus,
+    setTeam,
+    setAssagnies
+  ) => {
+    setOpenNew(false);
+    setTaskName("");
+    setTaskDescription("");
+    setPriority("");
+    setStatus("");
+    setTeam("");
+    setAssagnies([]);
+  };
+  const [openNew, setOpenNew] = useState(false);
+
+  const getRole = () => {
+    let token = localStorage.getItem("token");
+    let decoded = jwt_decode(token);
+    let roles = decoded.roles[0].authority;
+    return roles;
+  };
 
   const taskStatus = (status, name) => {
     return (
@@ -56,6 +85,21 @@ export default function Tasks({ data, status }) {
         gridColumn: "1 / -1",
       }}
     >
+      {getRole() === "Admin" ? (
+        <Fab
+          color="primary"
+          aria-label="add"
+          sx={{ position: "fixed", bottom: 50, right: 50 }}
+          onClick={handleOpenNew}
+        >
+          <AddIcon />
+        </Fab>
+      ) : null}
+      <NewTask
+        open={openNew}
+        handleClose={handleCloseNew}
+        userData={data}
+      ></NewTask>
       {data.taskUser.length > 0 ? (
         status === undefined ? (
           <>

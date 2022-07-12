@@ -94,7 +94,7 @@ public class UserController {
     	}
     	else { 
     		try {
-    		userService.addUserToteam(user_id, team_id);
+    		userService.addUserToTeam(user_id, team_id);
     		return new ResponseEntity<>("Uspešno ste dodali usera u team!" ,HttpStatus.OK);
     		}
     		catch (Exception e) {
@@ -103,6 +103,23 @@ public class UserController {
     	}
     	}
 
+    @GetMapping("/addUserToTask/{user_id}/{task_id}")
+    public ResponseEntity<String> addUserToTask(@PathVariable long user_id, @PathVariable long task_id) {
+    	
+    	if(userService.checkUserToTask(user_id, task_id)) {
+    		return new ResponseEntity<>("Ovaj user je već u tom tasku!" ,HttpStatus.BAD_REQUEST);
+    	}
+    	else { 
+    		try {
+    		userService.addUserToTask(user_id, task_id);
+    		return new ResponseEntity<>("Uspešno ste dodali usera u task!" ,HttpStatus.OK);
+    		}
+    		catch (Exception e) {
+        		return new ResponseEntity<>("Neuspešno dodavanje usera u task!" ,HttpStatus.BAD_REQUEST);
+			}
+    	}
+    	}
+    
     @PutMapping("/updatePassword/{id}")
     public ResponseEntity<String> updateUser(@RequestBody String password, @PathVariable Long id) {
         userService.updateUser(id, password);

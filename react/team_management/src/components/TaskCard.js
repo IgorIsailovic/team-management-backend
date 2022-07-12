@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Avatar from "@mui/material/Avatar";
 import Card from "@mui/material/Card";
 import Typography from "@mui/material/Typography";
@@ -7,8 +7,19 @@ import AvatarGroup from "@mui/material/AvatarGroup";
 import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
+import Tooltip from "@mui/material/Tooltip";
 
-export default function TaskCard({ task, cardClick }) {
+export default function TaskCard({
+  task,
+  cardClick,
+  getAssagnies,
+  assagnies,
+  getAvatar,
+}) {
+  useEffect(() => {
+    getAssagnies();
+  }, []);
+
   return (
     <Card
       //variant="outlined"
@@ -89,11 +100,17 @@ export default function TaskCard({ task, cardClick }) {
             "& .MuiAvatar-root": { width: 24, height: 24, fontSize: 15 },
           }}
         >
-          <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
-          <Avatar alt="Travis Howard" src="/static/images/avatar/2.jpg" />
-          <Avatar alt="Cindy Baker" src="/static/images/avatar/3.jpg" />
-          <Avatar alt="Agnes Walker" src="/static/images/avatar/4.jpg" />
-          <Avatar alt="Trevor Henderson" src="/static/images/avatar/5.jpg" />
+          {assagnies.map((assignee) => {
+            return (
+              <Tooltip title={assignee.firstName}>
+                <Avatar
+                  key={assignee.id}
+                  alt={assignee.firstName + assignee.lastName}
+                  src={getAvatar(assignee.username)}
+                />
+              </Tooltip>
+            );
+          })}
         </AvatarGroup>
       </Box>
     </Card>

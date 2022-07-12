@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import nikola from "../images/ceks.png";
 import igor from "../images/igor.png";
@@ -13,6 +13,7 @@ export default function Task({ task }) {
   const [assigner, setAssigner] = useState("");
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+  const [assagnies, setAssagnies] = useState([]);
 
   function cardClick() {
     let token = localStorage.getItem("token");
@@ -42,7 +43,7 @@ export default function Task({ task }) {
           ])
           .then(
             axios.spread((...responses) => {
-              setTaskResult(`${responses[0].data.username}`);
+              setTaskResult(`${responses[0].data.firstName}`);
               setTaskResult1(` ${responses[1].data.name}`);
               setAssigner(getAvatar(responses[0].data.username));
             })
@@ -56,6 +57,26 @@ export default function Task({ task }) {
       });
     handleOpen();
   }
+
+  const getAssagnies = () => {
+    let token = localStorage.getItem("token");
+    axios
+      .get(`http://localhost:8088/users/getUsersForTask/${task.id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then(function (response) {
+        setAssagnies(response.data);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  };
+
+  useEffect(() => {
+    getAssagnies();
+  }, []);
 
   const getAvatar = (user) => {
     switch (user) {
@@ -80,8 +101,17 @@ export default function Task({ task }) {
           taskResult={taskResult}
           taskResult1={taskResult1}
           assigner={assigner}
+          getAssagnies={getAssagnies}
+          assagnies={assagnies}
+          getAvatar={getAvatar}
         ></TaskModal>
-        <TaskCard task={task} cardClick={cardClick}></TaskCard>
+        <TaskCard
+          task={task}
+          cardClick={cardClick}
+          getAssagnies={getAssagnies}
+          assagnies={assagnies}
+          getAvatar={getAvatar}
+        ></TaskCard>
       </div>
     </>
   );

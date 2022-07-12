@@ -21,6 +21,9 @@ export default function TaskModal({
   taskResult,
   taskResult1,
   assigner,
+  getAssagnies,
+  assagnies,
+  getAvatar,
 }) {
   const style = {
     position: "absolute",
@@ -64,6 +67,18 @@ export default function TaskModal({
       });
   }
 
+  const statusParser = (status) => {
+    let firstLetter = status.charAt(0);
+    let secondLetter = status.charAt(1).toLowerCase();
+    let rest = status.slice(2);
+    rest = rest.toLowerCase();
+    let parsed =
+      status === "INPROGRESS"
+        ? `${firstLetter}${secondLetter} ${rest}`
+        : `${firstLetter}${secondLetter}${rest}`;
+    return parsed;
+  };
+
   return (
     <Modal open={open} onClose={handleClose}>
       <Box sx={style} className="card-modal">
@@ -81,39 +96,45 @@ export default function TaskModal({
           </Typography>
           {getRole() === "Admin" ? (
             <>
-              <IconButton
-                sx={{
-                  alignSelf: "start",
-                  justifySelf: "center",
-                  color: "primary.main",
-                }}
-                onClick={null}
-              >
-                <EditIcon></EditIcon>
-              </IconButton>
-              <IconButton
-                sx={{
-                  alignSelf: "start",
-                  justifySelf: "center",
-                  color: "primary.main",
-                }}
-                onClick={deleteTask}
-              >
-                <DeleteForeverIcon></DeleteForeverIcon>
-              </IconButton>
+              <Tooltip title="Edit">
+                <IconButton
+                  sx={{
+                    alignSelf: "start",
+                    justifySelf: "center",
+                    color: "primary.main",
+                  }}
+                  onClick={null}
+                >
+                  <EditIcon></EditIcon>
+                </IconButton>
+              </Tooltip>
+              <Tooltip title="Delete">
+                <IconButton
+                  sx={{
+                    alignSelf: "start",
+                    justifySelf: "center",
+                    color: "primary.main",
+                  }}
+                  onClick={deleteTask}
+                >
+                  <DeleteForeverIcon></DeleteForeverIcon>
+                </IconButton>
+              </Tooltip>
             </>
           ) : null}
-          <IconButton
-            sx={{
-              alignSelf: "start",
-              justifySelf: "center",
-              color: "primary.main",
-              gridColumn: "4/-1",
-            }}
-            onClick={handleClose}
-          >
-            <CloseIcon></CloseIcon>
-          </IconButton>
+          <Tooltip title="Close">
+            <IconButton
+              sx={{
+                alignSelf: "start",
+                justifySelf: "center",
+                color: "primary.main",
+                gridColumn: "4/-1",
+              }}
+              onClick={handleClose}
+            >
+              <CloseIcon></CloseIcon>
+            </IconButton>
+          </Tooltip>
         </Box>
         <Box sx={{ m: 2 }}>
           <Typography
@@ -137,7 +158,7 @@ export default function TaskModal({
         <Box sx={{ display: "grid" }}>
           <Box sx={{ display: "grid", m: 1 }}>
             <Typography
-              variant="h6"
+              variant="h7"
               id="modal-modal-description"
               align="center"
               fontWeight={600}
@@ -176,7 +197,7 @@ export default function TaskModal({
           </Box>
           <Box sx={{ display: "grid", m: 1 }}>
             <Typography
-              variant="h6"
+              variant="h7"
               align="center"
               fontWeight={600}
               sx={{ alignSelf: "center", justifySelf: "center", m: 1 }}
@@ -190,7 +211,7 @@ export default function TaskModal({
           </Box>
           <Box sx={{ display: "grid", m: 1 }}>
             <Typography
-              variant="h6"
+              variant="h7"
               align="center"
               fontWeight={600}
               sx={{ alignSelf: "center", justifySelf: "center", m: 1 }}
@@ -206,11 +227,32 @@ export default function TaskModal({
                 marginBottom: "1rem",
               }}
             >
-              {task.status}
+              {statusParser(task.status)}
             </Typography>
           </Box>
           <Box sx={{ display: "grid", m: 1 }}>
-            <Typography variant="h6" fontWeight={600} align="center" m="1">
+            <Typography
+              variant="h7"
+              align="center"
+              fontWeight={600}
+              sx={{ alignSelf: "center", justifySelf: "center", m: 1 }}
+            >
+              Estimated duration (h)
+            </Typography>
+            <Typography
+              color="inherit"
+              align="center"
+              sx={{
+                alignSelf: "center",
+                justifySelf: "center",
+                marginBottom: "1rem",
+              }}
+            >
+              {task.est_dur}
+            </Typography>
+          </Box>
+          <Box sx={{ display: "grid", m: 1 }}>
+            <Typography variant="h7" fontWeight={600} align="center" m="1">
               Assigner
             </Typography>
             <Tooltip title={taskResult}>
@@ -226,22 +268,31 @@ export default function TaskModal({
           </Box>
           <Box sx={{ display: "grid", m: 1 }}>
             <Typography
-              variant="h6"
+              variant="h7"
               fontWeight={600}
               align="center"
               sx={{ m: 1 }}
             >
               Assignies
             </Typography>
-            <AvatarGroup max={4} sx={{ justifySelf: "center", m: 1 }}>
-              <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
-              <Avatar alt="Travis Howard" src="/static/images/avatar/2.jpg" />
-              <Avatar alt="Cindy Baker" src="/static/images/avatar/3.jpg" />
-              <Avatar alt="Agnes Walker" src="/static/images/avatar/4.jpg" />
-              <Avatar
-                alt="Trevor Henderson"
-                src="/static/images/avatar/5.jpg"
-              />
+            <AvatarGroup
+              max={4}
+              sx={{
+                justifySelf: "center",
+                m: 1,
+              }}
+            >
+              {assagnies.map((assignee) => {
+                return (
+                  <Tooltip title={assignee.firstName}>
+                    <Avatar
+                      key={assignee.id}
+                      alt={assignee.firstName + assignee.lastName}
+                      src={getAvatar(assignee.username)}
+                    />
+                  </Tooltip>
+                );
+              })}
             </AvatarGroup>
           </Box>
         </Box>

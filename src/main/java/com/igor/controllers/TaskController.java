@@ -57,9 +57,9 @@ public class TaskController {
 	    }
 	 
 	 @PostMapping("/addTask")
-	    public ResponseEntity<String> addTask(@RequestBody Task task) {
+	    public ResponseEntity<Long> addTask(@RequestBody Task task) {
 	        taskService.addTask(task);
-	        return ResponseEntity.ok().body("Succesffuly added task!");
+	        return ResponseEntity.ok().body(task.getId());
 	    }
 	 
 	 @PutMapping("/{id}")

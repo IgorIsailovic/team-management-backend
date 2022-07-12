@@ -169,15 +169,23 @@ public class UserServiceImpl implements UserService {
 			return "OK";
 		}
 
-		public void addUserToteam(long user_id, long team_id) {
+		public void addUserToTeam(long user_id, long team_id) {
 	    	 userRepository.addUserToTeam(user_id, team_id);
 	    	
 	    }
 		
+		public void addUserToTask(long user_id, long task_id) {
+	    	 userRepository.addUserToTask(user_id, task_id);
+	    	
+	    }
 	public boolean checkUserToTeam(long user_id, long team_id) {
 			return userRepository.checkUserToTeam(user_id, team_id);
 		}
 	
+	public boolean checkUserToTask(long user_id, long task_id) {
+		return userRepository.checkUserToTask(user_id, task_id);
+	}
+
 	
 	public User updateUser(Long id, String password) {
 		User user = userRepository.findById(id).get();
