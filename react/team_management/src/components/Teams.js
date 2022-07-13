@@ -45,7 +45,7 @@ export default function Teams({ data }) {
               key={team.id}
               variant="body1"
               fontFamily="Helvetica"
-              color="inherit"
+              color="primary.main"
               align="center"
               fontWeight={700}
               sx={{ alignSelf: "center", justifySelf: "center" }}

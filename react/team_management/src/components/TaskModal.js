@@ -284,7 +284,7 @@ export default function TaskModal({
             >
               {assagnies.map((assignee) => {
                 return (
-                  <Tooltip title={assignee.firstName}>
+                  <Tooltip key={assignee.id} title={assignee.firstName}>
                     <Avatar
                       key={assignee.id}
                       alt={assignee.firstName + assignee.lastName}

@@ -55,6 +55,7 @@ export default function Tasks({ data, status }) {
           background: "#F1F1F1",
           padding: "1rem",
           minHeight: "14rem",
+          gridAutoRows: "min-content",
         }}
       >
         <Typography

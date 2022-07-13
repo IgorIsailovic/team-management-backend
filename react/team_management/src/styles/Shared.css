@@ -1,7 +1,7 @@
 
 @media (min-width: 58rem) {
   .tasks{
-    grid-template-columns: 1fr 1fr !important;
+    grid-template-columns: auto auto !important;
   }
   .overview-box{
     grid-template-columns: 1fr 1fr !important;

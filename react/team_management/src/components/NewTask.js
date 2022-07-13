@@ -225,6 +225,7 @@ export default function NewTask({ open, handleClose, userData }) {
               autoFocus
               value={taskDescription}
               onChange={(e) => setTaskDescription(e.target.value)}
+              inputProps={{ maxLength: 254 }}
             />
           </Box>
         </Box>
