@@ -24,6 +24,8 @@ export default function NewTask({ open, handleClose, userData }) {
   const [assignies, setAssagnies] = useState([]);
   const [assignie, setAssagnie] = useState([]);
 
+  const url = "http://192.168.0.22:8088";
+
   const localHandleClose = () => {
     handleClose(
       setTaskName,
@@ -79,7 +81,7 @@ export default function NewTask({ open, handleClose, userData }) {
   const getUsers = () => {
     let token = localStorage.getItem("token");
     axios
-      .get(`http://localhost:8088/users/`, {
+      .get(`${url}/users/`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -123,7 +125,7 @@ export default function NewTask({ open, handleClose, userData }) {
 
     var config1 = {
       method: "post",
-      url: "http://localhost:8088/tasks/addTask",
+      url: `${url}/tasks/addTask`,
       headers: {
         Authorization: `Bearer ${token}`,
         "Content-Type": "application/json",
@@ -136,14 +138,11 @@ export default function NewTask({ open, handleClose, userData }) {
       .then(function (response) {
         console.log(JSON.stringify(response.data));
         axios
-          .get(
-            `http://localhost:8088/users/addUserToTask/${assignie}/${response.data}`,
-            {
-              headers: {
-                Authorization: `Bearer ${token}`,
-              },
-            }
-          )
+          .get(`${url}/users/addUserToTask/${assignie}/${response.data}`, {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          })
           .then(function (response) {
             console.log(response);
           })

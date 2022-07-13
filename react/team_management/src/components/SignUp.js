@@ -12,6 +12,8 @@ import Container from "@mui/material/Container";
 import Copyright from "./Copyright";
 import { Navigate } from "react-router-dom";
 
+const url = "http://192.168.0.22:8088";
+
 export default function SignUp() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -32,7 +34,7 @@ export default function SignUp() {
 
   let config = {
     method: "post",
-    url: "http://localhost:8088/users/signup",
+    url: `${url}/users/signup`,
     headers: {
       "Content-Type": "application/json",
     },

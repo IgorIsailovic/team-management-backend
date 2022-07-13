@@ -15,11 +15,13 @@ export default function Task({ task }) {
   const handleClose = () => setOpen(false);
   const [assagnies, setAssagnies] = useState([]);
 
+  const url = "http://192.168.0.22:8088";
+
   function cardClick() {
     let token = localStorage.getItem("token");
     console.log(task.id);
     axios
-      .get(`http://localhost:8088/tasks/${task.id}`, {
+      .get(`${url}/tasks/${task.id}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -27,15 +29,12 @@ export default function Task({ task }) {
       .then(function (response) {
         axios
           .all([
-            axios.get(
-              `http://localhost:8088/users/getOne/${response.data.assigner}`,
-              {
-                headers: {
-                  Authorization: `Bearer ${token}`,
-                },
-              }
-            ),
-            axios.get(`http://localhost:8088/teams/${response.data.team}`, {
+            axios.get(`${url}/users/getOne/${response.data.assigner}`, {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            }),
+            axios.get(`${url}/teams/${response.data.team}`, {
               headers: {
                 Authorization: `Bearer ${token}`,
               },
@@ -61,7 +60,7 @@ export default function Task({ task }) {
   const getAssagnies = () => {
     let token = localStorage.getItem("token");
     axios
-      .get(`http://localhost:8088/users/getUsersForTask/${task.id}`, {
+      .get(`${url}/users/getUsersForTask/${task.id}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

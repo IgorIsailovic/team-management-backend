@@ -16,6 +16,8 @@ import { Alert, AlertTitle } from "@mui/material";
 import Modal from "@mui/material/Modal";
 import Copyright from "./Copyright";
 
+const url = "http://192.168.0.22:8088";
+
 export default function SignIn() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -77,8 +79,9 @@ export default function SignIn() {
 */
   function handleSubmit(event) {
     event.preventDefault();
+    console.log(url);
     axios
-      .post(`http://${window.location.hostname}:8088/users/signin`, {
+      .post(`${url}/users/signin`, {
         username: username,
         password: password,
       })
@@ -94,14 +97,11 @@ export default function SignIn() {
         let exp = decoded.exp;
         console.log(user);
         axios
-          .get(
-            `http://${window.location.hostname}:8088/users/getByName/${user}`,
-            {
-              headers: {
-                Authorization: `Bearer ${token}`,
-              },
-            }
-          )
+          .get(`${url}/users/getByName/${user}`, {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          })
           .then((response) => {
             console.log(response.data);
             setResult(response.data);

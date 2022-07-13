@@ -23,7 +23,6 @@ import com.igor.service.TaskServiceImpl;
 
 
 @RestController
-@CrossOrigin(origins = "http://localhost:3000")
 @RequestMapping("/tasks")
 public class TaskController {
 	

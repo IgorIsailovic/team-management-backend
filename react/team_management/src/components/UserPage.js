@@ -37,6 +37,8 @@ import UserOverview from "./UserOverview";
 
 const drawerWidth = 200;
 
+const url = "http://192.168.0.22:8088";
+
 const Main = styled("main", { shouldForwardProp: (prop) => prop !== "open" })(
   ({ theme, open }) => ({
     // width: "100%",
@@ -200,7 +202,7 @@ export default function UserPage() {
     let iat = decoded.iat;
     let exp = decoded.exp;
     axios
-      .get(`http://localhost:8088/users/getUsersForTeam/${team}`, {
+      .get(`${url}/users/getUsersForTeam/${team}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -208,7 +210,7 @@ export default function UserPage() {
       .then((response) => {
         let users = response.data;
         axios
-          .get(`http://localhost:8088/tasks/getTasksForTeam/${team}`, {
+          .get(`${url}/tasks/getTasksForTeam/${team}`, {
             headers: {
               Authorization: `Bearer ${token}`,
             },

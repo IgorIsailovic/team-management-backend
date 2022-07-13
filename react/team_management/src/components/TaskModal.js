@@ -14,6 +14,8 @@ import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import CloseIcon from "@mui/icons-material/Close";
 import jwt_decode from "jwt-decode";
 
+const url = "http://192.168.0.22:8088";
+
 export default function TaskModal({
   task,
   open,
@@ -54,7 +56,7 @@ export default function TaskModal({
   function deleteTask() {
     let token = localStorage.getItem("token");
     axios
-      .delete(`http://localhost:8088/tasks/${task.id}`, {
+      .delete(`${url}/tasks/${task.id}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

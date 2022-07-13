@@ -21,7 +21,6 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:3000")
 @RequestMapping("/users")
 public class UserController {
     private static final Logger LOGGER = LoggerFactory.getLogger(UserController.class);
@@ -35,7 +34,7 @@ public class UserController {
     
    
 
-    @CrossOrigin
+   // @CrossOrigin
     @PostMapping("/signin")
     public String login(@RequestBody LoginDto loginDto) {
     	LOGGER.info("User try to login!" + loginDto.getUsername() + "/" + loginDto.getPassword());
@@ -48,7 +47,7 @@ public class UserController {
     @PostMapping("/signup")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @ResponseStatus(HttpStatus.CREATED)
-    @CrossOrigin
+   // @CrossOrigin
     public User signup(@RequestBody LoginDto loginDto){
         return userService.signup(loginDto.getUsername(), loginDto.getPassword(), loginDto.getFirstName(),
                 loginDto.getLastName(),loginDto.getEmail()).orElseThrow(() -> new HttpServerErrorException(HttpStatus.BAD_REQUEST,"User already exists"));
@@ -59,20 +58,17 @@ public class UserController {
         User user = userService.getUserById(id);
         return ResponseEntity.ok().body(user);
     } 
-    
     @GetMapping("getByName/{name}")
     public ResponseEntity<Optional<User>> getTeamByName(@PathVariable String name) {
         Optional<User> user = userService.getUserByName(name);
         return ResponseEntity.ok().body(user);
     }
-    
     @GetMapping
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    @CrossOrigin
+  //  @CrossOrigin
     public List<User> getAllUsers() {
         return userService.getAll();
     }
-     
     @DeleteMapping("/delete/{username}")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<String> deleteUser(@PathVariable("username") String username) {
@@ -85,7 +81,6 @@ public class UserController {
 			return new ResponseEntity<>(HttpStatus.ACCEPTED);
 		return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
-
     @GetMapping("/{user_id}/{team_id}")
     public ResponseEntity<String> addUserToTeam(@PathVariable long user_id, @PathVariable long team_id) {
     	
@@ -125,13 +120,11 @@ public class UserController {
         userService.updateUser(id, password);
         return ResponseEntity.ok().body("Succesffuly updated user!");
     }
-    	
     @GetMapping("/getUsersForTeam/{team}")
 	 public List<User> getUsersForTeam(@PathVariable String team) {
 	        return userService.findUsersForTeam(team);
 	        
 	    }
-  
     @GetMapping("/getUsersForTask/{id}")
   	 public List<User> getUsersForTask(@PathVariable int id) {
   	        return userService.findUsersForTask(id);
