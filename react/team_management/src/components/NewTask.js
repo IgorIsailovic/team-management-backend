@@ -10,7 +10,7 @@ import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
-import SaveAltIcon from "@mui/icons-material/SaveAlt";
+import SaveIcon from "@mui/icons-material/Save";
 import Tooltip from "@mui/material/Tooltip";
 
 export default function NewTask({
@@ -29,8 +29,8 @@ export default function NewTask({
   const [assignies, setAssagnies] = useState([]);
   const [assignie, setAssagnie] = useState([]);
 
-  //const url = "http://192.168.0.22:8088";
-  const url = "http://10.17.48.57:8088";
+  const url = "http://192.168.0.22:8088";
+  //const url = "http://10.17.48.57:8088";
 
   const localHandleClose = () => {
     handleClose();
@@ -190,7 +190,7 @@ export default function NewTask({
                   }}
                   onClick={addTask}
                 >
-                  <SaveAltIcon></SaveAltIcon>
+                  <SaveIcon></SaveIcon>
                 </IconButton>
               </Tooltip>
             </>

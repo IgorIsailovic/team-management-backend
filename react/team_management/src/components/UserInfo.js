@@ -35,7 +35,7 @@ export default function userInfo({ data }) {
           height: "100%",
           width: "100%",
           maxWidth: "60rem",
-          padding: "3rem",
+          padding: "2rem",
           //borderRadius: "3rem",
           backgroundColor: "white",
         }}

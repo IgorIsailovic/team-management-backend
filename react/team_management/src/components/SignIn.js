@@ -15,9 +15,10 @@ import { useNavigate } from "react-router-dom";
 import { Alert, AlertTitle } from "@mui/material";
 import Modal from "@mui/material/Modal";
 import Copyright from "./Copyright";
+import ResponsiveDialog from "./ResponsiveDialog";
 
-//const url = "http://192.168.0.22:8088";
-const url = "http://10.17.48.57:8088";
+const url = "http://192.168.0.22:8088";
+//const url = "http://10.17.48.57:8088";
 
 export default function SignIn() {
   const [username, setUsername] = useState("");
@@ -33,6 +34,15 @@ export default function SignIn() {
   const [passwordOld, setPasswordOld] = useState("");
   const [passwordNew, setPasswordNew] = useState("");
   const [passwordNew2, setPasswordNew2] = useState("");
+  const [openDialog, setOpenDialog] = useState(false);
+
+  const handleClickOpenDialog = () => {
+    setOpenDialog(true);
+  };
+
+  const handleCloseDialog = () => {
+    setOpenDialog(false);
+  };
 
   const style = {
     position: "absolute",
@@ -261,7 +271,7 @@ export default function SignIn() {
           ) : null}
           <Grid container>
             <Grid item xs>
-              <Link href="#" variant="body2" onClick={handleOpen}>
+              <Link href="#" variant="body2" onClick={handleClickOpenDialog}>
                 Forgot password?
               </Link>
             </Grid>
@@ -270,6 +280,10 @@ export default function SignIn() {
                 {"Don't have an account? Sign Up"}
               </Link>
             </Grid>
+            <ResponsiveDialog
+              open={openDialog}
+              handleClose={handleCloseDialog}
+            ></ResponsiveDialog>
           </Grid>
         </Box>
       </Box>

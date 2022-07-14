@@ -34,7 +34,7 @@ export default function Teams({ data }) {
               marginBottom: "1rem",
               padding: "1.5rem",
               //gridColumn: "span 2",
-              gridRow: "auto",
+              //gridRow: "auto",
               color: "black",
               justifySelf: "center",
               alignSelf: "center",

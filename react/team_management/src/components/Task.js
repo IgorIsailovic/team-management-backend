@@ -15,8 +15,8 @@ export default function Task({ task, getUpdatedUserData }) {
   const handleClose = () => setOpen(false);
   const [assagnies, setAssagnies] = useState([]);
 
-  //const url = "http://192.168.0.22:8088";
-  const url = "http://10.17.48.57:8088";
+  const url = "http://192.168.0.22:8088";
+  //const url = "http://10.17.48.57:8088";
 
   function cardClick() {
     let token = localStorage.getItem("token");

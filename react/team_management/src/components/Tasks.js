@@ -8,9 +8,10 @@ import AddIcon from "@mui/icons-material/Add";
 import NewTask from "./NewTask";
 import jwt_decode from "jwt-decode";
 import axios from "axios";
+import Skeleton from "@mui/material/Skeleton";
 
-//const url = "http://192.168.0.22:8088";
-const url = "http://10.17.48.57:8088";
+const url = "http://192.168.0.22:8088";
+//const url = "http://10.17.48.57:8088";
 
 export default function Tasks({
   data,
@@ -23,29 +24,19 @@ export default function Tasks({
   setAssagnies,
   setEstDur,
 }) {
-  const [newData, setNewData] = useState(data);
-
-  const initialBacklog = newData.taskUser.filter(
-    (task) => task.status === "BACKLOG"
-  );
-  const initialSelected = newData.taskUser.filter(
-    (task) => task.status === "SELECTED"
-  );
-  const initialInprogress = newData.taskUser.filter(
-    (task) => task.status === "INPROGRESS"
-  );
-  const initialFinished = newData.taskUser.filter(
-    (task) => task.status === "FINISHED"
-  );
-
+  useEffect(() => {
+    getUpdatedUserData();
+    //setStatusView();
+  }, []);
   const handleOpenNew = () => setOpenNew(true);
   const handleCloseNew = () => setOpenNew(false);
 
   const [openNew, setOpenNew] = useState(false);
-  const [backlog, setBacklog] = useState(initialBacklog);
-  const [selected, setSelected] = useState(initialSelected);
-  const [inprogress, setInprogress] = useState(initialInprogress);
-  const [finished, setFinished] = useState(initialFinished);
+  const [backlog, setBacklog] = useState("");
+  const [selected, setSelected] = useState("");
+  const [inprogress, setInprogress] = useState("");
+  const [finished, setFinished] = useState("");
+  const [isLoading, setLoading] = useState(true);
 
   const getRole = () => {
     let token = localStorage.getItem("token");
@@ -63,6 +54,7 @@ export default function Tasks({
         },
       })
       .then((response) => {
+        // setData(response.data);
         setBacklog(
           response.data.taskUser.filter((task) => task.status === "BACKLOG")
         );
@@ -75,6 +67,7 @@ export default function Tasks({
         setFinished(
           response.data.taskUser.filter((task) => task.status === "FINISHED")
         );
+        setLoading(false);
 
         console.log(response.data);
       })
@@ -83,9 +76,6 @@ export default function Tasks({
       });
   };
 
-  useEffect(() => {
-    getUpdatedUserData();
-  }, []);
   const taskStatus = (status, name) => {
     return (
       <Box
@@ -121,6 +111,41 @@ export default function Tasks({
       </Box>
     );
   };
+
+  if (isLoading) {
+    return (
+      <Box
+        className="tasks"
+        sx={{
+          display: "grid",
+          width: "100%",
+          height: "100%",
+          gridGap: "1rem",
+          alignSelf: "center",
+          justifySelf: "center",
+          gridColumn: "1 / -1",
+        }}
+      >
+        <Skeleton
+          variant="text"
+          sx={{ m: 1, height: "13rem", width: "13rem", justifySelf: "center" }}
+        />
+        <Skeleton
+          variant="text"
+          sx={{ m: 1, height: "13rem", width: "13rem", justifySelf: "center" }}
+        />
+        <Skeleton
+          variant="text"
+          sx={{ m: 1, height: "13rem", width: "13rem", justifySelf: "center" }}
+        />
+        <Skeleton
+          variant="text"
+          sx={{ m: 1, height: "13rem", width: "13rem", justifySelf: "center" }}
+        />
+      </Box>
+    );
+  }
+
   return (
     <Box
       className="tasks"
@@ -151,25 +176,12 @@ export default function Tasks({
         getUpdatedUserData={getUpdatedUserData}
       ></NewTask>
       {data.taskUser.length > 0 ? (
-        status === undefined ? (
-          <>
-            {taskStatus(backlog, "Backlog")}
-            {taskStatus(selected, "Selected")}
-            {taskStatus(inprogress, "In progress")}
-            {taskStatus(finished, "Finished")}
-          </>
-        ) : (
-          <Box
-            sx={{
-              alignSelf: "center",
-              justifySelf: "center",
-              width: "100%",
-              height: "100%",
-            }}
-          >
-            {taskStatus(inprogress, "In progress")}
-          </Box>
-        )
+        <>
+          {taskStatus(backlog, "Backlog")}
+          {taskStatus(selected, "Selected")}
+          {taskStatus(inprogress, "In progress")}
+          {taskStatus(finished, "Finished")}
+        </>
       ) : (
         <Typography
           sx={{
