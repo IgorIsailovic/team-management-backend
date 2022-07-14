@@ -6,7 +6,7 @@ import milan from "../images/milan.png";
 import TaskModal from "./TaskModal";
 import TaskCard from "./TaskCard";
 
-export default function Task({ task }) {
+export default function Task({ task, getUpdatedUserData }) {
   const [open, setOpen] = useState(false);
   const [taskResult, setTaskResult] = useState("");
   const [taskResult1, setTaskResult1] = useState("");
@@ -15,7 +15,8 @@ export default function Task({ task }) {
   const handleClose = () => setOpen(false);
   const [assagnies, setAssagnies] = useState([]);
 
-  const url = "http://192.168.0.22:8088";
+  //const url = "http://192.168.0.22:8088";
+  const url = "http://10.17.48.57:8088";
 
   function cardClick() {
     let token = localStorage.getItem("token");
@@ -103,6 +104,7 @@ export default function Task({ task }) {
           getAssagnies={getAssagnies}
           assagnies={assagnies}
           getAvatar={getAvatar}
+          getUpdatedUserData={getUpdatedUserData}
         ></TaskModal>
         <TaskCard
           task={task}

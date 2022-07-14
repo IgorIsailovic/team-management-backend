@@ -13,8 +13,10 @@ import EditIcon from "@mui/icons-material/Edit";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import CloseIcon from "@mui/icons-material/Close";
 import jwt_decode from "jwt-decode";
+import { Button } from "@mui/material";
 
-const url = "http://192.168.0.22:8088";
+//const url = "http://192.168.0.22:8088";
+const url = "http://10.17.48.57:8088";
 
 export default function TaskModal({
   task,
@@ -26,6 +28,7 @@ export default function TaskModal({
   getAssagnies,
   assagnies,
   getAvatar,
+  getUpdatedUserData,
 }) {
   const style = {
     position: "absolute",
@@ -53,6 +56,8 @@ export default function TaskModal({
     return roles;
   };
 
+  const localGetUpdatedUserData = () => getUpdatedUserData();
+
   function deleteTask() {
     let token = localStorage.getItem("token");
     axios
@@ -63,6 +68,7 @@ export default function TaskModal({
       })
       .then(function (response) {
         console.log("task deleted");
+        localGetUpdatedUserData();
       })
       .catch(function (error) {
         console.log(error);

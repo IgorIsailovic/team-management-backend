@@ -13,7 +13,12 @@ import Select from "@mui/material/Select";
 import SaveAltIcon from "@mui/icons-material/SaveAlt";
 import Tooltip from "@mui/material/Tooltip";
 
-export default function NewTask({ open, handleClose, userData }) {
+export default function NewTask({
+  open,
+  handleClose,
+  userData,
+  getUpdatedUserData,
+}) {
   const [taskName, setTaskName] = useState("");
   const [taskDescription, setTaskDescription] = useState("");
   const [priority, setPriority] = useState("");
@@ -24,21 +29,24 @@ export default function NewTask({ open, handleClose, userData }) {
   const [assignies, setAssagnies] = useState([]);
   const [assignie, setAssagnie] = useState([]);
 
-  const url = "http://192.168.0.22:8088";
+  //const url = "http://192.168.0.22:8088";
+  const url = "http://10.17.48.57:8088";
 
   const localHandleClose = () => {
-    handleClose(
-      setTaskName,
-      setTaskDescription,
-      setPriority,
-      setStatus,
-      setTeam,
-      setAssagnies
-    );
+    handleClose();
+    setTaskName("");
+    setTaskDescription("");
+    setPriority("");
+    setStatus("");
+    setTeam("");
+    setAssagnie("");
+    setEstDur("");
   };
   useEffect(() => {
     getUsers();
   }, []);
+
+  const localGetUpdatedUserData = () => getUpdatedUserData();
 
   const style = {
     position: "absolute",
@@ -145,6 +153,7 @@ export default function NewTask({ open, handleClose, userData }) {
           })
           .then(function (response) {
             console.log(response);
+            localGetUpdatedUserData();
           })
           .catch(function (error) {
             console.log(error);
@@ -153,6 +162,7 @@ export default function NewTask({ open, handleClose, userData }) {
       .catch(function (error) {
         console.log(error);
       });
+    handleClose();
   };
   return (
     <Modal open={open} onClose={localHandleClose}>

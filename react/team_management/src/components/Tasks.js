@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Typography from "@mui/material/Typography";
 import Task from "./Task";
 import Box from "@mui/material/Box";
@@ -7,33 +7,43 @@ import Fab from "@mui/material/Fab";
 import AddIcon from "@mui/icons-material/Add";
 import NewTask from "./NewTask";
 import jwt_decode from "jwt-decode";
+import axios from "axios";
 
-export default function Tasks({ data, status }) {
-  const backlog = data.taskUser.filter((task) => task.status === "BACKLOG");
-  const selceted = data.taskUser.filter((task) => task.status === "SELECTED");
-  const inprogress = data.taskUser.filter(
+//const url = "http://192.168.0.22:8088";
+const url = "http://10.17.48.57:8088";
+
+export default function Tasks({
+  data,
+  status,
+  setTaskName,
+  setTaskDescription,
+  setPriority,
+  setStatus,
+  setTeam,
+  setAssagnies,
+  setEstDur,
+}) {
+  const initialBacklog = data.taskUser.filter(
+    (task) => task.status === "BACKLOG"
+  );
+  const initialSelected = data.taskUser.filter(
+    (task) => task.status === "SELECTED"
+  );
+  const initialInprogress = data.taskUser.filter(
     (task) => task.status === "INPROGRESS"
   );
-  const finished = data.taskUser.filter((task) => task.status === "FINISHED");
+  const initialFinished = data.taskUser.filter(
+    (task) => task.status === "FINISHED"
+  );
 
   const handleOpenNew = () => setOpenNew(true);
-  const handleCloseNew = (
-    setTaskName,
-    setTaskDescription,
-    setPriority,
-    setStatus,
-    setTeam,
-    setAssagnies
-  ) => {
-    setOpenNew(false);
-    setTaskName("");
-    setTaskDescription("");
-    setPriority("");
-    setStatus("");
-    setTeam("");
-    setAssagnies([]);
-  };
+  const handleCloseNew = () => setOpenNew(false);
+
   const [openNew, setOpenNew] = useState(false);
+  const [backlog, setBacklog] = useState(initialBacklog);
+  const [selected, setSelected] = useState(initialSelected);
+  const [inprogress, setInprogress] = useState(initialInprogress);
+  const [finished, setFinished] = useState(initialFinished);
 
   const getRole = () => {
     let token = localStorage.getItem("token");
@@ -42,6 +52,38 @@ export default function Tasks({ data, status }) {
     return roles;
   };
 
+  const getUpdatedUserData = () => {
+    let token = localStorage.getItem("token");
+    axios
+      .get(`${url}/users/getByName/${data.username}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((response) => {
+        setBacklog(
+          response.data.taskUser.filter((task) => task.status === "BACKLOG")
+        );
+        setSelected(
+          response.data.taskUser.filter((task) => task.status === "SELECTED")
+        );
+        setInprogress(
+          response.data.taskUser.filter((task) => task.status === "INPROGRESS")
+        );
+        setFinished(
+          response.data.taskUser.filter((task) => task.status === "FINISHED")
+        );
+
+        console.log(response.data);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  };
+
+  useEffect(() => {
+    getUpdatedUserData();
+  }, []);
   const taskStatus = (status, name) => {
     return (
       <Box
@@ -68,7 +110,11 @@ export default function Tasks({ data, status }) {
           {name}
         </Typography>
         {status.map((task) => (
-          <Task task={task} key={task.id}></Task>
+          <Task
+            task={task}
+            key={task.id}
+            getUpdatedUserData={getUpdatedUserData}
+          ></Task>
         ))}
       </Box>
     );
@@ -100,31 +146,27 @@ export default function Tasks({ data, status }) {
         open={openNew}
         handleClose={handleCloseNew}
         userData={data}
+        getUpdatedUserData={getUpdatedUserData}
       ></NewTask>
       {data.taskUser.length > 0 ? (
         status === undefined ? (
           <>
             {taskStatus(backlog, "Backlog")}
-            {taskStatus(selceted, "Selected")}
+            {taskStatus(selected, "Selected")}
             {taskStatus(inprogress, "In progress")}
             {taskStatus(finished, "Finished")}
           </>
         ) : (
-          data.taskUser.map((task) =>
-            task.status === "INPROGRESS" ? (
-              <Box
-                key={task.id}
-                sx={{
-                  alignSelf: "center",
-                  justifySelf: "center",
-                  width: "100%",
-                  height: "100%",
-                }}
-              >
-                <Task task={task} key={task.id}></Task>
-              </Box>
-            ) : null
-          )
+          <Box
+            sx={{
+              alignSelf: "center",
+              justifySelf: "center",
+              width: "100%",
+              height: "100%",
+            }}
+          >
+            {taskStatus(inprogress, "In progress")}
+          </Box>
         )
       ) : (
         <Typography
