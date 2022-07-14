@@ -23,16 +23,18 @@ export default function Tasks({
   setAssagnies,
   setEstDur,
 }) {
-  const initialBacklog = data.taskUser.filter(
+  const [newData, setNewData] = useState(data);
+
+  const initialBacklog = newData.taskUser.filter(
     (task) => task.status === "BACKLOG"
   );
-  const initialSelected = data.taskUser.filter(
+  const initialSelected = newData.taskUser.filter(
     (task) => task.status === "SELECTED"
   );
-  const initialInprogress = data.taskUser.filter(
+  const initialInprogress = newData.taskUser.filter(
     (task) => task.status === "INPROGRESS"
   );
-  const initialFinished = data.taskUser.filter(
+  const initialFinished = newData.taskUser.filter(
     (task) => task.status === "FINISHED"
   );
 
