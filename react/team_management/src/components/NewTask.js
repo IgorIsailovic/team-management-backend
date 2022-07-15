@@ -18,19 +18,17 @@ export default function NewTask({
   handleClose,
   userData,
   getUpdatedUserData,
+  url,
 }) {
   const [taskName, setTaskName] = useState("");
   const [taskDescription, setTaskDescription] = useState("");
   const [priority, setPriority] = useState("");
   const [team, setTeam] = useState("");
   const [status, setStatus] = useState("");
-  const [assigner, setAssigner] = useState("");
+  //const [assigner, setAssigner] = useState("");
   const [estDur, setEstDur] = useState("");
   const [assignies, setAssagnies] = useState([]);
   const [assignie, setAssagnie] = useState([]);
-
-  const url = "http://192.168.0.22:8088";
-  //const url = "http://10.17.48.57:8088";
 
   const localHandleClose = () => {
     handleClose();
@@ -47,6 +45,10 @@ export default function NewTask({
   }, []);
 
   const localGetUpdatedUserData = () => getUpdatedUserData();
+
+  const taskNameError = () => {
+    return taskName.length < 1 || taskName.length > 55 ? true : false;
+  };
 
   const style = {
     position: "absolute",
@@ -137,7 +139,6 @@ export default function NewTask({
       headers: {
         Authorization: `Bearer ${token}`,
         "Content-Type": "application/json",
-        Cookie: "Cookie_1=value",
       },
       data: data,
     };
@@ -221,6 +222,8 @@ export default function NewTask({
               autoFocus
               value={taskName}
               onChange={(e) => setTaskName(e.target.value)}
+              //error={taskNameError}
+              //helperText={taskNameError?"Invalid size":""}
             />
           </Box>
           <Box sx={{ m: 2, width: "100%" }}>

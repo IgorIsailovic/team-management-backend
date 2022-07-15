@@ -1,32 +1,24 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import Box from "@mui/material/Box";
 import { Typography } from "@mui/material";
+import SkeletonTasksOverview from "./SkeletonTaskOverview";
 
-export default function TaskOverview({ data }) {
-  const [backlog, setBacklog] = useState("");
-  const [selected, setSelected] = useState("");
-  const [inprogress, setInprogress] = useState("");
-  const [finished, setFinished] = useState("");
-
-  const calculateTasks = () => {
-    setBacklog(
-      data.taskUser.filter((task) => task.status === "BACKLOG").length
-    );
-    setSelected(
-      data.taskUser.filter((task) => task.status === "SELECTED").length
-    );
-    setInprogress(
-      data.taskUser.filter((task) => task.status === "INPROGRESS").length
-    );
-    setFinished(
-      data.taskUser.filter((task) => task.status === "FINISHED").length
-    );
-  };
-
+export default function TaskOverview({
+  data,
+  getUpdatedUserData,
+  isLoading,
+  backlog,
+  selected,
+  inprogress,
+  finished,
+}) {
   useEffect(() => {
-    calculateTasks();
+    getUpdatedUserData();
   }, []);
-  return (
+
+  return isLoading ? (
+    <SkeletonTasksOverview />
+  ) : (
     <Box
       sx={{
         alignSelf: "center",
@@ -35,24 +27,40 @@ export default function TaskOverview({ data }) {
         boxShadow: "1px 3px 10px  #9E9E9E",
         height: "100%",
         width: "100%",
-
         padding: "1rem",
-
+        minHeight: "16rem",
         backgroundColor: "white",
         gridColumn: "1 / -1",
         gridTemplateColumns: "repeat(4, 1fr)",
         //gridGap: "0rem",
       }}
     >
-      <Typography
-        variant="h6"
-        component="h2"
-        fontWeight={700}
-        align="center"
-        sx={{ gridColumn: "1 / -1", alignSelf: "center" }}
+      <Box
+        sx={{
+          alignSelf: "center",
+          justifySelf: "center",
+          display: "grid",
+
+          //maxWidth: "60rem",
+          //minHeight: "8rem",
+          padding: "1rem",
+          backgroundColor: "white",
+          gridColumn: "1 / -1",
+        }}
       >
-        Tasks Overview
-      </Typography>
+        <Typography
+          variant="h6"
+          component="h2"
+          fontWeight={700}
+          align="center"
+          sx={{
+            alignSelf: "center",
+            justifySelf: "center",
+          }}
+        >
+          Tasks Overview
+        </Typography>
+      </Box>
       <Box
         sx={{
           alignSelf: "center",
@@ -61,7 +69,7 @@ export default function TaskOverview({ data }) {
           boxShadow: "1px 3px 10px  #9E9E9E",
           height: "90%",
           width: "90%",
-          maxWidth: "60rem",
+          //maxWidth: "60rem",
           padding: "1rem",
           backgroundColor: "white",
         }}
@@ -92,7 +100,7 @@ export default function TaskOverview({ data }) {
             alignSelf: "center",
           }}
         >
-          {backlog}
+          {backlog.length}
         </Typography>
       </Box>
       <Box
@@ -103,7 +111,7 @@ export default function TaskOverview({ data }) {
           boxShadow: "1px 3px 10px  #9E9E9E",
           height: "90%",
           width: "90%",
-          maxWidth: "60rem",
+          //maxWidth: "60rem",
           padding: "1rem",
           backgroundColor: "white",
         }}
@@ -134,7 +142,7 @@ export default function TaskOverview({ data }) {
             alignSelf: "center",
           }}
         >
-          {selected}
+          {selected.length}
         </Typography>
       </Box>
       <Box
@@ -145,7 +153,7 @@ export default function TaskOverview({ data }) {
           boxShadow: "1px 3px 10px  #9E9E9E",
           height: "90%",
           width: "90%",
-          maxWidth: "60rem",
+          //maxWidth: "60rem",
           padding: "1rem",
           backgroundColor: "white",
         }}
@@ -176,7 +184,7 @@ export default function TaskOverview({ data }) {
             alignSelf: "center",
           }}
         >
-          {inprogress}
+          {inprogress.length}
         </Typography>
       </Box>
       <Box
@@ -187,7 +195,7 @@ export default function TaskOverview({ data }) {
           boxShadow: "1px 3px 10px  #9E9E9E",
           height: "90%",
           width: "90%",
-          maxWidth: "60rem",
+          //maxWidth: "60rem",
           padding: "1rem",
           backgroundColor: "white",
         }}
@@ -218,7 +226,7 @@ export default function TaskOverview({ data }) {
             alignSelf: "center",
           }}
         >
-          {finished}
+          {finished.length}
         </Typography>
       </Box>
     </Box>

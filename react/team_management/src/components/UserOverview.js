@@ -6,7 +6,15 @@ import TaskOverview from "./TaskOverview";
 import { Typography } from "@mui/material";
 import "../styles/Shared.css";
 
-export default function UserOverview({ data }) {
+export default function UserOverview({
+  data,
+  getUpdatedUserData,
+  isLoading,
+  backlog,
+  selected,
+  inprogress,
+  finished,
+}) {
   return (
     <Box
       className="overview-box"
@@ -40,13 +48,21 @@ export default function UserOverview({ data }) {
           variant="h6"
           fontWeight={700}
           align="center"
-          sx={{ mt: 2, gridColumn: "1 / -1", alignSelf: "start" }}
+          sx={{ mb: 2, gridColumn: "1 / -1", alignSelf: "center" }}
         >
           Teams
         </Typography>
         <Teams data={data}></Teams>
       </Box>
-      <TaskOverview data={data}></TaskOverview>
+      <TaskOverview
+        data={data}
+        getUpdatedUserData={getUpdatedUserData}
+        isLoading={isLoading}
+        backlog={backlog}
+        selected={selected}
+        inprogress={inprogress}
+        finished={finished}
+      ></TaskOverview>
     </Box>
   );
 }

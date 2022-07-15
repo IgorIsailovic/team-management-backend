@@ -30,10 +30,11 @@ import LogoutIcon from "@mui/icons-material/Logout";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import jwt_decode from "jwt-decode";
 import { useEffect } from "react";
+import axios from "axios";
 
 const drawerWidth = 240;
 
-export default function MainPage() {
+export default function MainPage({ url }) {
   //let token = localStorage.getItem("token");
   const [auth, setAuth] = useState(true);
   const [anchorEl, setAnchorEl] = useState(null);
@@ -41,8 +42,44 @@ export default function MainPage() {
   const [view, setView] = useState("user");
   const [drawer, setDrawer] = useState(null);
   const [margin, setMargin] = useState(null);
+  const [backlog, setBacklog] = useState("");
+  const [selected, setSelected] = useState("");
+  const [inprogress, setInprogress] = useState("");
+  const [finished, setFinished] = useState("");
+  const [isLoading, setLoading] = useState(true);
 
   //const navigate = useNavigate();
+
+  const getUpdatedUserData = () => {
+    let token = localStorage.getItem("token");
+    axios
+      .get(`${url}/users/getByName/${data.username}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((response) => {
+        // setData(response.data);
+        setBacklog(
+          response.data.taskUser.filter((task) => task.status === "BACKLOG")
+        );
+        setSelected(
+          response.data.taskUser.filter((task) => task.status === "SELECTED")
+        );
+        setInprogress(
+          response.data.taskUser.filter((task) => task.status === "INPROGRESS")
+        );
+        setFinished(
+          response.data.taskUser.filter((task) => task.status === "FINISHED")
+        );
+        setLoading(false);
+
+        console.log(response.data);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  };
 
   const location = useLocation();
   const data = location.state.data;
@@ -102,11 +139,32 @@ export default function MainPage() {
   const getView = (view) => {
     switch (view) {
       case "user":
-        return <UserOverview data={data}></UserOverview>;
+        return (
+          <UserOverview
+            data={data}
+            getUpdatedUserData={getUpdatedUserData}
+            isLoading={isLoading}
+            backlog={backlog}
+            selected={selected}
+            inprogress={inprogress}
+            finished={finished}
+          ></UserOverview>
+        );
       case "teams":
         return <Teams data={data}></Teams>;
       case "tasks":
-        return <Tasks data={data}></Tasks>;
+        return (
+          <Tasks
+            data={data}
+            url={url}
+            getUpdatedUserData={getUpdatedUserData}
+            isLoading={isLoading}
+            backlog={backlog}
+            selected={selected}
+            inprogress={inprogress}
+            finished={finished}
+          ></Tasks>
+        );
       case "userInfo":
         return <UserInfo data={data}></UserInfo>;
       default:

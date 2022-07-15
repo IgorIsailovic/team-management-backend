@@ -7,73 +7,28 @@ import Fab from "@mui/material/Fab";
 import AddIcon from "@mui/icons-material/Add";
 import NewTask from "./NewTask";
 import jwt_decode from "jwt-decode";
-import axios from "axios";
-import Skeleton from "@mui/material/Skeleton";
-
-const url = "http://192.168.0.22:8088";
-//const url = "http://10.17.48.57:8088";
+import SkeletonTasks from "./SkeletonTasks";
 
 export default function Tasks({
   data,
-  status,
-  setTaskName,
-  setTaskDescription,
-  setPriority,
-  setStatus,
-  setTeam,
-  setAssagnies,
-  setEstDur,
+  url,
+  getUpdatedUserData,
+  isLoading,
+  backlog,
+  selected,
+  inprogress,
+  finished,
 }) {
-  useEffect(() => {
-    getUpdatedUserData();
-    //setStatusView();
-  }, []);
   const handleOpenNew = () => setOpenNew(true);
   const handleCloseNew = () => setOpenNew(false);
 
   const [openNew, setOpenNew] = useState(false);
-  const [backlog, setBacklog] = useState("");
-  const [selected, setSelected] = useState("");
-  const [inprogress, setInprogress] = useState("");
-  const [finished, setFinished] = useState("");
-  const [isLoading, setLoading] = useState(true);
 
   const getRole = () => {
     let token = localStorage.getItem("token");
     let decoded = jwt_decode(token);
     let roles = decoded.roles[0].authority;
     return roles;
-  };
-
-  const getUpdatedUserData = () => {
-    let token = localStorage.getItem("token");
-    axios
-      .get(`${url}/users/getByName/${data.username}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
-      .then((response) => {
-        // setData(response.data);
-        setBacklog(
-          response.data.taskUser.filter((task) => task.status === "BACKLOG")
-        );
-        setSelected(
-          response.data.taskUser.filter((task) => task.status === "SELECTED")
-        );
-        setInprogress(
-          response.data.taskUser.filter((task) => task.status === "INPROGRESS")
-        );
-        setFinished(
-          response.data.taskUser.filter((task) => task.status === "FINISHED")
-        );
-        setLoading(false);
-
-        console.log(response.data);
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
   };
 
   const taskStatus = (status, name) => {
@@ -92,59 +47,32 @@ export default function Tasks({
           gridAutoRows: "min-content",
         }}
       >
-        <Typography
-          variant="h5"
-          component="h2"
-          fontWeight={700}
-          align="center"
-          sx={{ mt: 2 }}
-        >
-          {name}
-        </Typography>
-        {status.map((task) => (
-          <Task
-            task={task}
-            key={task.id}
-            getUpdatedUserData={getUpdatedUserData}
-          ></Task>
-        ))}
+        {isLoading ? (
+          <SkeletonTasks />
+        ) : (
+          <>
+            <Typography
+              variant="h5"
+              component="h2"
+              fontWeight={700}
+              align="center"
+              sx={{ mt: 2 }}
+            >
+              {name}
+            </Typography>
+            {status.map((task) => (
+              <Task
+                task={task}
+                key={task.id}
+                getUpdatedUserData={getUpdatedUserData}
+                url={url}
+              ></Task>
+            ))}
+          </>
+        )}
       </Box>
     );
   };
-
-  if (isLoading) {
-    return (
-      <Box
-        className="tasks"
-        sx={{
-          display: "grid",
-          width: "100%",
-          height: "100%",
-          gridGap: "1rem",
-          alignSelf: "center",
-          justifySelf: "center",
-          gridColumn: "1 / -1",
-        }}
-      >
-        <Skeleton
-          variant="text"
-          sx={{ m: 1, height: "13rem", width: "13rem", justifySelf: "center" }}
-        />
-        <Skeleton
-          variant="text"
-          sx={{ m: 1, height: "13rem", width: "13rem", justifySelf: "center" }}
-        />
-        <Skeleton
-          variant="text"
-          sx={{ m: 1, height: "13rem", width: "13rem", justifySelf: "center" }}
-        />
-        <Skeleton
-          variant="text"
-          sx={{ m: 1, height: "13rem", width: "13rem", justifySelf: "center" }}
-        />
-      </Box>
-    );
-  }
 
   return (
     <Box
@@ -174,8 +102,12 @@ export default function Tasks({
         handleClose={handleCloseNew}
         userData={data}
         getUpdatedUserData={getUpdatedUserData}
+        url={url}
       ></NewTask>
-      {data.taskUser.length > 0 ? (
+      {backlog.length > 0 ||
+      selected.length > 0 ||
+      inprogress.length > 0 ||
+      finished.length > 0 ? (
         <>
           {taskStatus(backlog, "Backlog")}
           {taskStatus(selected, "Selected")}

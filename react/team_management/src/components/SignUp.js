@@ -12,10 +12,7 @@ import Container from "@mui/material/Container";
 import Copyright from "./Copyright";
 import { Navigate } from "react-router-dom";
 
-const url = "http://192.168.0.22:8088";
-//const url = "http://10.17.48.57:8088";
-
-export default function SignUp() {
+export default function SignUp({ url }) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [passwordCheck, setPasswordCheck] = useState("");

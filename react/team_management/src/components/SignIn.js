@@ -17,10 +17,7 @@ import Modal from "@mui/material/Modal";
 import Copyright from "./Copyright";
 import ResponsiveDialog from "./ResponsiveDialog";
 
-const url = "http://192.168.0.22:8088";
-//const url = "http://10.17.48.57:8088";
-
-export default function SignIn() {
+export default function SignIn({ url }) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [result, setResult] = useState("");
