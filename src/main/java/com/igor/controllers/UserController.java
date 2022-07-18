@@ -45,6 +45,7 @@ public class UserController {
     }
 
     @PostMapping("/signup")
+    @PreAuthorize("hasRole('ROLE_Team Leader')")
     @ResponseStatus(HttpStatus.CREATED)
    // @CrossOrigin
     public User signup(@RequestBody LoginDto loginDto){
@@ -63,10 +64,12 @@ public class UserController {
         return ResponseEntity.ok().body(user);
     }
     @GetMapping
+    @PreAuthorize("hasRole('ROLE_Team Leader')")
     public List<User> getAllUsers() {
         return userService.getAll();
     }
     @DeleteMapping("/delete/{username}")
+    @PreAuthorize("hasRole('ROLE_Team Leader')")
     public ResponseEntity<String> deleteUser(@PathVariable("username") String username) {
     	Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		String currentPrincipalName = authentication.getName();
