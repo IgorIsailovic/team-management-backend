@@ -45,7 +45,7 @@ public class UserController {
     }
 
     @PostMapping("/signup")
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasRole('ROLE_Team Leader')")
     @ResponseStatus(HttpStatus.CREATED)
    // @CrossOrigin
     public User signup(@RequestBody LoginDto loginDto){
@@ -64,13 +64,12 @@ public class UserController {
         return ResponseEntity.ok().body(user);
     }
     @GetMapping
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
-  //  @CrossOrigin
+    @PreAuthorize("hasRole('ROLE_Team Leader')")
     public List<User> getAllUsers() {
         return userService.getAll();
     }
     @DeleteMapping("/delete/{username}")
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasRole('ROLE_Team Leader')")
     public ResponseEntity<String> deleteUser(@PathVariable("username") String username) {
     	Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		String currentPrincipalName = authentication.getName();
@@ -120,9 +119,9 @@ public class UserController {
         userService.updateUser(id, password);
         return ResponseEntity.ok().body("Succesffuly updated user!");
     }
-    @GetMapping("/getUsersForTeam/{team}")
-	 public List<User> getUsersForTeam(@PathVariable String team) {
-	        return userService.findUsersForTeam(team);
+    @GetMapping("/getUsersForTeam/{id}")
+	 public List<User> getUsersForTeam(@PathVariable int id) {
+	        return userService.findUsersForTeam(id);
 	        
 	    }
     @GetMapping("/getUsersForTask/{id}")

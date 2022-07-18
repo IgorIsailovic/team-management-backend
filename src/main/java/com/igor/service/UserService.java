@@ -9,11 +9,15 @@ import com.igor.models.User;
 
 public interface UserService {
 	
+	List<User> getAll();
 	
+	User getUserById(long id);
 	
-	List<User> findUsersForTeam(String team);
+	List<User> findUsersForTeam(int id);
 	
 	List<User> findUsersForTask(int id);
+	
+	String deleteUser(String username);
 
 	void addUserToTeam(long user_id, long team_id);
 	
@@ -21,6 +25,11 @@ public interface UserService {
 	
  boolean checkUserToTeam(long user_id, long team_id);
 		
-	
+ boolean checkUserToTask(long user_id, long task_id);
+ 
+ User updateUser(Long id, String password);
 
+
+
+ 
 }

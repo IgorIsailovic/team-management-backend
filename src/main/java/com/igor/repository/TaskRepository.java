@@ -19,7 +19,7 @@ public interface TaskRepository extends JpaRepository<Task, Long>{
 			  		+ "JOIN security_user s ON s.id = tu.user_id\r\n"
 			  		+ "WHERE tu.user_id=:id", 
 			  nativeQuery = true)
-	List<Task> findAllTasksForUser(@Param("id")int id);
+	List<Task> findAllTasksForUserId(@Param("id")int id);
 	
 	@Query(
 			  value = "SELECT * FROM task t\r\n"
@@ -27,14 +27,14 @@ public interface TaskRepository extends JpaRepository<Task, Long>{
 			  		+ "JOIN security_user s ON s.id = tu.user_id\r\n"
 			  		+ "WHERE s.username=:username", 
 			  nativeQuery = true)
-	List<Task> findAllTasksForUser1(@Param("username")String username);
+	List<Task> findAllTasksForUserName(@Param("username")String username);
 
 	@Query(
 			  value = "SELECT * FROM task t\r\n"
-			  		+ "JOIN team te ON t.team_id = te.id\r\n"
-			  		+ "WHERE te.name=:team", 
+			  		+ "JOIN team te ON t.team = te.id\r\n"
+			  		+ "WHERE te.id=:id", 
 			  nativeQuery = true)
-	List<Task> findTasksForTeam(@Param("team")String team);
+	List<Task> findTasksForTeam(@Param("id")int id);
 
 	
 }

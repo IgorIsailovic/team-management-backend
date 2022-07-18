@@ -16,6 +16,8 @@ public interface TeamService {
 
 	void deleteTeam(Long id);
 	
+	List<Team> findTeamsForUser(String username);
+	
 	Team getTeamByName(String name);
 	
 	List<Team> findTeamsForTask(int id);

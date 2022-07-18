@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -40,8 +41,8 @@ public class TaskController {
 		return taskService.findTasksForUser(id);
 	}
 	@GetMapping("/getTasks/{username}")
-	public List<Task> getAllTasksTest1(@PathVariable String username){
-		return taskService.findTasksForUser1(username);
+	public List<Task> getAllTasksForUser(@PathVariable String username){
+		return taskService.findTasksForUserName(username);
 	}
 	 @GetMapping("/{id}")
 	    public ResponseEntity<Task> getTaskById(@PathVariable Long id) {
@@ -49,9 +50,9 @@ public class TaskController {
 	        return ResponseEntity.ok().body(task);
 	    }
 	
-	 @GetMapping("/getTasksForTeam/{team}")
-	 public List<Task> getTasksForTeam(@PathVariable String team) {
-	        return taskService.findTasksForTeam(team);
+	 @GetMapping("/getTasksForTeam/{id}")
+	 public List<Task> getTasksForTeam(@PathVariable int id) {
+	        return taskService.findTasksForTeam(id);
 	        
 	    }
 	 
@@ -65,6 +66,12 @@ public class TaskController {
 	    public ResponseEntity<String> updateTask(@RequestBody Task task, @PathVariable Long id) {
 	        taskService.updateTask(id, task);
 	        return ResponseEntity.ok().body("Succesffuly updated task!");
+	    }
+	
+	 @GetMapping("/changeTaskStatus/{id}/{status}")
+	    public ResponseEntity<String> changeTaskStatus( @PathVariable Long id, @PathVariable String status) {
+	        taskService.changeTaskStatus(id, status);
+	        return ResponseEntity.ok().body("Changed Task status!");
 	    }
 	 
 	 @DeleteMapping("/{id}")

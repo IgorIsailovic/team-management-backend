@@ -36,7 +36,7 @@ public class Task {
 	
 	private Priority priority;
 	
-	private int assigner;
+	private int reporter;
 	
 	@ManyToMany
 	@JoinTable(
@@ -99,12 +99,12 @@ public class Task {
 	}
 
 
-	public int getAssigner() {
-		return assigner;
+	public int getReporter() {
+		return reporter;
 	}
 
-	public void setAssigner(int assigner) {
-		this.assigner = assigner;
+	public void setReporter(int reporter) {
+		this.reporter = reporter;
 	}
 	
 	public Priority getPriority() {
@@ -115,7 +115,7 @@ public class Task {
 		this.priority = priority;
 	}
 	
-	public Task(Long id, String name, String description, int est_dur, Status status, int team, int assigner, Priority priority) {
+	public Task(Long id, String name, String description, int est_dur, Status status, int team, int reporter, Priority priority) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -123,7 +123,7 @@ public class Task {
 		this.est_dur = est_dur;
 		this.status = status;
 		this.team = team;
-		this.assigner=assigner;
+		this.reporter=reporter;
 		this.priority=priority;
 
 	}

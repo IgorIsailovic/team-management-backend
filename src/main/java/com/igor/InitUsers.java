@@ -27,20 +27,18 @@ public class InitUsers implements ApplicationRunner {
 	UserServiceImpl userService;
 	@Override
 	public void run(ApplicationArguments args) throws Exception {
-		Optional<Role> role = userService.addRole("Admin", "Admin role");
-		LOGGER.debug("Role ROLE_ADMIN created? " + (role.isPresent() ? role.get().getRoleName() : "Nije"));
+		Optional<Role> role = userService.addRole("Team Leader", "Team Leader role");
+		LOGGER.debug("Role ROLE Team Leader created? " + (role.isPresent() ? role.get().getRoleName() : "Nije"));
 		
 		
 		Optional<Role> role2 = userService.addRole("User", "User role");
 		LOGGER.debug("Role ROLE_USER created? " + (role2.isPresent() ?
 		role2.get().getRoleName(): "Nije"));
 		 
-		Optional<Role> role3 = userService.addRole("Leader", "User role");
-		LOGGER.debug("Role ROLE_USER created? " + (role2.isPresent() ?
-		role2.get().getRoleName(): "Nije"));
+	
 		
 		
-		Optional<User> user1 = userService.addAdmin("milan","Sps.7009", "Milan", "Nikolic", "milan.nikolic@nbs.rs");
+		Optional<User> user1 = userService.addTeamLeader("max","Max123!", "Max", "Smith", "max.smith@gmail.com");
 		if (user1.isPresent()) {
 			
 			LOGGER.debug("User:" + user1.get().getId() + "/" + user1.get().getUsername() + "/" + user1.get().getPassword() + " created");
@@ -48,14 +46,14 @@ public class InitUsers implements ApplicationRunner {
 			
 		}
 		
-		  Optional<User> user2 = userService.addAdmin("nikola","Test.7032", "Nikola", "Čeković", "nikola.cekovic@nbs.rs"); 
+		  Optional<User> user2 = userService.addTeamLeader("lynda","Lynda123!", "Lynda", "Vasquez", "lynda.vasquez@gmail.com"); 
 		  if (user2.isPresent()) {
 			  LOGGER.debug("User:" + user2.get().getId() + "/" + user2.get().getUsername()
 			  + "/" + user2.get().getPassword() + " created");
 			  LOGGER.debug(user2.get().getRoles().toString());
 		  }
 		 
-		  Optional<User> user3 = userService.addAdmin("igor","Test.7020", "Igor", "Isailović", "igor.isailovic@nbs.rs"); 
+		  Optional<User> user3 = userService.addTeamLeader("igor","Test.7020", "Igor", "Isailović", "iigorisailovic@gmail.com"); 
 		  if (user3.isPresent()) {
 			  LOGGER.debug("User:" + user3.get().getId() + "/" + user3.get().getUsername()
 			  + "/" + user3.get().getPassword() + " created");

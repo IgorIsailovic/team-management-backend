@@ -70,7 +70,7 @@ public class TeamController {
 		}
 	 
 	 @GetMapping("teams/teamsForTask/{id}")
-		public List<Team> teamsForTask(@PathVariable int id){
+		public List<Team> getTeamsForTask(@PathVariable int id){
 			return teamService.findTeamsForTask(id);
 		}
 }

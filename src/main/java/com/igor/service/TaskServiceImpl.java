@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.igor.enums.Status;
 import com.igor.models.Task;
 import com.igor.models.Team;
 import com.igor.repository.TaskRepository;
@@ -23,11 +24,11 @@ public class TaskServiceImpl implements TaskService {
 	    }
 	    
 	  public List<Task> findTasksForUser(int id) {
-	       List<Task> teams = repository.findAllTasksForUser(id);
+	       List<Task> teams = repository.findAllTasksForUserId(id);
 	        return teams;
 	    }
-	  public List<Task> findTasksForUser1(String username) {
-	       List<Task> teams = repository.findAllTasksForUser1(username);
+	  public List<Task> findTasksForUserName(String username) {
+	       List<Task> teams = repository.findAllTasksForUserName(username);
 	        return teams;
 	    }
 	    @Override
@@ -44,6 +45,13 @@ public class TaskServiceImpl implements TaskService {
 	    public Task updateTask(Long id, Task task) {
 	    	return repository.save(task);
 	    }
+	  
+	    @Override
+	    public Task changeTaskStatus(Long id, String status) {
+	    	Task task = repository.getById(id);
+	    	task.setStatus(Status.valueOf(status));
+	    	return repository.save(task);
+	    }
 	    
 	    @Override
 	    public void deleteTask(Long id) {
@@ -51,8 +59,8 @@ public class TaskServiceImpl implements TaskService {
 	    }
 
 		@Override
-		public List<Task> findTasksForTeam(String team) {
-			return repository.findTasksForTeam(team);
+		public List<Task> findTasksForTeam(int id) {
+			return repository.findTasksForTeam(id);
 		}
 
 		

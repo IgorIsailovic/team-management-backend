@@ -107,26 +107,13 @@ public class UserServiceImpl implements UserService {
 	        return user;
 	    }
 	    
-	    public Optional<User> addLeader(String username, String password, String firstName, String lastName, String email) {
-	        LOGGER.info("New leader attempting to add to DB");
-	        Optional<User> user = Optional.empty();
-	        if (!userRepository.findByUsername(username).isPresent()) {
-	            Optional<Role> role = roleRepository.findByRoleName("Leader");
-	            user = Optional.of(userRepository.save(new User(username,
-	                            passwordEncoder.encode(password),
-	                            role.get(),
-	                            firstName,
-	                            lastName,
-	                            email)));
-	        }
-	        return user;
-	    }
+	   
 	    
-	    public Optional<User> addAdmin(String username, String password, String firstName, String lastName, String email){
-	       LOGGER.info("New admin added");
+	    public Optional<User> addTeamLeader(String username, String password, String firstName, String lastName, String email){
+	       LOGGER.info("New Team Leader added");
 	        Optional<User> user = Optional.empty();
 	        if (!userRepository.findByUsername(username).isPresent()) {
-	            Optional<Role> role = roleRepository.findByRoleName("Admin");
+	            Optional<Role> role = roleRepository.findByRoleName("Team Leader");
 	            user = Optional.of(userRepository.save(new User(username,
 	                            passwordEncoder.encode(password),
 	                            role.get(),
@@ -147,7 +134,7 @@ public class UserServiceImpl implements UserService {
 	    }
 	    
 
-	    public java.util.List<User> getAll() {
+	    public List<User> getAll() {
 	    	LOGGER.debug("Lista usera");
 	        return userRepository.findAll();
 	    }
@@ -194,8 +181,8 @@ public class UserServiceImpl implements UserService {
     }
 
 	@Override
-	public List<User> findUsersForTeam(String team) {
-		return userRepository.findUsersForTeam(team);
+	public List<User> findUsersForTeam(int id) {
+		return userRepository.findUsersForTeam(id);
 	}
 
 	public List<User> findUsersForTask(int id) {

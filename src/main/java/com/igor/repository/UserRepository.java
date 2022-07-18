@@ -58,9 +58,9 @@ public interface UserRepository extends JpaRepository<User, Long> {
     		value = "SELECT * FROM security_user u\r\n"
     				+ "JOIN team_user tu ON tu.user_id=u.id\r\n"
 			  		+ "JOIN team t ON t.id = tu.team_id\r\n"
-			  		+ "WHERE t.name=:team", 
+			  		+ "WHERE t.id=:id", 
 			  nativeQuery = true)
-	List<User> findUsersForTeam(@Param("team")String team);
+	List<User> findUsersForTeam(@Param("id")int id);
 
     @Query(
     		value = "SELECT * FROM security_user u\r\n"
