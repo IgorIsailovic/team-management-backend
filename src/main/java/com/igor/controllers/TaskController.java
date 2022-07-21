@@ -36,7 +36,7 @@ public class TaskController {
 	public List<Task> getAllTasks(){
 		return taskService.findAll();
 	}
-	@GetMapping("/test/{id}")
+	@GetMapping("/getTasksById/{id}")
 	public List<Task> getAllTasksByID(@PathVariable int id){
 		return taskService.findTasksForUser(id);
 	}

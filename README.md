@@ -13,7 +13,6 @@
   </p>
   <p align="center">
 
-
 </div>
 
 <details>
@@ -42,22 +41,22 @@ Spring boot application that communicates with its frontend counterpart as well 
 
 ### CRUD
 
-App uses JPA to store data into PostgreSQL database.
+App uses JPA to store data in PostgreSQL database.
 
 ### Database
 
-PostgreSQL database in development is run as a docker image using a docker compose file wich is a part of this repository (compose.yml).
-Demo app witch is hosted on Heroku is communicating with a PostgreSQL database hosted on AWS.
+PostgreSQL database in development is run as a docker image using a docker-compose file which is a part of this repository (compose.yml).
+Demo app which is hosted on Heroku is communicating with a PostgreSQL database hosted on AWS.
 
 ### Security and Authentication
 
-App uses spring security with jwt token for authentication. Unauthorized Users can acces only two endpoints: /users/signin and /users/signup. For every other endpoint user has to be authenticated using the jwt token that was acquired during singin.
+App uses spring security with jwt token for authentication. Unauthorized Users can access only two endpoints: /users/signin and /users/signup. For every other endpoint user has to be authenticated using the jwt token that was acquired during signin.
 
-There are two types of users/user roles "User" and "Team Leader". Team leader has the authority to access all endpoints thus execute all CRUD operations. Useres with the User role have limited authority and can not access all endpoints.
+There are two types of users/user roles "User" and "Team Leader". Team leader has the authority to access all endpoints and thus execute all CRUD operations. Users with the User role have limited authority and can not access all endpoints.
 
 ## 🛠️ Built With
 
-Backend part of the project is built with Java and Spring with a postgreSQL database.
+The backend part of the project is built with Java and Spring with a PostgreSQL database.
 
 [![java]][java-url]
 [![spring]][spring-url]
@@ -85,7 +84,7 @@ Backend part of the project is built with Java and Spring with a postgreSQL data
 
 - Assign a task to a user
 
-- Update user passowrd
+- Update user password
 
 - Get all users for the specific team
 
@@ -137,9 +136,9 @@ Backend part of the project is built with Java and Spring with a postgreSQL data
 git clone https://github.com/IgorIsailovic/team-management-backend.git
 ```
 
-2. Initalize the database
+2. Initialize the database
 
-Make sure navigate to the folder that contains compose.yml file.
+Make sure to navigate to the folder that contains the compose.yml file.
 
 From there run the commands below
 
@@ -153,11 +152,11 @@ docker-compose up
 docker-compose start
 ```
 
-With that PostgreSQL db is started localy. DB admin username and password as well as other parameters are contained in the compose.yml file.
+With that PostgreSQL DB is started locally. DB admin username and password as well as other parameters are contained in the compose.yml file.
 
 - aplication.properties
 
-Make sure that that the database connection part of this file looks like this:
+Make sure that the database connection part of this file looks like this:
 
 ```yml
 spring.jpa.hibernate.ddl-auto=create
@@ -180,7 +179,7 @@ Note that spring.jpa.hibernate.ddl-auto should only be set to create the first t
    java -jar target/TeamManagement-0.0.1-SNAPSHOT.jar
    ```
 
-5. Inital users
+5. Initial users
 <div align="center">
 <table class="tg">
 <thead>
