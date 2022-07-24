@@ -53,12 +53,6 @@ public class InitUsers implements ApplicationRunner {
 			  LOGGER.debug(user2.get().getRoles().toString());
 		  }
 		 
-		  Optional<User> user3 = userService.addTeamLeader("igor","Test.7020", "Igor", "Isailović", "iigorisailovic@gmail.com"); 
-		  if (user3.isPresent()) {
-			  LOGGER.debug("User:" + user3.get().getId() + "/" + user3.get().getUsername()
-			  + "/" + user3.get().getPassword() + " created");
-			  LOGGER.debug(user3.get().getRoles().toString());
-		  }
 		
 	}
 
