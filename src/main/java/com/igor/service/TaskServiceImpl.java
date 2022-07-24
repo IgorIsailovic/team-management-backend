@@ -43,6 +43,14 @@ public class TaskServiceImpl implements TaskService {
 	    
 	    @Override
 	    public Task updateTask(Long id, Task task) {
+	    	Task t = repository.findById(id).get();
+	    	if(task.getName()!=null)t.setName(task.getName());
+	    	if(task.getDescription()!=null)t.setDescription(task.getDescription());
+	    	if(task.getEst_dur()!=0)t.setEst_dur(task.getEst_dur());
+	    	if(task.getPriority()!=null)t.setPriority(task.getPriority());
+	    	if(task.getReporter()!=0)t.setReporter(task.getReporter());
+	    	if(task.getStatus()!=null)t.setStatus(task.getStatus());
+	    	if(task.getTeam()!=0)t.setTeam(task.getTeam());
 	    	return repository.save(task);
 	    }
 	  

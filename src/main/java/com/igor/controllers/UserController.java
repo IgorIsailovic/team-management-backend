@@ -55,14 +55,32 @@ public class UserController {
 
     @GetMapping("getOne/{id}")
     public ResponseEntity<User> getTeamById(@PathVariable long id) {
+    	try {
         User user = userService.getUserById(id);
         return ResponseEntity.ok().body(user);
+    	}
+    	catch (Exception e) {
+    		return new ResponseEntity<User>(HttpStatus.BAD_REQUEST);
+		}
     } 
     @GetMapping("getByName/{name}")
     public ResponseEntity<Optional<User>> getTeamByName(@PathVariable String name) {
+    	try {
         Optional<User> user = userService.getUserByName(name);
-        return ResponseEntity.ok().body(user);
+         if(!user.isPresent()) {
+        	 return new ResponseEntity<Optional<User>>(HttpStatus.BAD_REQUEST);
+        	
+         }
+         else 
+        	 return ResponseEntity.ok().body(user);
+         
+    	}
+    	catch (Exception e) {
+    		return new ResponseEntity<Optional<User>>(HttpStatus.BAD_REQUEST);
+		}
+    
     }
+    
     @GetMapping
     @PreAuthorize("hasRole('ROLE_Team Leader')")
     public List<User> getAllUsers() {
@@ -84,15 +102,15 @@ public class UserController {
     public ResponseEntity<String> addUserToTeam(@PathVariable long user_id, @PathVariable long team_id) {
     	
     	if(userService.checkUserToTeam(user_id, team_id)) {
-    		return new ResponseEntity<>("Ovaj user je već u tom timu!" ,HttpStatus.BAD_REQUEST);
+    		return new ResponseEntity<>("User is already part of this team!" ,HttpStatus.BAD_REQUEST);
     	}
     	else { 
     		try {
     		userService.addUserToTeam(user_id, team_id);
-    		return new ResponseEntity<>("Uspešno ste dodali usera u team!" ,HttpStatus.OK);
+    		return new ResponseEntity<>("Successfully added user to the team!" ,HttpStatus.OK);
     		}
     		catch (Exception e) {
-        		return new ResponseEntity<>("Neuspešno dodavanje usera u team!" ,HttpStatus.BAD_REQUEST);
+        		return new ResponseEntity<>("Unsuccessfull, user was not added to the team!" ,HttpStatus.BAD_REQUEST);
 			}
     	}
     	}
@@ -101,23 +119,28 @@ public class UserController {
     public ResponseEntity<String> addUserToTask(@PathVariable long user_id, @PathVariable long task_id) {
     	
     	if(userService.checkUserToTask(user_id, task_id)) {
-    		return new ResponseEntity<>("Ovaj user je već u tom tasku!" ,HttpStatus.BAD_REQUEST);
+    		return new ResponseEntity<>("This task was already assigned to this user!" ,HttpStatus.BAD_REQUEST);
     	}
     	else { 
     		try {
     		userService.addUserToTask(user_id, task_id);
-    		return new ResponseEntity<>("Uspešno ste dodali usera u task!" ,HttpStatus.OK);
+    		return new ResponseEntity<>("Successfully assigned the task to the user!" ,HttpStatus.OK);
     		}
     		catch (Exception e) {
-        		return new ResponseEntity<>("Neuspešno dodavanje usera u task!" ,HttpStatus.BAD_REQUEST);
+        		return new ResponseEntity<>("Unsuccessfull, the task was not assigned to the user!" ,HttpStatus.BAD_REQUEST);
 			}
     	}
     	}
     
     @PutMapping("/updatePassword/{id}")
     public ResponseEntity<String> updateUser(@RequestBody String password, @PathVariable Long id) {
+    	try {
         userService.updateUser(id, password);
         return ResponseEntity.ok().body("Succesffuly updated user!");
+    	}
+    	catch (Exception e) {
+    		return new ResponseEntity<>("Unsuccessfull, user was not updated!" ,HttpStatus.BAD_REQUEST);
+		}
     }
     @GetMapping("/getUsersForTeam/{id}")
 	 public List<User> getUsersForTeam(@PathVariable int id) {

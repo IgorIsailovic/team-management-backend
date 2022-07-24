@@ -1,9 +1,12 @@
 package com.igor.controllers;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.igor.exceptions.ResourceNotFoundException;
 import com.igor.models.Task;
 import com.igor.models.Team;
+import com.igor.models.User;
 import com.igor.repository.TeamRepository;
 import com.igor.service.TeamServiceImpl;
 
@@ -37,31 +41,58 @@ public class TeamController {
 	
 	 @GetMapping("teams/{id}")
 	    public ResponseEntity<Team> getTeamById(@PathVariable Long id) {
+		 try {
 	        Team team = teamService.getTeam(id);
 	        return ResponseEntity.ok().body(team);
+		 }
+		 catch (Exception e) {
+			 return new ResponseEntity<Team>(HttpStatus.BAD_REQUEST);
+		}
 	    }
 	
 	 @GetMapping("teams/getTeamByName/{name}")
 	    public ResponseEntity<Team> getTeamByName(@PathVariable String name) {
-	        Team team = teamService.getTeamByName(name);
-	        return ResponseEntity.ok().body(team);
+		 try {
+	       Team team = teamService.getTeamByName(name);
+	       if(team==null) {return new ResponseEntity<Team>(HttpStatus.BAD_REQUEST);}
+	      
+	       else return ResponseEntity.ok().body(team);
+		 }
+		 catch (Exception e) {
+		  		return new ResponseEntity<Team>(HttpStatus.BAD_REQUEST);		}
 	    }
 	 @PostMapping("teams")
+	 @PreAuthorize("hasRole('ROLE_Team Leader')")
 	    public ResponseEntity<String> addTeam(@RequestBody Team team) {
+		 	if(teamService.getTeamByName(team.getName())!=null){
+		 		 return new ResponseEntity<>("Team already exists!", HttpStatus.BAD_REQUEST);
+		 	}
+		 	else {
 	        teamService.addTeam(team);
 	        return ResponseEntity.ok().body("Succesffuly added team!");
+		 	}
 	    }
 	 
 	 @PutMapping("teams/{id}")
+	 @PreAuthorize("hasRole('ROLE_Team Leader')")
 	    public ResponseEntity<String> updateTeam(@RequestBody Team team, @PathVariable Long id) {
+		 try {
 	        teamService.updateTeam(id, team);
-	        return ResponseEntity.ok().body("Succesffuly updated team!");
+	        return ResponseEntity.ok().body("Succesffuly updated team!");}
+		 catch (Exception e) {
+			 return new ResponseEntity<>("No such team!", HttpStatus.BAD_REQUEST);
 	    }
-	 
+	 }
 	 @DeleteMapping("teams/{id}")
+	 @PreAuthorize("hasRole('ROLE_Team Leader')")
 	    public ResponseEntity<String> deleteTeam(@PathVariable Long id) {
+		 try {
 	        teamService.deleteTeam(id);
 	        return ResponseEntity.ok().body("Succesffuly deleted team!");
+		 }
+		 catch (Exception e) {
+			 return new ResponseEntity<>("No such team!", HttpStatus.BAD_REQUEST);
+		}
 	    }
 	 
 	 @GetMapping("teams/getTeams/{username}")

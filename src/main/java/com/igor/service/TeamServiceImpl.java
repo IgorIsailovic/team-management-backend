@@ -1,6 +1,7 @@
 package com.igor.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -29,12 +30,15 @@ public class TeamServiceImpl implements TeamService {
     
     @Override
     public Team getTeam(Long id) {
-    	return repository.getById(id);
+    	return repository.findById(id).get();
     }
     
     @Override
     public Team updateTeam(Long id, Team team) {
-    	return repository.save(team);
+     Team t = repository.findById(id).get();
+     t.setName(team.getName());
+     return repository.save(t);
+     
     }
     
     @Override
