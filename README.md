@@ -211,14 +211,14 @@ Note that spring.jpa.hibernate.ddl-auto should only be set to create the first t
 
 ## 📧 Contact
 
-Your Name - iigorisailovic@gmail.com - https://www.linkedin.com/in/igor-isailovi%C4%87-9b00b7200/
+Your Name - iigorisailovic@gmail.com - https://www.linkedin.com/in/igorisailovic/
 
 Project Link: [https://github.com/IgorIsailovic/team-management-backend](https://github.com/IgorIsailovic/team-management-backend)
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
-[linkedin-url]: https://www.linkedin.com/in/igor-isailovi%C4%87-9b00b7200/
+[linkedin-url]: https://www.linkedin.com/in/igorisailovic/
 [java]: https://img.shields.io/badge/Java-ED8B00?style=for-the-badge&logo=java&logoColor=white
 [spring]: https://img.shields.io/badge/Spring-6DB33F?style=for-the-badge&logo=spring&logoColor=white
 [postgresql]: https://img.shields.io/badge/PostgreSQL-316192?style=for-the-badge&logo=postgresql&logoColor=white
