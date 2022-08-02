@@ -191,17 +191,17 @@ Note that spring.jpa.hibernate.ddl-auto should only be set to create the first t
   <tr>
     <td class="tg-baqh">Role</td>
     <td class="tg-baqh">Team Leader</td>
-    <td class="tg-baqh">Team Leader</td>
+    <td class="tg-baqh">User</td>
   </tr>
   <tr>
     <td class="tg-baqh">username</td>
     <td class="tg-baqh">Max</td>
-    <td class="tg-baqh">Lynda</td>
+    <td class="tg-baqh">marta</td>
   </tr>
   <tr>
     <td class="tg-baqh">password</td>
     <td class="tg-baqh">Max123!</td>
-    <td class="tg-baqh">Lynda123!</td>
+    <td class="tg-baqh">Marta123!</td>
   </tr>
 </tbody>
 </table>
