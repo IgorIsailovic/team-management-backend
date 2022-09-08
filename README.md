@@ -165,6 +165,7 @@ spring.sql.init.platform=postgres
 spring.datasource.url=jdbc:postgresql://localhost:5432/test_db
 spring.datasource.username=root
 spring.datasource.password=root
+spring.jpa.defer-datasource-initialization=true
 ```
 
 Note that spring.jpa.hibernate.ddl-auto should only be set to create the first time the app is run. After that either set it to none or comment the line.
