@@ -1,8 +1,9 @@
-INSERT INTO security_user(email,first_name, last_name, password, username) VALUES ('max.smith@gmail.com', 'Max', 'Smith',crypt('Max123!', gen_salt('bf')),'max');
-INSERT INTO security_user(email,first_name, last_name, password, username) VALUES ('lynda.vasquez@gmail.com', 'Lynda', 'Vasquez',crypt('Lynda123!', gen_salt('bf')),'lynda');
-INSERT INTO security_user(email,first_name, last_name, password, username) VALUES ('jim.maxwell@gmail.com', 'Jim', 'Maxwell',crypt('Jim123!', gen_salt('bf')),'jim');
-INSERT INTO security_user(email,first_name, last_name, password, username) VALUES ('marta.petrovich@gmail.com', 'Marta', 'Petrovich',crypt('Marta123!', gen_salt('bf')),'marta');
-INSERT INTO security_user(email,first_name, last_name, password, username) VALUES ('melinda.chavez@gmail.com', 'Melinda', 'Chavez',crypt('Melinda123!', gen_salt('bf')),'melinda');
+
+INSERT INTO security_user(email,first_name, last_name, password, username) VALUES ('max.smith@gmail.com', 'Max', 'Smith','Max123!','max');
+INSERT INTO security_user(email,first_name, last_name, password, username) VALUES ('lynda.vasquez@gmail.com', 'Lynda', 'Vasquez','Lynda123!','lynda');
+INSERT INTO security_user(email,first_name, last_name, password, username) VALUES ('jim.maxwell@gmail.com', 'Jim', 'Maxwell','Jim123!','jim');
+INSERT INTO security_user(email,first_name, last_name, password, username) VALUES ('marta.petrovich@gmail.com', 'Marta', 'Petrovich','Marta123!','marta');
+INSERT INTO security_user(email,first_name, last_name, password, username) VALUES ('melinda.chavez@gmail.com', 'Melinda', 'Chavez','Melinda123!','melinda');
 
 INSERT INTO security_role(description, role_name) VALUES ('Team Lead', 'Team Lead');
 INSERT INTO security_role(description, role_name) VALUES ('User', 'User');

@@ -35,10 +35,12 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
         // Entry points
     	http.cors().and().csrf()
         .disable().authorizeRequests()
-                .antMatchers("/users/signup", "/users/signin").permitAll()
+                .antMatchers("/users/signup", "/users/signin", "/h2/**").permitAll()
                 .anyRequest().authenticated();
 
-      
+    	// Disable headers frame option (Fix for H2 console) 
+        http.headers().frameOptions().disable();
+        
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
         http.addFilterBefore(new JwtTokenFilter(userDetailsService), UsernamePasswordAuthenticationFilter.class);
