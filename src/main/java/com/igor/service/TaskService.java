@@ -2,9 +2,8 @@ package com.igor.service;
 
 import java.util.List;
 
-import com.igor.enums.Status;
 import com.igor.models.Task;
-import com.igor.models.Team;
+
 
 public interface TaskService {
 	

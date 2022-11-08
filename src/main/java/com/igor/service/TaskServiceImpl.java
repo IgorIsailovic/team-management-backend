@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 
 import com.igor.enums.Status;
 import com.igor.models.Task;
-import com.igor.models.Team;
 import com.igor.repository.TaskRepository;
 
 

@@ -1,12 +1,11 @@
 package com.igor.service;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.igor.models.Task;
+
 import com.igor.models.Team;
 import com.igor.repository.TeamRepository;
 

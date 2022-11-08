@@ -3,22 +3,17 @@ package com.igor.service;
 import java.util.Optional;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.igor.models.Role;
-import com.igor.models.Task;
-import com.igor.models.Team;
 import com.igor.models.User;
 import com.igor.repository.RoleRepository;
 import com.igor.repository.UserRepository;
@@ -113,7 +108,7 @@ public class UserServiceImpl implements UserService {
 	       LOGGER.info("New Team Leader added");
 	        Optional<User> user = Optional.empty();
 	        if (!userRepository.findByUsername(username).isPresent()) {
-	            Optional<Role> role = roleRepository.findByRoleName("Team Leader");
+	            Optional<Role> role = roleRepository.findByRoleName("Team Lead");
 	            user = Optional.of(userRepository.save(new User(username,
 	                            passwordEncoder.encode(password),
 	                            role.get(),

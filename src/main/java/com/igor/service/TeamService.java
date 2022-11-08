@@ -1,7 +1,6 @@
 package com.igor.service;
 
 import java.util.List;
-import java.util.Optional;
 
 import com.igor.models.Team;
 
