@@ -1,9 +1,9 @@
 
-INSERT INTO security_user(email,first_name, last_name, password, username) VALUES ('max.smith@gmail.com', 'Max', 'Smith','Max123!','max');
-INSERT INTO security_user(email,first_name, last_name, password, username) VALUES ('lynda.vasquez@gmail.com', 'Lynda', 'Vasquez','Lynda123!','lynda');
-INSERT INTO security_user(email,first_name, last_name, password, username) VALUES ('jim.maxwell@gmail.com', 'Jim', 'Maxwell','Jim123!','jim');
-INSERT INTO security_user(email,first_name, last_name, password, username) VALUES ('marta.petrovich@gmail.com', 'Marta', 'Petrovich','Marta123!','marta');
-INSERT INTO security_user(email,first_name, last_name, password, username) VALUES ('melinda.chavez@gmail.com', 'Melinda', 'Chavez','Melinda123!','melinda');
+INSERT INTO security_user(email,first_name, last_name, password, username) VALUES ('max.smith@gmail.com', 'Max', 'Smith','$2a$06$QNYchUqpVaQAFg.ugnPSnOALb4NHLQx2y2u1Ewng9yWvCTOK16FGe','max');
+INSERT INTO security_user(email,first_name, last_name, password, username) VALUES ('lynda.vasquez@gmail.com', 'Lynda', 'Vasquez','$2a$06$ZSBNNgWQjfV2ydjhsHz5Oe.OkN4JPtUfmEvb4Qb/ABr6BCf80WUK.','lynda');
+INSERT INTO security_user(email,first_name, last_name, password, username) VALUES ('jim.maxwell@gmail.com', 'Jim', 'Maxwell','$2a$06$tL5MB7/y4HIXz9zs/KNFweIlu43CYmFZC8Clc0MydIy3zkFhValPm','jim');
+INSERT INTO security_user(email,first_name, last_name, password, username) VALUES ('marta.petrovich@gmail.com', 'Marta', 'Petrovich','$2a$06$Qn8MQqBDbCl6Dk7CwrLbv.xLyeaNOCjahyGQcIAh0bWfQk/cJ1rXC','marta');
+INSERT INTO security_user(email,first_name, last_name, password, username) VALUES ('melinda.chavez@gmail.com', 'Melinda', 'Chavez','$2a$06$fFiA0yM9YMKHkU4q8EKoG.6ubOCuKiBV2zYrsMYE0bf6PF9oRptUu','melinda');
 
 INSERT INTO security_role(description, role_name) VALUES ('Team Lead', 'Team Lead');
 INSERT INTO security_role(description, role_name) VALUES ('User', 'User');
