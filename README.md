@@ -45,8 +45,7 @@ App uses JPA to store data in PostgreSQL database.
 
 ### Database
 
-PostgreSQL database in development is run as a docker image using a docker-compose file which is a part of this repository (compose.yml).
-Demo app which is hosted on Heroku is communicating with a PostgreSQL database hosted on AWS.
+Database is an integrated H2 db.
 
 ### Security and Authentication
 
@@ -138,37 +137,8 @@ git clone https://github.com/IgorIsailovic/team-management-backend.git
 
 2. Initialize the database
 
-Make sure to navigate to the folder that contains the compose.yml file.
+Database is initialized when the app is started.
 
-From there run the commands below
-
-- docker-compose
-
-```sh
-docker-compose up
-```
-
-```sh
-docker-compose start
-```
-
-With that PostgreSQL DB is started locally. DB admin username and password as well as other parameters are contained in the compose.yml file.
-
-- aplication.properties
-
-Make sure that the database connection part of this file looks like this:
-
-```yml
-spring.jpa.hibernate.ddl-auto=create
-spring.sql.init.mode=always
-spring.sql.init.platform=postgres
-spring.datasource.url=jdbc:postgresql://localhost:5432/test_db
-spring.datasource.username=root
-spring.datasource.password=root
-spring.jpa.defer-datasource-initialization=true
-```
-
-Note that spring.jpa.hibernate.ddl-auto should only be set to create the first time the app is run. After that either set it to none or comment the line.
 
 3. Rebuild the project
    ```sh
